@@ -1,0 +1,260 @@
+
+      (function(){
+
+        var log = function (payload) {
+          var x = new XMLHttpRequest();
+          x.open('POST', 'https://e.spoutable.com/e');
+          x.setRequestHeader('Content-Type', 'text/plain');
+          x.send(JSON.stringify(payload));
+        };
+
+        log({"e":100,"v":3,"b":2,"ct":"2019-06-14T13:51:06.111Z","objectType":"page","action":"payload landed","i0":"-LhLFO4zxYxaluR5cfCW","i1":"-LhLFO4r5QQTkJvMGlof","i2":"-LhLAbjTfslC9Wu4i9Yt","sid":"7c887d1e-c4ea-4682-bad8-216a89ce74e5"});
+
+        var d=document,
+            c={i:{"distilEnabled":false,"mobileEnabled":true,"bidRatio":null,"consumableAdjustment":null,"name":"SitePoint","spoutableAdzerkSiteId":1055432,"spoutableSiteId":"7c887d1e-c4ea-4682-bad8-216a89ce74e5","siteUUID":"7c887d1e-c4ea-4682-bad8-216a89ce74e5","publisherId":19303,"adzerkAPIURL":"//engine.adzerk.net/api/v2","networkId":9637,"isActive":true,"adminIsActive":true,"adminIsApproved":true,"branch":"master","path":"7c887d1e-c4ea-4682-bad8-216a89ce74e5/spoutable.js","runningRecycledContent":true,"appnexusDeals":[],"configRevision":322},
+               t:{"sessionId":"-LhLAbjTfslC9Wu4i9Yt","pageCount":1,"strategyId":1037876,"bundleId":569662},
+               p:{"cdnHost":"//cdn2.spoutable.com","sentryHost":"https://e289928358464050a005778499572066@app.getsentry.com/63517","spoutTrackHost":"//t.spoutable.com","spoutEventHost":"//e.spoutable.com","distilDomain":"bender.spoutable.com"},
+               v:{"userId":"cjww5h1zz9qwa8eqpx79mqk9k","clientIp":"197.248.104.38","isMobile":false,"secure":true,"facebookApp":false,"pageImpressionId":"-LhLFO4r5QQTkJvMGlof","pageURL":"https://www.sitepoint.com/offline-web-apps-service-workers-pouchdb/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36","language":"en-US,en;q=0.9","userPromise":{},"cityName":"Nakuru","countryCode":"KE","latitude":-0.2833,"longitude":36.0667,"isGDPRCountry":false},
+               o:{},
+               n:1560520266111,
+               m:Date.now()
+            },
+            b=function(){
+              var f=d.createElement('iframe'),
+                  s=f.style;
+              f.allowtransparency='true';
+              f.scrolling='no';
+              s.position='absolute';
+              s.height=s.width='1px';
+              s.top=s.left='-9999px';
+              return f;
+            },
+            a=function(u){
+              var f=b();
+              f.id=u.unit.frameId;
+              d.body.appendChild(f);
+              var w=f.contentWindow,
+                  e=w.document;
+              e.open();
+              e.close();
+              w.c=c;
+              w.u=u;
+
+              w.onerror = function(msg, url, line, col) {
+                var payload = {"e":100,"v":3,"b":2,"ct":"2019-06-14T13:51:06.111Z","objectType":"page","action":"friendly window onerror","i0":"-LhLFO4zxYxaluR5cfCX","i1":"-LhLFO4r5QQTkJvMGlof","i2":"-LhLAbjTfslC9Wu4i9Yt","sid":"7c887d1e-c4ea-4682-bad8-216a89ce74e5"};
+                payload.memo = msg.message || msg;
+                log(payload);
+              }
+
+              var script = e.createElement('script');
+              script.type = 'text/javascript';
+              script.charset = 'UTF-8';
+              script.onerror = function(err) {
+                var payload = {"e":100,"v":3,"b":2,"ct":"2019-06-14T13:51:06.111Z","objectType":"page","action":"unit script onerror","i0":"-LhLFO4zxYxaluR5cfCY","i1":"-LhLFO4r5QQTkJvMGlof","i2":"-LhLAbjTfslC9Wu4i9Yt","sid":"7c887d1e-c4ea-4682-bad8-216a89ce74e5"};
+                payload.memo = (err.srcElement || err.target || {}).src;
+                log(payload);
+              }
+              e.head.appendChild(script);
+              script.src = 'https://s.spoutable.com/units/'+c.i.branch+'/'+u.unit.fileName;
+            },
+            r=function(src) { (new Image).src = src; },
+            s=function(src){
+              var f=b();
+              f.src=src;
+              d.body.appendChild(f);
+            };
+
+            sessionStorage.setItem('spoutable-'+c.i.siteUUID, JSON.stringify(c.t));
+    a({
+  "unit": {
+    "frameId": "spout-unit",
+    "zoneId": 3088551,
+    "unitConfigId": 343905,
+    "className": "DisplaySplit",
+    "fileName": "display-split.js",
+    "unitName": "display-split",
+    "explicitLayoutAdIds": [],
+    "minAdCount": 0,
+    "desiredAdCount": 0,
+    "properSite": "sitepoint",
+    "properSlot1": "sitepoint_overlay_top",
+    "properSlot2": "sitepoint_overlay_bottom_2",
+    "customCSS": "@import url('https://fonts.googleapis.com/css?family=Roboto:Light');#s-header,#s-ads-splitter,#s-ads .ad-recirc .title span{font-family:'Roboto'}#s-ads-footer .ad970x250 {display:block !important} #s-ads-footer .ad-recirc{display:none} #s-wrapper{min-width:1010px} #col3 .ad-recirc{display:none !important} #col2 .ad-recirc:nth-of-type(2){display:none} #col2 .ad-recirc{margin-bottom:0 !important}#s-wrapper:after{background-color:#EFEFF0}#s-header{border-top:solid 5px #3A3A3A}#s-header .client-logo{height:calc(80% - 9px);}#s-header .txt:before{font-size: 24px; color:#3A3A3A !important; content:'More from SitePoint' !important}#s-header a.spout-logo{filter: grayscale(100%) hue-rotate(360deg);}#s-header a.spout-logo{opacity:0.5}#s-ads-splitter > div:not(:nth-child(2)):before{border-bottom:none !important;height:1px !important;background:none !important}#s-ads-splitter > div:nth-of-type(2){display:none}#s-ads-splitter div:nth-of-type(1):before,#s-ads-splitter div:nth-of-type(3):before{background-color:#FFFFFF}#s-ads-splitter div:nth-of-type(1):before,#s-ads-splitter div:nth-of-type(3):before{height:0px;border-color:#C7C7C7}#s-ads-splitter div:nth-of-type(2):before{font-size: 14px; color:#545454 !important; content:'SPONSORED CONTENT' !important}#s-ads .ad-recirc{overflow:visible}#s-ads .ad-recirc .txt .title{bottom:0;padding-top:20%;padding-bottom:4px;background:-moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.77) 61%, rgba(0,0,0,0.77) 100%);background:-webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.77) 61%, rgba(0,0,0,0.77) 100%);background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.77) 61%, rgba(0,0,0,0.77) 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#c4000000',GradientType=0 )}#s-ads .ad-recirc:hover .title{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transition:translate(0, 0);transform:translate(0, 0);padding-top:2%}#s-ads .ad-recirc .txt .tag{background-color:#fa3292 !important}#s-ads .ad-recirc .txt .tag{color:#FFFFFF !important}#s-ads .ad-recirc .txt .tag{-webkit-transform: translate(1px, 8px);-ms-transform: translate(1px, 8px);-o-transition: translate(1px, 8px);transform: translate(1px, 8px);}#s-ads .ad-recirc .txt .title .tiny{opacity:1;color:#3EC9CB !important}.ad-recirc .txt {font-size:16px} #swipe-alert-wrapper:after{background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);}",
+    "properAutoRefresh": true,
+    "adzerkNetworkId": 9637,
+    "recycledContentCount": 3,
+    "skipSiteOverrides": [
+      "customCSS"
+    ],
+    "adSlotOptions": [
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      },
+      {
+        "include": [
+          "feed"
+        ]
+      }
+    ],
+    "feedAdCount": 9,
+    "unitCfgName": "overlay_split-view_300x250+970x250",
+    "unitPlacement": "overlay",
+    "unitRegionId": 1,
+    "triggers": [
+      {
+        "cookieExpires": 86400,
+        "id": 974303,
+        "event": "exit"
+      }
+    ],
+    "unitTitle": "More From SitePoint",
+    "feedInfo": {
+      "url": "https://www.sitepoint.com/feed/",
+      "format": "xml",
+      "item": "item",
+      "copy": "title",
+      "clickUrl": "link",
+      "embeddedThumbnail": "description",
+      "thumbnail": "img&src",
+      "domain": "SitePoint",
+      "flightId": "8196103",
+      "category": "category:first"
+    },
+    "partnerPriority": [
+      "feed"
+    ],
+    "revcontentAccount": "proper",
+    "revcontentDomain": "spoutable.com",
+    "revcontentWidgetId": "94510",
+    "revcontentBottomBarWidgetId": "94511",
+    "revcontentTopBarWidgetId": "94512",
+    "allowCriteoInOverlay": true,
+    "criteoAdCount": 2,
+    "bidtellectMinCpc": 0.1,
+    "bidtellectMinCpcMobile": 0.05,
+    "zemantaMinCpc": 0.1,
+    "zemantaMinCpcMobile": 0.05
+  },
+  "unitImpressionId": "-LhLFO4zxYxaluR5cfCT",
+  "ads": [
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -9
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -8
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -7
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -6
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -5
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -4
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -3
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -2
+    },
+    {
+      "partner": "feed",
+      "partnerId": 28,
+      "placeholder": true,
+      "required": true,
+      "priority": -2,
+      "cpm": 0,
+      "suborder": -1
+    }
+  ],
+  "bid": 0
+});r("https://bttrack.com/pixel/cookiesync?source=56316c53-899d-4828-9363-057415faaf37&secure=1");r("https://b1sync.zemanta.com/usersync/spoutable/?puid=cjww5h1zz9qwa8eqpx79mqk9k&cb=https%3A%2F%2Fs.spoutable.com%2Fsc%3Fp%3Dzemanta%26v%3D__ZUID__");r("https://secure.adnxs.com/getuid?https://s.spoutable.com/sc?p=appnexus&v=$UID");})()
