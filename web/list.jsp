@@ -1,6 +1,6 @@
 <%@page import="com.database.dbConn"%>
 <%
-    String ID, record_id, SerialNumber, SubCountyRegNo, SubPartnerID, RegDate, sex, age, Xray, treatmentdate, hivStatus, hivtestdate, artstatus, artdate, Mflcode, SubPartnerNom, smear0, genexpert, withinfacility, initialmodality,user_id;
+    String ID, SerialNumber, SubCountyRegNo, SubPartnerID, RegDate, sex, age, Xray, treatmentdate, hivStatus, hivtestdate, artstatus, artdate, Mflcode, SubPartnerNom, smear0, genexpert, withinfacility, initialmodality,user_id;
  
                 dbConn conn = new dbConn();
                //System.out.println("Your Id: "+id);

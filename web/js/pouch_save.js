@@ -1,4 +1,4 @@
-        //create variables from the form
+      //create variables from the form
                 var user_id = $('#id').val();
                 var SubCountyRegNo = $('#subCountyRegNo').val();
                 var RegDate = $('#dateOfRegistration').val();

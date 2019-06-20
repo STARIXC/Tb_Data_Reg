@@ -421,7 +421,7 @@
             response.sendRedirect("login.jsp");
         }
     %>
-    <script src="js/app.js"></script>
+    <!--<script src="js/app.js"></script>-->
     <script src="pouchdb-7.0.0.min.js"></script>
     <script src="js/pouch_save.js"></script>
     

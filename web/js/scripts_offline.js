@@ -1,5 +1,5 @@
 function patasubcounty() {
-  var county = document.getElementById("county").value;
+    var county = document.getElementById("county").value;
     $.ajax({
         url: 'getsubcounty?county=' + county,
         type: 'post',
@@ -12,7 +12,7 @@ function patasubcounty() {
 
             //  App.init();   
         }
- });
+    });
 
 }
 function showTreatmentDate() {

@@ -23,5 +23,5 @@
     <center><h3>After Logout You Can't Go Back....</h3></center><br>
     <center><a href="login.jsp">Login Again.</a></center>
     </body>
-    <script src="js/app.js"></script>
+   
 </html>

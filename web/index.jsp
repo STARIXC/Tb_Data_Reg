@@ -33,8 +33,10 @@
 
 <body class="bg-light" onload="">
     <%
-        String email = (String) session.getAttribute("email");
-        String id = (String) session.getAttribute("ID");
+        //String email = (String) session.getAttribute("email");
+        // String id = (String) session.getAttribute("ID");
+        String email = "admin@tbrecsystems.fhi.com";
+        String id = "admin001";
         if (email != null) {
     %>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -48,7 +50,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                
+
                 <!-- <li class="nav-item">
                      <a class="nav-link" href="#">Notifications</a>
                  </li>
@@ -71,10 +73,6 @@
                         Logout
                     </a>
                 </li>
-            
-                    
-                </li>
-              
             </ul>
 
         </div>
@@ -111,30 +109,11 @@
                                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="glyphicon glyphicon-plus"></i> Add New</a>
                                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> <i class="glyphicon glyphicon-search"></i>View Data</a>
-                                <!--    <a class="nav-item nav-link" id="nav-update-tab" data-toggle="tab" href="#nav-update" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="displayUpdateData()"></a>-->
+                                    <!--    <a class="nav-item nav-link" id="nav-update-tab" data-toggle="tab" href="#nav-update" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="displayUpdateData()"></a>-->
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
-                                <%
-                                    try {
-                                        String deleted = (String) session.getAttribute("deleted");
-                                        if (deleted != null) {
-                                            session.removeAttribute("deleted");
-                                            out.println("<center><div class='alert alert-danger'>" + deleted + "</div></center>");
-                                        } else {
-                                        }
-                                        String updated = (String) session.getAttribute("updated");
-                                        if (updated != null) {
-                                            session.removeAttribute("updated");
-                                            out.println("<center><div class='alert alert-success'>" + updated + "</div></center>");
-                                        } else {
-                                        }
-                                    } catch (Exception e) {
-                                        out.println(e);
-                                    }
 
-
-                                %>
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                     <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Enter New Record</h6>
                                     <div class="text-white pl-5 pt-3 bg-primary">
@@ -142,7 +121,7 @@
                                             <div id="loading"></div>
                                         </center>
 
-                                        <form method="POST"  id="form_data" autocomplete="off" validate >
+                                        <form  id="form_data" autocomplete="off" validate method="POST" >
 
                                             <div class="row offset-0 p-2">
                                                 <input type="hidden" name="id" id="id" value="<%=id%>">
@@ -301,77 +280,22 @@
 
                                         </form>
                                     </div>
-
+                                    <div id="sync-wrapper" class="editorPage">
+                                        <strong>Sync Status: </strong><span id="sync-span"></span>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                     <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
 
                                     <div class="text-muted pt-3">
                                         <div class="table-responsive toggle-circle-filled" id="datat">
-                                            <table class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;">
-                                                <thead>
-
-                                                    <tr>
-                                                        <th data-visible="true">S/No:</th>
-                                                        <th>SubPartner ID</th>
-                                                        <th data-breakpoints="xs sm md">Sub County Reg #</th>
-                                                        <th data-breakpoints="xs">MFL Code</th>
-                                                        <th data-breakpoints="all">Facility Name</th>
-                                                        <th data-breakpoints="all">HIV Status</th> 
-                                                        <th data-breakpoints="all">ART Status</th> 
-                                                        <th data-breakpoints="all">Sex</th> 
-                                                        <th data-breakpoints="all">Age</th> 
-                                                        <th data-breakpoints="xs sm md">Registration Date</th>
-
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <%@ include file = "list_data.jsp" %>
-                                                    <!----data from  db table---->
-
-                                                </tbody>
-
-                                            </table>
+                                           
 
                                         </div>
 
                                     </div>
                                 </div>
-                             <!--   <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
-                                    <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
-                                    <div class="text-muted pt-3">
-                                        <div class="col-lg-12 col-md-12">
 
-                                            <table id='tb_report_table' class='table table-striped table-hover ' data-paging="true" style='width:100%'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>SubPartner ID</th>
-                                                        <th>Registration Date</th>
-                                                        <th>HIV Status</th> 
-                                                        <th>MFL Code</th>
-                                                        <th>Facility Name</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="update_data">
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>SubPartner ID</th>
-                                                        <th>Registration Date</th>
-                                                        <th>HIV Status</th> 
-                                                        <th>MFL Code</th>
-                                                        <th>Facility Name</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-
-                                        </div>
-
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -380,28 +304,18 @@
 
 
         </div>
-
+      
 
     </main>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="pouchdb-7.0.0.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/DT-Tables/js/jquery-3.3.1.min.js" ></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/bootstrap/js/bootstrap.min.js" ></script>
-    <!--<script src="assets/DT-Tables/js/jquery.dataTables.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.bootstrap.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.responsive.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.buttons.min.js" ></script>
-    <script src="assets/DT-Tables/js/buttons.flash.min.js" ></script>
-    <script src="assets/DT-Tables/js/jszip.min.js" ></script>
-    <script src="assets/DT-Tables/js/pdfmake.min.js" ></script>
-    <script src="assets/DT-Tables/js/vfs_fonts.js" ></script>
-    <script src="assets/DT-Tables/js/buttons.html5.min.js" ></script>
-   
-    <script src="assets/DT-Tables/js/buttons.print.min.js" ></script>-->
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/additional/additional.js"></script>
     <script src="js/footable.js"></script>
@@ -409,26 +323,17 @@
     <script src="assets/offcanvas.js"></script>
     <script src="assets/bootstrap/js/bootstrap-formhelpers.js"></script>
     <script src="assets/calender/lib/jquery-ui.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="js/credentials.js"></script>
+    <script src="js/form_1.js"></script>
+    <script src="js/scripts_offline.js"></script>
     <script src="js/datepicker.js"></script>
 
 
-
-    <script src="js/form.js"></script>
-
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="2" style="font-weight:bold;font-size:2pt;font-family:Arial, Helvetica, Open Sans, sans-serif">32x32</text></svg>
-    <%    } else {
+    <% } else {
             response.sendRedirect("login.jsp");
         }
     %>
-    <script src="js/app.js"></script>
-    <script src="pouchdb-7.0.0.min.js"></script>
-    <script src="js/pouch_save.js"></script>
-    
-    <script>
-                                                            jQuery(function ($) {
-                                                                $('.table').footable();
-                                                            });
-    </script>
+
 </body>
 </html>
