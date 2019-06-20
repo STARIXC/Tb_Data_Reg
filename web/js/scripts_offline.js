@@ -15,21 +15,13 @@ function patasubcounty() {
     });
 
 }
-function showTreatmentDate() {
-    var selectBox = document.getElelmentByID('hivStatus');
-    var userInput = selectBox.options[selectBox.selectedIndex].value;
-    if (userInput === 'Pos') {
-        document.getElelmentByID('dttreatment'.style.visibility = 'visible');
-    } else {
-        document.getElelmentByID('dttreatment'.style.visibility = 'visible');
-    }
-    return false;
-}
-function patafacility() {
 
-    var subcounty = document.getElementById("subcounty").value;
+
+function patafacilityzote() {
+
+    //var subcounty = document.getElementById("subcounty").value;
     $.ajax({
-        url: 'getfacility?subcounty=' + subcounty,
+        url: 'get_facility',
         type: 'post',
         dataType: 'html',
         success: function (data)

@@ -25,6 +25,10 @@
         <servlet-class>com.controller.getfacility</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>get_facility</servlet-name>
+        <servlet-class>com.controller.get_facility</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>record</servlet-name>
         <servlet-class>com.controller.RecordsServlet</servlet-class>
     </servlet>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>getfacility</servlet-name>
         <url-pattern>/getfacility</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>get_facility</servlet-name>
+        <url-pattern>/get_facility</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>record</servlet-name>

@@ -20,6 +20,7 @@
     <link href="assets/bootstrap/css/bootstrap-glyphicons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/bootstrap/maps/glyphicons-fontawesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/footable.bootstrap.css">
+    <link rel="stylesheet" href="css/select2.min.css">
     <!--<link rel="stylesheet" href="assets/DT-Tables/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="assets/DT-Tables/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="assets/DT-Tables/css/buttons.dataTables.min.css">-->
@@ -142,7 +143,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="county">County</label>
-                                                        <select class="form-control"  onchange="patasubcounty()" name='county' id='county'>
+                                                        <select class="form-control"  onchange="" name='county' id='county'>
                                                             <option value=""> Select County</option>
                                                             <option value="1"> Nakuru</option>
                                                             <option value="2"> Laikipia</option>
@@ -155,7 +156,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="subCounty">Sub-County</label>
-                                                        <select class="form-control"  onchange='patafacility()' name='subcounty' id='subcounty' >
+                                                        <select class="form-control"  onchange='' name='subcounty' id='subcounty' >
 
                                                         </select>
                                                     </div>
@@ -317,6 +318,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/bootstrap/js/bootstrap.min.js" ></script>
     <script src="js/jquery.validate.min.js"></script>
+    <script src="js/select2.min.js"></script>
     <script src="js/additional/additional.js"></script>
     <script src="js/footable.js"></script>
     <script src="assets/popper.min.js"></script>

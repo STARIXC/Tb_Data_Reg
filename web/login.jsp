@@ -14,7 +14,9 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery.min.js"></script>
         <script src="assets/bootstrap-3/js/bootstrap.min.js"></script>
-
+        <script>
+            patafacilityzote();
+        </script>
     </head>
     <body>
         <div class="container">
@@ -83,8 +85,11 @@
                                             <input type="password" name="password" id="password" required="" placeholder="Employee Password" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label>Employee Department:</label>
-                                            <input type="text" name="department" id="department" required="" placeholder="Employee Department" class="form-control">
+                                            <label>Employee Facility:</label>
+                                            <select class="form-control" name='facility' id='facility' >
+
+                                            </select>
+                                            <!--  <input type="text" name="department" id="department" required="" placeholder="Employee Department" class="form-control">-->
                                         </div>
                                         <div class="form-group">
                                             <label>Employee Designation:</label>
@@ -124,10 +129,10 @@
                     $(this).addClass('active');
                     e.preventDefault();
                 });
-          
+
             });
 
         </script>
-      
+        <script src="js/scripts_offline.js"></script>
     </body>
 </html>

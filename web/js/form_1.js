@@ -15,6 +15,7 @@ LocalDB.changes(
         })
         .on('change', ShowRecords);
 //when user clicks "save " while editing a record
+
 $("#save_data").click(function () {
     $('#loading').html('<img src="images/ajax-loader.gif"> loading...');
     //run saveArticle function, which will run validation, save if validated
@@ -56,24 +57,34 @@ function saveRecord() {
         //these field are updated by the user from the form
         id: Id,
         SubPartnerID: subPartnerID,
-        SubCountyRegNo: SubCountyRegNo,
-        RegDate: RegDate,
-        Sex: Sex,
-        Age: Age,
-        TreatmentDate: TreatmentDate,
-        HIVStatus: HIVStatus,
-        HIVTestDate: HIVTestDate,
-        ArtStatus: ArtStatus,
-        ArtDate: ArtDate,
-        mflcode: mflcode,
-        SubPartnerNo: SubPartnerNom,
-        SupportType: SupportType,
-        Smear0: Smear0,
-        GenExpert: GenExpert,
-        WithinFacility: WithinFacility,
-        HIVModality: HIVModality,
-        Xray: Xray,
-        serialNumber: serialNumber,
+        registrationdate: RegDate,
+        quarter:null,
+        year:null,
+        sex: Sex,
+        age: Age,
+        treatmentdate: TreatmentDate,
+        hivstatus: HIVStatus,
+        hivtestdate: HIVTestDate,
+        artstatus: ArtStatus,
+        artdate: ArtDate,
+        treatmentoutcome:null,
+        outcomedate:null,
+        timestamp:new Date().getTime(),
+        Mflcode: mflcode,
+        SubPartnerNom: SubPartnerNom,
+        supporttype: SupportType,
+        tbtype:null,
+        patienttype:null,
+        smear0: Smear0,
+        smear2_3:null,
+        smear5:null,
+        smear6_8:null,
+        genexpert: GenExpert,
+        tested_within_facility: WithinFacility,
+        initial_modality: HIVModality,
+        subcounty_regno:SubCountyRegNo,
+        serialno: serialNumber,
+        xray: Xray,
         user_id: user_id
     };
     console.log("State of record object BEFORE doing db.put: " + JSON.stringify(record));
@@ -203,17 +214,17 @@ function ShowRecords() {
             //alert(dat.doc.startdate);
             //dat.doc._id
 
-            dbdata += "<tr><td> " + dat.doc.serialNumber +
+            dbdata += "<tr><td> " + dat.doc.serialno +
                     " </td><td>" + dat.doc.SubPartnerID +
-                    "</td><td>" + dat.doc.SubCountyRegNo +
-                    "</td><td>" + dat.doc.mflcode +
-                    "</td><td>" + dat.doc.SubPartnerNo+ 
-                    "</td><td>" + dat.doc.ArtStatus+
-                    "</td><td>" + dat.doc.Sex+
-                    "</td><td>" + dat.doc.Age+
-                    "</td><td>" + dat.doc.RegDate +
-                  "</td><td><button class='btn-success' onclick='loadsaveddata(\"" + dat.doc._id + "\",\"" + dat.doc.SubPartnerNo + "\")'><i class='glyphicon glyphicon-edit'></i>Edit</button></td></tr>";
-            
+                    "</td><td>" + dat.doc.subcounty_regno +
+                    "</td><td>" + dat.doc.Mflcode +
+                    "</td><td>" + dat.doc.SubPartnerNom +
+                    "</td><td>" + dat.doc.artstatus +
+                    "</td><td>" + dat.doc.sex +
+                    "</td><td>" + dat.doc.age +
+                    "</td><td>" + dat.doc.registrationdate +
+                    "</td><td><button class='btn-success' onclick='loadsaveddata(\"" + dat.doc._id + "\",\"" + dat.doc.SubPartnerNom + "\")'><i class='glyphicon glyphicon-edit'></i>Edit</button></td></tr>";
+
         } //end of for loop
 
         appendtabledata(dbdata);
@@ -244,4 +255,70 @@ function sync() {
             });
 }
 
+var db = new PouchDB('facilities');
+function patafacility() {
+
+    var cnt = 0;
+
+    var facilities = "<option value=''>Select Facility</option>";
+
+    db.allDocs({include_docs: true, descending: true}).then(function (doc) {
+
+        cnt++;
+        //console.log(doc);
+        for (a = 0; a <
+                doc.total_rows; a++) {
+            var dat = {};
+            dat = doc.rows[a];
+            //console.log(dat.doc.title);
+            //how to reference each column 
+
+            //dat.doc._id
+            var num = parseInt(a) + 1;
+            facilities += "<option value='" + dat.doc._id + "_" + dat.doc.SubPartnerID + "'>" + dat.doc.SubPartnerNom + "</option>";
+        } //end of for loop
+        $("#facility").html(facilities);
+        $(document).ready(function () {
+            //$('#lyricstable').DataTable();
+            $('#facility').select2();
+        });
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+var dbs = new PouchDB('subcounty');
+function patasubcounty() {
+
+    var cnt = 0;
+
+    var subcounty = "<option value=''>Select Sub-County</option>";
+
+    dbs.allDocs({include_docs: true, descending: true}).then(function (doc) {
+
+        cnt++;
+        //console.log(doc);
+        for (a = 0; a <
+                doc.total_rows; a++) {
+            var dat = {};
+            dat = doc.rows[a];
+            //console.log(dat.doc.title);
+            //how to reference each column 
+
+            //dat.doc._id
+            var num = parseInt(a) + 1;
+            subcounty += "<option value='" + dat.doc._id + "_" + dat.doc.DistrictID + "'>" + dat.doc.DistrictNom + "</option>";
+        } //end of for loop
+        $("#subcounty").html(subcounty);
+        $(document).ready(function () {
+            //$('#lyricstable').DataTable();
+            $('#subcounty').select2();
+        });
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+patasubcounty();
+patafacility();
 ShowRecords();

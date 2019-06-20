@@ -48,7 +48,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                
+
                 <!-- <li class="nav-item">
                      <a class="nav-link" href="#">Notifications</a>
                  </li>
@@ -71,10 +71,10 @@
                         Logout
                     </a>
                 </li>
-            
-                    
+
+
                 </li>
-              
+
             </ul>
 
         </div>
@@ -95,12 +95,18 @@
 
     <main role="main" class="container">
         <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow" style="background-color: rgb(0, 128, 255);">
-
             <div class="lh-100">
-                <h6 class="mb-0 text-white lh-100">Tb Date Entry and Management System</h6>
-
+                <h6 class="mb-0 text-white lh-100">Tb Data Entry and Management System</h6>
             </div>
         </div>
+        <div class="d-flex align-items-center p-2 my-1 text-white-50 bg-default rounded box-shadow">
+       
+                    <div class="text-center col-12"><button id='refreshpage' class="btn btn-large btn-primary" type="button"><i class="glyphicon glyphicon-refresh"> </i></button></div>
+                   
+               
+      
+        </div>
+
 
         <div class="my-1 p-2 bg-white rounded box-shadow">
             <section id="tabs" class="project-tab">
@@ -111,7 +117,7 @@
                                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="glyphicon glyphicon-plus"></i> Add New</a>
                                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> <i class="glyphicon glyphicon-search"></i>View Data</a>
-                                <!--    <a class="nav-item nav-link" id="nav-update-tab" data-toggle="tab" href="#nav-update" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="displayUpdateData()"></a>-->
+                                    <!--    <a class="nav-item nav-link" id="nav-update-tab" data-toggle="tab" href="#nav-update" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="displayUpdateData()"></a>-->
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
@@ -338,40 +344,40 @@
 
                                     </div>
                                 </div>
-                             <!--   <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
-                                    <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
-                                    <div class="text-muted pt-3">
-                                        <div class="col-lg-12 col-md-12">
-
-                                            <table id='tb_report_table' class='table table-striped table-hover ' data-paging="true" style='width:100%'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>SubPartner ID</th>
-                                                        <th>Registration Date</th>
-                                                        <th>HIV Status</th> 
-                                                        <th>MFL Code</th>
-                                                        <th>Facility Name</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="update_data">
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>SubPartner ID</th>
-                                                        <th>Registration Date</th>
-                                                        <th>HIV Status</th> 
-                                                        <th>MFL Code</th>
-                                                        <th>Facility Name</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-
-                                        </div>
-
-                                    </div>
-                                </div>-->
+                                <!--   <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
+                                       <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
+                                       <div class="text-muted pt-3">
+                                           <div class="col-lg-12 col-md-12">
+   
+                                               <table id='tb_report_table' class='table table-striped table-hover ' data-paging="true" style='width:100%'>
+                                                   <thead>
+                                                       <tr>
+                                                           <th>SubPartner ID</th>
+                                                           <th>Registration Date</th>
+                                                           <th>HIV Status</th> 
+                                                           <th>MFL Code</th>
+                                                           <th>Facility Name</th>
+                                                           <th>Edit</th>
+                                                       </tr>
+                                                   </thead>
+                                                   <tbody id="update_data">
+                                                   </tbody>
+                                                   <tfoot>
+                                                       <tr>
+                                                           <th>SubPartner ID</th>
+                                                           <th>Registration Date</th>
+                                                           <th>HIV Status</th> 
+                                                           <th>MFL Code</th>
+                                                           <th>Facility Name</th>
+                                                           <th>Edit</th>
+                                                       </tr>
+                                                   </tfoot>
+                                               </table>
+   
+                                           </div>
+   
+                                       </div>
+                                   </div>-->
                             </div>
                         </div>
                     </div>
@@ -424,11 +430,18 @@
     <!--<script src="js/app.js"></script>-->
     <script src="pouchdb-7.0.0.min.js"></script>
     <script src="js/pouch_save.js"></script>
-    
+
     <script>
-                                                            jQuery(function ($) {
+                                                            jQuery(function ($)
+                                                            {
                                                                 $('.table').footable();
                                                             });
+                                                            $("#refreshpage").click(function ()
+                                                            {
+                                                                window.location.reload();
+                                                                //clearweeklyfields();
+                                                            });
+
     </script>
 </body>
 </html>
