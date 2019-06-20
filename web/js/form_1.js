@@ -58,8 +58,8 @@ function saveRecord() {
         id: Id,
         SubPartnerID: subPartnerID,
         registrationdate: RegDate,
-        quarter:null,
-        year:null,
+        quarter: null,
+        year: null,
         sex: Sex,
         age: Age,
         treatmentdate: TreatmentDate,
@@ -67,22 +67,22 @@ function saveRecord() {
         hivtestdate: HIVTestDate,
         artstatus: ArtStatus,
         artdate: ArtDate,
-        treatmentoutcome:null,
-        outcomedate:null,
-        timestamp:new Date().getTime(),
+        treatmentoutcome: null,
+        outcomedate: null,
+        timestamp: new Date().getTime(),
         Mflcode: mflcode,
         SubPartnerNom: SubPartnerNom,
         supporttype: SupportType,
-        tbtype:null,
-        patienttype:null,
+        tbtype: null,
+        patienttype: null,
         smear0: Smear0,
-        smear2_3:null,
-        smear5:null,
-        smear6_8:null,
+        smear2_3: null,
+        smear5: null,
+        smear6_8: null,
         genexpert: GenExpert,
         tested_within_facility: WithinFacility,
         initial_modality: HIVModality,
-        subcounty_regno:SubCountyRegNo,
+        subcounty_regno: SubCountyRegNo,
         serialno: serialNumber,
         xray: Xray,
         user_id: user_id
@@ -223,7 +223,7 @@ function ShowRecords() {
                     "</td><td>" + dat.doc.sex +
                     "</td><td>" + dat.doc.age +
                     "</td><td>" + dat.doc.registrationdate +
-                    "</td><td><button class='btn-success' onclick='loadsaveddata(\"" + dat.doc._id + "\",\"" + dat.doc.SubPartnerNom + "\")'><i class='glyphicon glyphicon-edit'></i>Edit</button></td></tr>";
+                    "</td><td><button type='button' data-toggle='modal' data-target='#editform' class='btn-success btn_edit'><i class='glyphicon glyphicon-edit'></i></button><button class='btn-danger' onclick='deletedata(\"" + dat.doc._id + "\",\"" + dat.doc.id + "\")'><i class='glyphicon glyphicon-trash'></i></button></td></tr>";
 
         } //end of for loop
 
@@ -275,12 +275,12 @@ function patafacility() {
 
             //dat.doc._id
             var num = parseInt(a) + 1;
-            facilities += "<option value='" + dat.doc._id + "_" + dat.doc.SubPartnerID + "'>" + dat.doc.SubPartnerNom + "</option>";
+            facilities += "<option value='" + dat.doc._id + "_" + dat.doc.DistrictID + "' data-subpartnerid='"+dat.doc.SubPartnerID +"' data-mfl='"+dat.doc.CentreSanteId +"' data-facility='"+dat.doc.SubPartnerNom +"'>" + dat.doc.SubPartnerNom + "</option>";
         } //end of for loop
         $("#facility").html(facilities);
         $(document).ready(function () {
             //$('#lyricstable').DataTable();
-            $('#facility').select2();
+           // $('#facility').select2();
         });
 
     }).catch(function (err) {
@@ -319,6 +319,34 @@ function patasubcounty() {
         console.log(err);
     });
 }
+function editRecord(thisObj) {
+    console.log(thisObj);
+    var $tmpid = thisObj.find("td:eq(0)").text(),
+    $tmpSubpartnerID= thisObj.find("td:eq(0)").text(),
+    $tmpRegDate= thisObj.find("td:eq(0)").text(),
+    $tmpSex= thisObj.find("td:eq(0)").text(),
+    $tmpAge= thisObj.find("td:eq(0)").text(),
+    $tmpTreatmentdate= thisObj.find("td:eq(0)").text(),
+    $tmpHivStatus= thisObj.find("td:eq(0)").text(),
+    $tmpHivTestDate= thisObj.find("td:eq(0)").text(),
+    $tmpArtStatus= thisObj.find("td:eq(0)").text(),
+    $tmpArtDate= thisObj.find("td:eq(0)").text(),
+    $tmpTimestamp= thisObj.find("td:eq(0)").text(),
+    $tmpMflcode= thisObj.find("td:eq(0)").text(),
+    $tmpSubPartnerNom= thisObj.find("td:eq(0)").text(),
+    $tmpSupporttype= thisObj.find("td:eq(0)").text(),
+    $tmpSmear0= thisObj.find("td:eq(0)").text(),
+    $tmpGenExpert= thisObj.find("td:eq(0)").text(),
+    $tmpWithinFacility= thisObj.find("td:eq(0)").text(),
+    $tmpHivModality= thisObj.find("td:eq(0)").text(),
+    $tmpScountyRegno= thisObj.find("td:eq(0)").text(),
+    $tmpSerialno= thisObj.find("td:eq(0)").text(),
+    $tmpXray= thisObj.find("td:eq(0)").text(),
+    $tmpUserid= thisObj.find("td:eq(0)").text();
+}
+$("#datat").on("click", ".btn_edit", function (){editRecord($(this).parent())});
+
+
 patasubcounty();
 patafacility();
 ShowRecords();
