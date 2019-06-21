@@ -1,6 +1,8 @@
 //set variable to represent the article form
 var recordForm = document.getElementById('form_data');
-
+var BtnReset = document.getElementById('btn_reset');
+var BtnSave = document.getElementById('save_data');
+var divDisplayData = document.getElementById('datat');
 //setup for pouchdb
 //Requiring the package  
 //var PouchDB = require('PouchDB');  
@@ -53,7 +55,7 @@ function saveRecord() {
     //var SubCountyRegNo=       $('#id').val()
     var record = {
         //createded and updated wihout user input
-        _id: new Date().toISOString(),
+        _id: Id,
         //these field are updated by the user from the form
         id: Id,
         SubPartnerID: subPartnerID,
@@ -90,12 +92,18 @@ function saveRecord() {
     console.log("State of record object BEFORE doing db.put: " + JSON.stringify(record));
     LocalDB.put(record, function callback(error, result) {
         if (!error) {
-            alert('¡Record saved!');
-            result += "record saved";
+            modeReset();
+            result = "record saved";
             console.log("State of record object BEFORE doing db.put: " + JSON.stringify(record));
             // once record is successfully saved, reset the page using our function
-            modeReset();
-            $('#loading').html(result);
+            $('#loading').fadeIn().html(result);
+            setTimeout(function () {
+                $('#loading').fadeOut('slow');
+            }, 2000);
+          
+        } else {
+
+
         }
 
     });
@@ -223,11 +231,13 @@ function ShowRecords() {
                     "</td><td>" + dat.doc.sex +
                     "</td><td>" + dat.doc.age +
                     "</td><td>" + dat.doc.registrationdate +
-                    "</td><td><button type='button' data-toggle='modal' data-target='#editform' class='btn-success btn_edit'><i class='glyphicon glyphicon-edit'></i></button><button class='btn-danger' onclick='deletedata(\"" + dat.doc._id + "\",\"" + dat.doc.id + "\")'><i class='glyphicon glyphicon-trash'></i></button></td></tr>";
+                    "</td><td class='btn_edit' data-toggle='modal' data-target='#editform'><i class='glyphicon glyphicon-edit'></i></td></tr>";
 
         } //end of for loop
 
         appendtabledata(dbdata);
+
+
 
     }).catch(function (err) {
         console.log(err);
@@ -237,7 +247,7 @@ function ShowRecords() {
 //call the function that displays the data
 
 function appendtabledata(dbdata) {
-    $("#datat").html(' <table id="TableResults" class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;"><thead><tr><th data-visible="true">S/No:</th><th>SubPartner ID</th><th data-breakpoints="xs sm md">Sub County Reg #</th><th data-breakpoints="xs">MFL Code</th><th data-breakpoints="all">Facility Name</th><th data-breakpoints="all">ART Status</th><th data-breakpoints="all">Sex</th><th data-breakpoints="all">Age</th><th data-breakpoints="xs sm md">Registration Date</th><th>Edit</th></tr></thead><tbody>' + dbdata + '</tbody></table>');
+    $("#showRecords").html(' <table id="TableResults" class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;"><thead><tr><th data-visible="true">S/No:</th><th>SubPartner ID</th><th data-breakpoints="xs sm md">Sub County Reg #</th><th data-breakpoints="xs">MFL Code</th><th data-breakpoints="all">Facility Name</th><th data-breakpoints="all">ART Status</th><th data-breakpoints="all">Sex</th><th data-breakpoints="all">Age</th><th data-breakpoints="xs sm md">Registration Date</th><th>Edit</th></tr></thead><tbody>' + dbdata + '</tbody></table>');
 
     $(document).ready(function () {
         $('.table').footable();
@@ -275,12 +285,12 @@ function patafacility() {
 
             //dat.doc._id
             var num = parseInt(a) + 1;
-            facilities += "<option value='" + dat.doc._id + "_" + dat.doc.DistrictID + "' data-subpartnerid='"+dat.doc.SubPartnerID +"' data-mfl='"+dat.doc.CentreSanteId +"' data-facility='"+dat.doc.SubPartnerNom +"'>" + dat.doc.SubPartnerNom + "</option>";
+            facilities += "<option id='facility_select' value='" + dat.doc._id + "_" + dat.doc.DistrictID + "' data-subpartnerid='" + dat.doc.SubPartnerID + "' data-mfl='" + dat.doc.CentreSanteId + "' data-facility='" + dat.doc.SubPartnerNom + "'>" + dat.doc.SubPartnerNom + "</option>";
         } //end of for loop
         $("#facility").html(facilities);
         $(document).ready(function () {
             //$('#lyricstable').DataTable();
-           // $('#facility').select2();
+            // $('#facility').select2();
         });
 
     }).catch(function (err) {
@@ -319,34 +329,200 @@ function patasubcounty() {
         console.log(err);
     });
 }
-function editRecord(thisObj) {
+function editRecordPrep(thisObj) {
     console.log(thisObj);
     var $tmpid = thisObj.find("td:eq(0)").text(),
-    $tmpSubpartnerID= thisObj.find("td:eq(0)").text(),
-    $tmpRegDate= thisObj.find("td:eq(0)").text(),
-    $tmpSex= thisObj.find("td:eq(0)").text(),
-    $tmpAge= thisObj.find("td:eq(0)").text(),
-    $tmpTreatmentdate= thisObj.find("td:eq(0)").text(),
-    $tmpHivStatus= thisObj.find("td:eq(0)").text(),
-    $tmpHivTestDate= thisObj.find("td:eq(0)").text(),
-    $tmpArtStatus= thisObj.find("td:eq(0)").text(),
-    $tmpArtDate= thisObj.find("td:eq(0)").text(),
-    $tmpTimestamp= thisObj.find("td:eq(0)").text(),
-    $tmpMflcode= thisObj.find("td:eq(0)").text(),
-    $tmpSubPartnerNom= thisObj.find("td:eq(0)").text(),
-    $tmpSupporttype= thisObj.find("td:eq(0)").text(),
-    $tmpSmear0= thisObj.find("td:eq(0)").text(),
-    $tmpGenExpert= thisObj.find("td:eq(0)").text(),
-    $tmpWithinFacility= thisObj.find("td:eq(0)").text(),
-    $tmpHivModality= thisObj.find("td:eq(0)").text(),
-    $tmpScountyRegno= thisObj.find("td:eq(0)").text(),
-    $tmpSerialno= thisObj.find("td:eq(0)").text(),
-    $tmpXray= thisObj.find("td:eq(0)").text(),
-    $tmpUserid= thisObj.find("td:eq(0)").text();
+            $tmpSubpartnerID = thisObj.find("td:eq(1)").text(),
+            $tmpRegDate = thisObj.find("td:eq(9)").text(),
+            $tmpSex = thisObj.find("td:eq(3)").text(),
+            $tmpAge = thisObj.find("td:eq(4)").text(),
+            $tmpTreatmentdate = thisObj.find("td:eq(5)").text(),
+            $tmpHivStatus = thisObj.find("td:eq(6)").text(),
+            $tmpHivTestDate = thisObj.find("td:eq(7)").text(),
+            $tmpArtStatus = thisObj.find("td:eq(8)").text(),
+            $tmpArtDate = thisObj.find("td:eq(9)").text(),
+            $tmpTimestamp = thisObj.find("td:eq(10)").text(),
+            $tmpMflcode = thisObj.find("td:eq(11)").text(),
+            $tmpSubPartnerNom = thisObj.find("td:eq(12)").text(),
+            $tmpSupporttype = thisObj.find("td:eq(13)").text(),
+            $tmpSmear0 = thisObj.find("td:eq(14)").text(),
+            $tmpGenExpert = thisObj.find("td:eq(15)").text(),
+            $tmpWithinFacility = thisObj.find("td:eq(16)").text(),
+            $tmpHivModality = thisObj.find("td:eq(17)").text(),
+            $tmpScountyRegno = thisObj.find("td:eq(18)").text(),
+            $tmpSerialno = thisObj.find("td:eq(19)").text(),
+            $tmpXray = thisObj.find("td:eq(20)").text(),
+            $tmpUserid = thisObj.find("td:eq(21)").text();
+    var editform = "";
+    editform += "<form  id='form_data' autocomplete='off' validate method='POST' >" +
+            "<div class='row offset-0 p-2'>" +
+            " <input type='hidden' name='id' id='id' value=''>" +
+            "<div class='col-md-5'>" +
+            "<div class='form-group'>" +
+            " <label for='serialNumber'>Serial Number</label>" +
+            "<input type='text' class='form-control' id='serialNumber' name='serialNumber'>" +
+            " </div>" +
+            " <div class='form-group'>" +
+            " <label for='dateOfRegistration'>Date of Registration</label>" +
+            " <input type='text' class='form-control' id='dateOfRegistration' name='dateOfRegistration' >" +
+            "</div>" +
+            "<div class='form-group'>" +
+            "<label for='subCountyRegNo'>Sub County Registration No.</label>" +
+            " <input type='text' class='form-control' id='subCountyRegNo' name='subCountyRegNo'>" +
+            " </div>" +
+            " </div>"+
+    " <div class='col-md-6'>" +
+            " <div class='form-group'>" +
+            " <label for='county'>County</label>" +
+            " <select class='form-control'   name='county' id='county'>" +
+            "  <option value''> Select County</option>" +
+            "  <option value='1'> Nakuru</option>" +
+            " <option value='2'> Laikipia</option>" +
+            "  <option value='3'> Narok</option>" +
+            "  <option value='4'> Baringo</option>" +
+            " <option value='5'> Kajiado</option>" +
+            "  <option value='7'> Samburu</option>" +
+            "  <option value='8'> Turkana</option>" +
+            "  </select>" +
+            " </div>" +
+            "  <div class='form-group'>" +
+            "<label for='subCounty'>Sub-County</label>" +
+            "  <select class='form-control'  onchange='' name='subcounty' id='subcounty' >" +
+            " </select>" +
+            "  </div>" +
+            " <div class='form-group'>" +
+            "<label for='healthFaciities'>Health Facilities</label>" +
+            "<select class='form-control'  name='facility' id='facility' ></select>" +
+            "</div></div></div>" +
+            "<div class='row p-2'><div class='col-md-5'>" +
+            "<div class='form-group'><label for='sex'>Sex</label>" +
+            "<select class='form-control' id='sex' name='sex'>" +
+            " <option value=''>Select One</option>" +
+            "  <option value='M'>Male</option>" +
+            " <option value='F'>Female</option>" +
+            " </select>" +
+            " </div>" +
+            "  <div class='form-group'>" +
+            "<label for='ageOnRegistration'>Age on Registration</label>" +
+            "<input type='number' class='form-control' id='ageOnRegistration' name='ageOnRegistration' min='1' max='100'>" +
+            "</div>" +
+            "<div class='form-group'>" +
+            " <label for='xray'>Xray</label>" +
+            " <select class='form-control' id='xray' name='xray'>" +
+            "  <option value=''>Select One</option>" +
+            " <option value='Y'>Yes</option>" +
+            " <option value='N'>No</option>" +
+            "  </select>" +
+            " </div>" +
+            "<div class='form-group'>" +
+            " <label for='hivStatus'>HIV Status</label>" +
+            "<select class='form-control' id='hivStatus' name='hivStatus'>" +
+            "  <option value=''>Select One</option>" +
+            "<option value='ND'>ND</option>" +
+            "<option value='Neg'>Neg</option>" +
+            "<option value='Pos'>Pos</option>" +
+            " </select>" +
+            "</div>" +
+            "<div class='form-group'>" +
+            "<label for='hivTestDate'>HIV Test Date</label>" +
+            " <input type='text' class= 'form-control' name='hivTestDate' id='hivTestDate'>" +
+            "</div>" +
+            "<div class='form-group' id='dttreatment' >" +
+            "<label for='dateTreamentStarted'>Date of Treatment Started</label>" +
+            " <input type='text' class='form-control' name='dateTreamentStarted' id='dateTreatmentStarted'>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-6'>" +
+            "<div class='form-group'>" +
+            " <label for='art'>ART</label>" +
+            "<select class='form-control' id='art' name='art'>" +
+            " <option value=''>Select One</option>" +
+            "  <option value='Y'>YES</option>" +
+            "  <option value='N'>NO</option>" +
+            "  </select>" +
+            "</div>" +
+            "<div class='form-group'>" +
+            "<label for='artDate'>ART Date</label>" +
+            " <input type='text' class='form-control' name='artdate' id='artdate'>" +
+            "</div>" +
+            " <div class='form-group'>" +
+            " <label for='sputumSmear'>Sputum Smear Examination 0th Month Result</label>" +
+            " <select class='form-control' id='sputumSmear' name='sputumSmear'>" +
+            " <option value=''>Select One</option>" +
+            " <option value='ND'>ND</option>" +
+            " <option value='Neg'>Neg</option>" +
+            " <option value='Pos'>Pos</option>" +
+            " </select>" +
+            " </div>" +
+            " <div class='form-group'>" +
+            " <label for='generalExpert'>General Expert</label>" +
+            " <select class='form-control' id='generalExpert' name='generalExpert'>" +
+            "<option value=''>Select One</option>" +
+            " <option value='MTB detected, Rifampicin resistance detected'>MTB detected, Rifampicin resistance detected</option>" +
+            " <option value='MTB detected, Rifampicin resistance indeterminate'>MTB detected, Rifampicin resistance indeterminate</option>" +
+            " <option value='MTB detected, Rifampicin resistance not detected'>MTB detected, Rifampicin resistance not detected</option>" +
+            "<option value='MTB not detected'>MTB not detected</option>" +
+            "<option value='Not Applicable'>Not Applicable</option>" +
+            " <option value='Not Done'>Not Done</option>" +
+            "  </select>" +
+            " </div>" +
+            "<div class='form-group'>" +
+            " <label for='testedWithinFacility'>Was the Client Tested for HIV within the Facility ?</label>" +
+            " <select class='form-control' id='withinFacility' name='withinFacility'>" +
+            " <option value=''>Select One</option>" +
+            " <option value='Y'>YES</option>" +
+            " <option value='N'>NO</option>" +
+            "  </select>" +
+            "</div>" +
+            "<div class='form-group'>" +
+            " <label for='hivTestModality'>What was the HIV Test Modality ?</label>" +
+            "<select class='form-control' id='hivModality' name='hivModality'>" +
+            " <option value=''>Select One</option>" +
+            "<option value='Other PITC'>Other PITC</option>" +
+            "<option value='Inpatient'>Inpatient</option>" +
+            " <option value='Emergency'>Emergency</option>" +
+            "<option value='Malnutrition'>Malnutrition</option>" +
+            "<option value='Pediatrics'>Pediatrics</option>" +
+            "<option value='PMTCT- ANC1 Only'>PMTCT- ANC1 Only</option>" +
+            "<option value='STI'>STI</option>" +
+            "  <option value='VCT'>VCT</option>" +
+            "<option value='Index Testing'>Index Testing</option>" +
+            "<option value='PMTCT POST ANC1'>PMTCT POST ANC1</option>" +
+            "</select>" +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</form>";
+    
+    $("#modal-body").html(editform);
+    $("#Title").html("Updating " +$tmpid);
+    $("#serialNumber").html($tmpid);
+    $("#dateOfRegistration").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    $("#Title").html($tmpid);
+    
+    
+    
 }
-$("#datat").on("click", ".btn_edit", function (){editRecord($(this).parent())});
-
-
+$("#showRecords").on("click", ".btn_edit", function () {
+    editRecordPrep($(this).parent())
+});
 patasubcounty();
 patafacility();
 ShowRecords();

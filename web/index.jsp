@@ -119,7 +119,7 @@
                                     <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Enter New Record</h6>
                                     <div class="text-white pl-5 pt-3 bg-primary">
                                         <center>
-                                            <div id="loading"></div>
+                                            <div id="loading" class="alert-success"></div>
                                         </center>
 
                                         <form  id="form_data" autocomplete="off" validate method="POST" >
@@ -181,7 +181,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="ageOnRegistration">Age on Registration</label>
-                                                        <input type="Number" class="form-control" id="ageOnRegistration" name="ageOnRegistration">
+                                                        <input type="number" class="form-control" id="ageOnRegistration" name="ageOnRegistration" min="1" max="100">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="xray">Xray</label>
@@ -290,7 +290,7 @@
 
                                     <div class="text-muted pt-3">
                                         <div class="table-responsive toggle-circle-filled" id="datat">
-
+                                            <div id="showRecords"></div>   
 
                                         </div>
 
@@ -308,9 +308,11 @@
 
 
     </main>
+ 
+
     <!-- Modal -->
     <div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="Title" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="Title">Editing</h5>
@@ -318,8 +320,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class="modal-body bg-primary" id="modal-body">
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -356,6 +358,6 @@
             response.sendRedirect("login.jsp");
         }
     %>
-
+   
 </body>
 </html>
