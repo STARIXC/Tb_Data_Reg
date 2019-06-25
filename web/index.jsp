@@ -125,7 +125,7 @@
                                         <form  id="form_data" autocomplete="off" validate method="POST" >
 
                                             <div class="row offset-0 p-2">
-                                                <input type="hidden" name="id" id="id" value="<%=id%>">
+                                                <input type="hidden"  name ="rowid" id="rowid"  />
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label for="serialNumber">Serial Number</label>
@@ -143,7 +143,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="county">County</label>
-                                                        <select class="form-control"  onchange="" name='county' id='county'>
+                                                        <select class="form-control"  onchange="patasubcounty()" name='county' id='county'>
                                                             <option value=""> Select County</option>
                                                             <option value="1"> Nakuru</option>
                                                             <option value="2"> Laikipia</option>
@@ -156,7 +156,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="subCounty">Sub-County</label>
-                                                        <select class="form-control"  onchange='' name='subcounty' id='subcounty' >
+                                                        <select class="form-control"  onchange='patafacility()' name='subcounty' id='subcounty' >
 
                                                         </select>
                                                     </div>
@@ -275,6 +275,13 @@
                                             <div class="row offset-1">
                                                 <div class="col-md-8">
                                                     <input type="submit" class="btn btn-success btn-lg mb-2" id="save_data" name="save_data" value="Save Record"/>
+
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <button type="submit" id='updatebutton' style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                                        UPDATE 
+                                                    </button>
+
                                                 </div>
 
                                             </div>
@@ -308,7 +315,7 @@
 
 
     </main>
- 
+
 
     <!-- Modal -->
     <div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="Title" aria-hidden="true">
@@ -321,7 +328,7 @@
                     </button>
                 </div>
                 <div class="modal-body bg-primary" id="modal-body">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -349,6 +356,7 @@
     <script src="assets/calender/lib/jquery-ui.min.js"></script>
     <script src="js/credentials.js"></script>
     <script src="js/form_1.js"></script>
+    <script src="js/facility.js"></script>
     <script src="js/scripts_offline.js"></script>
     <script src="js/datepicker.js"></script>
 
@@ -358,6 +366,6 @@
             response.sendRedirect("login.jsp");
         }
     %>
-   
+
 </body>
 </html>

@@ -23,6 +23,12 @@ $("#save_data").click(function () {
     //run saveArticle function, which will run validation, save if validated
     validateForm();
 }); //end submit-button click handler
+//
+$("#updatebutton").click(function () {
+    $('#loading').html('<img src="images/ajax-loader.gif"> loading...');
+    //run saveArticle function, which will run validation, save if validated
+    validateEditForm();
+}); //end submit-button click handler
 //synch button
 $('#button-sync').click(function () {
     sync();
@@ -100,7 +106,6 @@ function saveRecord() {
             setTimeout(function () {
                 $('#loading').fadeOut('slow');
             }, 2000);
-          
         } else {
 
 
@@ -145,7 +150,7 @@ function validateForm() {
             },
             hivtestDate: {
                 required: function (dat) {
-                    return $("#art").val() === 'Neg' || $("#art").val() === 'Pos';
+                    return $("#hivStatus").val() === 'POS';
                 }
             },
             dateTreatmentStarted: {
@@ -231,14 +236,11 @@ function ShowRecords() {
                     "</td><td>" + dat.doc.sex +
                     "</td><td>" + dat.doc.age +
                     "</td><td>" + dat.doc.registrationdate +
-                    "</td><td class='btn_edit' data-toggle='modal' data-target='#editform'><i class='glyphicon glyphicon-edit'></i></td></tr>";
-
+                    "</td><td><button class='btn-info' href='#nav-home' data-toggle='tab' onclick='loadSavedRecordData(\"" + dat.doc._id + "\",\"" + dat.doc.Mflcode + "\",\"no\")'>Edit</button></td></tr>";
+            // "</td><td class='btn_edit' data-toggle='modal' data-target='#editform'><i class='glyphicon glyphicon-edit'></i></td></tr>";
         } //end of for loop
 
         appendtabledata(dbdata);
-
-
-
     }).catch(function (err) {
         console.log(err);
     });
@@ -248,11 +250,9 @@ function ShowRecords() {
 
 function appendtabledata(dbdata) {
     $("#showRecords").html(' <table id="TableResults" class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;"><thead><tr><th data-visible="true">S/No:</th><th>SubPartner ID</th><th data-breakpoints="xs sm md">Sub County Reg #</th><th data-breakpoints="xs">MFL Code</th><th data-breakpoints="all">Facility Name</th><th data-breakpoints="all">ART Status</th><th data-breakpoints="all">Sex</th><th data-breakpoints="all">Age</th><th data-breakpoints="xs sm md">Registration Date</th><th>Edit</th></tr></thead><tbody>' + dbdata + '</tbody></table>');
-
     $(document).ready(function () {
         $('.table').footable();
     });
-
 }
 
 function sync() {
@@ -265,47 +265,14 @@ function sync() {
             });
 }
 
-var db = new PouchDB('facilities');
-function patafacility() {
 
-    var cnt = 0;
-
-    var facilities = "<option value=''>Select Facility</option>";
-
-    db.allDocs({include_docs: true, descending: true}).then(function (doc) {
-
-        cnt++;
-        //console.log(doc);
-        for (a = 0; a <
-                doc.total_rows; a++) {
-            var dat = {};
-            dat = doc.rows[a];
-            //console.log(dat.doc.title);
-            //how to reference each column 
-
-            //dat.doc._id
-            var num = parseInt(a) + 1;
-            facilities += "<option id='facility_select' value='" + dat.doc._id + "_" + dat.doc.DistrictID + "' data-subpartnerid='" + dat.doc.SubPartnerID + "' data-mfl='" + dat.doc.CentreSanteId + "' data-facility='" + dat.doc.SubPartnerNom + "'>" + dat.doc.SubPartnerNom + "</option>";
-        } //end of for loop
-        $("#facility").html(facilities);
-        $(document).ready(function () {
-            //$('#lyricstable').DataTable();
-            // $('#facility').select2();
-        });
-
-    }).catch(function (err) {
-        console.log(err);
-    });
-}
 var dbs = new PouchDB('subcounty');
 function patasubcounty() {
-
+    var county = document.getElementById("county").value;
     var cnt = 0;
-
     var subcounty = "<option value=''>Select Sub-County</option>";
-
-    dbs.allDocs({include_docs: true, descending: true}).then(function (doc) {
-
+   // dbs.allDocs({include_docs: true, descending: true}).then(function (doc) {
+   dbs.get(county).then(function (doc) {
         cnt++;
         //console.log(doc);
         for (a = 0; a <
@@ -317,212 +284,280 @@ function patasubcounty() {
 
             //dat.doc._id
             var num = parseInt(a) + 1;
-            subcounty += "<option value='" + dat.doc._id + "_" + dat.doc.DistrictID + "'>" + dat.doc.DistrictNom + "</option>";
+            subcounty += "<option value='" + dat.doc.DistrictID + "'>" + dat.doc.DistrictNom + "</option>";
         } //end of for loop
         $("#subcounty").html(subcounty);
         $(document).ready(function () {
             //$('#lyricstable').DataTable();
             $('#subcounty').select2();
         });
-
     }).catch(function (err) {
-        console.log(err);
+       // console.log(err);
     });
 }
-function editRecordPrep(thisObj) {
-    console.log(thisObj);
-    var $tmpid = thisObj.find("td:eq(0)").text(),
-            $tmpSubpartnerID = thisObj.find("td:eq(1)").text(),
-            $tmpRegDate = thisObj.find("td:eq(9)").text(),
-            $tmpSex = thisObj.find("td:eq(3)").text(),
-            $tmpAge = thisObj.find("td:eq(4)").text(),
-            $tmpTreatmentdate = thisObj.find("td:eq(5)").text(),
-            $tmpHivStatus = thisObj.find("td:eq(6)").text(),
-            $tmpHivTestDate = thisObj.find("td:eq(7)").text(),
-            $tmpArtStatus = thisObj.find("td:eq(8)").text(),
-            $tmpArtDate = thisObj.find("td:eq(9)").text(),
-            $tmpTimestamp = thisObj.find("td:eq(10)").text(),
-            $tmpMflcode = thisObj.find("td:eq(11)").text(),
-            $tmpSubPartnerNom = thisObj.find("td:eq(12)").text(),
-            $tmpSupporttype = thisObj.find("td:eq(13)").text(),
-            $tmpSmear0 = thisObj.find("td:eq(14)").text(),
-            $tmpGenExpert = thisObj.find("td:eq(15)").text(),
-            $tmpWithinFacility = thisObj.find("td:eq(16)").text(),
-            $tmpHivModality = thisObj.find("td:eq(17)").text(),
-            $tmpScountyRegno = thisObj.find("td:eq(18)").text(),
-            $tmpSerialno = thisObj.find("td:eq(19)").text(),
-            $tmpXray = thisObj.find("td:eq(20)").text(),
-            $tmpUserid = thisObj.find("td:eq(21)").text();
-    var editform = "";
-    editform += "<form  id='form_data' autocomplete='off' validate method='POST' >" +
-            "<div class='row offset-0 p-2'>" +
-            " <input type='hidden' name='id' id='id' value=''>" +
-            "<div class='col-md-5'>" +
-            "<div class='form-group'>" +
-            " <label for='serialNumber'>Serial Number</label>" +
-            "<input type='text' class='form-control' id='serialNumber' name='serialNumber'>" +
-            " </div>" +
-            " <div class='form-group'>" +
-            " <label for='dateOfRegistration'>Date of Registration</label>" +
-            " <input type='text' class='form-control' id='dateOfRegistration' name='dateOfRegistration' >" +
-            "</div>" +
-            "<div class='form-group'>" +
-            "<label for='subCountyRegNo'>Sub County Registration No.</label>" +
-            " <input type='text' class='form-control' id='subCountyRegNo' name='subCountyRegNo'>" +
-            " </div>" +
-            " </div>"+
-    " <div class='col-md-6'>" +
-            " <div class='form-group'>" +
-            " <label for='county'>County</label>" +
-            " <select class='form-control'   name='county' id='county'>" +
-            "  <option value''> Select County</option>" +
-            "  <option value='1'> Nakuru</option>" +
-            " <option value='2'> Laikipia</option>" +
-            "  <option value='3'> Narok</option>" +
-            "  <option value='4'> Baringo</option>" +
-            " <option value='5'> Kajiado</option>" +
-            "  <option value='7'> Samburu</option>" +
-            "  <option value='8'> Turkana</option>" +
-            "  </select>" +
-            " </div>" +
-            "  <div class='form-group'>" +
-            "<label for='subCounty'>Sub-County</label>" +
-            "  <select class='form-control'  onchange='' name='subcounty' id='subcounty' >" +
-            " </select>" +
-            "  </div>" +
-            " <div class='form-group'>" +
-            "<label for='healthFaciities'>Health Facilities</label>" +
-            "<select class='form-control'  name='facility' id='facility' ></select>" +
-            "</div></div></div>" +
-            "<div class='row p-2'><div class='col-md-5'>" +
-            "<div class='form-group'><label for='sex'>Sex</label>" +
-            "<select class='form-control' id='sex' name='sex'>" +
-            " <option value=''>Select One</option>" +
-            "  <option value='M'>Male</option>" +
-            " <option value='F'>Female</option>" +
-            " </select>" +
-            " </div>" +
-            "  <div class='form-group'>" +
-            "<label for='ageOnRegistration'>Age on Registration</label>" +
-            "<input type='number' class='form-control' id='ageOnRegistration' name='ageOnRegistration' min='1' max='100'>" +
-            "</div>" +
-            "<div class='form-group'>" +
-            " <label for='xray'>Xray</label>" +
-            " <select class='form-control' id='xray' name='xray'>" +
-            "  <option value=''>Select One</option>" +
-            " <option value='Y'>Yes</option>" +
-            " <option value='N'>No</option>" +
-            "  </select>" +
-            " </div>" +
-            "<div class='form-group'>" +
-            " <label for='hivStatus'>HIV Status</label>" +
-            "<select class='form-control' id='hivStatus' name='hivStatus'>" +
-            "  <option value=''>Select One</option>" +
-            "<option value='ND'>ND</option>" +
-            "<option value='Neg'>Neg</option>" +
-            "<option value='Pos'>Pos</option>" +
-            " </select>" +
-            "</div>" +
-            "<div class='form-group'>" +
-            "<label for='hivTestDate'>HIV Test Date</label>" +
-            " <input type='text' class= 'form-control' name='hivTestDate' id='hivTestDate'>" +
-            "</div>" +
-            "<div class='form-group' id='dttreatment' >" +
-            "<label for='dateTreamentStarted'>Date of Treatment Started</label>" +
-            " <input type='text' class='form-control' name='dateTreamentStarted' id='dateTreatmentStarted'>" +
-            "</div>" +
-            "</div>" +
-            "<div class='col-md-6'>" +
-            "<div class='form-group'>" +
-            " <label for='art'>ART</label>" +
-            "<select class='form-control' id='art' name='art'>" +
-            " <option value=''>Select One</option>" +
-            "  <option value='Y'>YES</option>" +
-            "  <option value='N'>NO</option>" +
-            "  </select>" +
-            "</div>" +
-            "<div class='form-group'>" +
-            "<label for='artDate'>ART Date</label>" +
-            " <input type='text' class='form-control' name='artdate' id='artdate'>" +
-            "</div>" +
-            " <div class='form-group'>" +
-            " <label for='sputumSmear'>Sputum Smear Examination 0th Month Result</label>" +
-            " <select class='form-control' id='sputumSmear' name='sputumSmear'>" +
-            " <option value=''>Select One</option>" +
-            " <option value='ND'>ND</option>" +
-            " <option value='Neg'>Neg</option>" +
-            " <option value='Pos'>Pos</option>" +
-            " </select>" +
-            " </div>" +
-            " <div class='form-group'>" +
-            " <label for='generalExpert'>General Expert</label>" +
-            " <select class='form-control' id='generalExpert' name='generalExpert'>" +
-            "<option value=''>Select One</option>" +
-            " <option value='MTB detected, Rifampicin resistance detected'>MTB detected, Rifampicin resistance detected</option>" +
-            " <option value='MTB detected, Rifampicin resistance indeterminate'>MTB detected, Rifampicin resistance indeterminate</option>" +
-            " <option value='MTB detected, Rifampicin resistance not detected'>MTB detected, Rifampicin resistance not detected</option>" +
-            "<option value='MTB not detected'>MTB not detected</option>" +
-            "<option value='Not Applicable'>Not Applicable</option>" +
-            " <option value='Not Done'>Not Done</option>" +
-            "  </select>" +
-            " </div>" +
-            "<div class='form-group'>" +
-            " <label for='testedWithinFacility'>Was the Client Tested for HIV within the Facility ?</label>" +
-            " <select class='form-control' id='withinFacility' name='withinFacility'>" +
-            " <option value=''>Select One</option>" +
-            " <option value='Y'>YES</option>" +
-            " <option value='N'>NO</option>" +
-            "  </select>" +
-            "</div>" +
-            "<div class='form-group'>" +
-            " <label for='hivTestModality'>What was the HIV Test Modality ?</label>" +
-            "<select class='form-control' id='hivModality' name='hivModality'>" +
-            " <option value=''>Select One</option>" +
-            "<option value='Other PITC'>Other PITC</option>" +
-            "<option value='Inpatient'>Inpatient</option>" +
-            " <option value='Emergency'>Emergency</option>" +
-            "<option value='Malnutrition'>Malnutrition</option>" +
-            "<option value='Pediatrics'>Pediatrics</option>" +
-            "<option value='PMTCT- ANC1 Only'>PMTCT- ANC1 Only</option>" +
-            "<option value='STI'>STI</option>" +
-            "  <option value='VCT'>VCT</option>" +
-            "<option value='Index Testing'>Index Testing</option>" +
-            "<option value='PMTCT POST ANC1'>PMTCT POST ANC1</option>" +
-            "</select>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</form>";
-    
-    $("#modal-body").html(editform);
-    $("#Title").html("Updating " +$tmpid);
-    $("#serialNumber").html($tmpid);
-    $("#dateOfRegistration").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    $("#Title").html($tmpid);
-    
-    
-    
-}
+var db = new PouchDB('facilities');
+function patafacility() {
+    var subc = document.getElementById("subcounty").value;
+    console.log(subc);
+    var cnt = 0;
+    var facilities = "<option value=''>Select Facility</option>";
+/**db.get({
+  selector: {DistrictID: {$eq: subc}}
+}).then(function (doc) {
+   cnt++;
+      console.log(doc);
+        for (f = 0; f <
+                doc.total_rows; f++) {
+            var dat = {};
+            dat = doc.rows[f];
+            
+            var num = parseInt(f) + 1;
+            facilities += "<option id='facility_select' value='"+ dat.doc.DistrictID +"' data-subpartnerid='"+dat.doc.SubPartnerID+"' data-mfl='"+dat.doc.CentreSanteID +"' data-facility='"+ dat.doc.SubPartnerNom +"' >"+ dat.doc.SubPartnerNom +" </option>";;
+        } //end of for loop
+       $("#facility").html(facilities.replace("<option value=''>Select facility</option>", ""));
+            //var select = document.getElementById('facility');
+            // select.size = select.length;
+            $('#facility').select2();
+}).catch(function (err) {
+  console.log(err);
+});**/
+   db.allDocs({include_docs: true, descending: true,DistrictID:subc}).then(function (doc) {
+        //db.get(subc).then(function (doc) {
+        cnt++;
+      console.log(doc);
+        for (f = 0; f <
+                doc.total_rows; f++) {
+            var dat = {};
+            dat = doc.rows[f];
+            
+            var num = parseInt(f) + 1;
+            facilities += "<option id='facility_select' value='"+ dat.doc.DistrictID +"' data-subpartnerid='"+dat.doc.SubPartnerID+"' data-mfl='"+dat.doc.CentreSanteId +"' data-facility='"+ dat.doc.SubPartnerNom +"' >"+ dat.doc.SubPartnerNom +" </option>";;
+        } //end of for loop
+       $("#facility").html(facilities.replace("<option value=''>Select facility</option>", ""));
+            var select = document.getElementById('facility');
+            // select.size = select.length;
+            $('#facility').select();
+      
+    }).catch(function (err) {
+      console.log(err);
+    });
+    }
+
 $("#showRecords").on("click", ".btn_edit", function () {
-    editRecordPrep($(this).parent())
+    editRecordPrep($(this).parent());
 });
-patasubcounty();
-patafacility();
+
+
+
+function loadSavedRecordData(id, Mflcode) {
+    //load from weekly db where id is as selected   
+    LocalDB.get(id).then(function (doc) {
+        var rowid = id;
+        //populate div with respective content
+        $("#rowid").val(id);
+
+        //$('select#facilityname').find("option[value='"+mflanddates[0]+"_"+facility+"']").prop('selected', true); 
+        $("#serialNumber").val(doc.serialno);
+        $("#dateOfRegistration").val(doc.registrationdate);
+        $("#subCountyRegNo").val(doc.subcounty_regno);
+        //$("#county").val(doc.hiv_pos_target_adult);
+        // $("#subcounty").val(doc.hiv_pos_target_total);
+        $('select#facility').find("option[value='" + doc.subPartnerNom + "']").prop('selected', true);
+        $('select#sex').find("option[value='" + doc.sex + "']").prop('selected', true);
+        $("#ageOnRegistration").val(doc.age);
+        $("#xray").val(doc.xray);
+        $('select#hivStatus').find("option[value='" + doc.hivstatus + "']").prop('selected', true);
+        $("#hivTestDate").val(doc.hivtestdate);
+        $("#dateTreatmentStarted").val(doc.treatmentdate);
+        $('select#art').find("option[value='" + doc.artstatus + "']").prop('selected', true);
+        $("#artdate").val(doc.artdate);
+        $('select#sputumSmear').find("option[value='" + doc.smear0 + "']").prop('selected', true);
+        $("#generalExpert").val(doc.genexpert);
+        $("#withinFacility").val(doc.tested_within_facility);
+        $('select#hivModality').find("option[value='" + doc.initial_modality + "']").prop('selected', true);
+        //do the vice versa on saving the edited fields
+
+        $("#save_data").hide();
+        $("#updatebutton").show();
+
+    });
+
+}
+
+//run all validation functions when called from saverecord
+function validateEditForm() {
+    $('#form_data').validate({
+        rules: {
+            serialNumber: {
+                required: true
+            },
+            dateOfRegistration: {
+                required: true
+            },
+            subCountyRegNo: {
+                required: true
+            },
+            county: {
+                required: true
+            },
+            subcounty: {
+                required: true
+            },
+            facility: {
+                required: true
+            },
+            sex: {
+                required: true
+            },
+            ageOnRegistration: {
+                required: true
+            },
+            xray: {
+                required: true
+            },
+            hivStatus: {
+                required: true
+            },
+            hivtestDate: {
+                required: function (dat) {
+                    return $("#hivStaus").val() === 'Pos';
+                }
+            },
+            dateTreatmentStarted: {
+                required: true
+            },
+            art: {
+                required: true
+            },
+            artdate: {
+                required: function (dat) {
+                    return $("#art").val() === "Y";
+                }
+            },
+            sputumSmear: {
+                required: true
+            },
+            generalExpert: {
+                required: true
+            },
+            withinFacility: {
+                required: true
+            },
+            hivModality: {
+                required: true
+            }
+        },
+        messages: {
+            serialNumber: "please enter the serial Number",
+            dateOfRegistration: "Please select the Registration Date",
+            subCountyRegNo: "please Enter the Subcounty Registration Number",
+            county: "Please Select the County from the drop down options",
+            subcounty: "Please Select the Sub-County from the drop down options",
+            facility: "Please Select the Facility from the drop down options",
+            sex: "Please Select the Sex/Gender of the Patient from the drop down options",
+            ageOnRegistration: "Please Select Age of Patient at Registration, (if below 12 months, round up to 1 yr)",
+            xray: "Please Choose if Xray was performed (Y/N)",
+            hivTestDate: "Please select the Registration Date",
+            hivStatus: "Please Choose the patient's HIV Status  (Pos,Neg,ND) ",
+            dateTreatmentStarted: "please Choose the date Treatment Started",
+            art: "Please Choose the ART Status (Y/N)",
+            artdate: "please enter the Art Date",
+            sputumSmear: "Please Enter Sputum Smear Examination 0th Month Result (Pos,Neg,ND)",
+            generalExpert: "Please Select the General Expert From the Drop Down List",
+            withinFacility: "Please Choose if the client tested for HIV within the facility? Y/N ",
+            hivModality: " Please Select the HIV Test Modality (Use the availed dropdown)"
+        },
+        submitHandler: function (form) {
+            saveEditRecord();
+        }
+
+    });
+}
+function saveEditRecord(id, SubPartnerID, registrationdate, quarter, year, sex, age, treatmentdate, hivstatus, hivtestdate, artstatus, artdate, treatmentoutcome, outcomedate, timestamp, Mflcode, SubPartnerNom, supporttype, tbtype, patienttype, smear0, smear2_3, smear5, smear6_8, genexpert, tested_within_facility, initial_modality, subcounty_regno, serialno, xray, user_id) {
+
+    var id = $("#rowid").val();
+    //create variables from the form
+    var user_id = $('#id').val();
+    var Id = $('#subCountyRegNo').val() + "_" + $('#facility_select').data('mfl');
+    var SubCountyRegNo = $('#subCountyRegNo').val();
+    var RegDate = $('#dateOfRegistration').val();
+    var Sex = $('#sex').val();
+    var Age = $('#ageOnRegistration').val();
+    var TreatmentDate = $('#dateTreatmentStarted').val();
+    var HIVStatus = $('#hivStatus').val();
+    var HIVTestDate = $('#hivTestDate').val();
+    var ArtStatus = $('#art').val();
+    var ArtDate = $('#artdate').val();
+    var mflcode = $('#facility_select').data('mfl');
+    var SubPartnerNom = $('#facility_select').data('facility');
+    var subPartnerID = $('#facility_select').data('subpartnerid');
+    var SupportType = "DSD";
+    var Smear0 = $('#sputumSmear').val();
+    var GenExpert = $('#generalExpert').val();
+    var WithinFacility = $('#withinFacility').val();
+    var HIVModality = $('#hivModality').val();
+    var Xray = $('#xray').val();
+    var serialNumber = $('#serialNumber').val();
+    //var SubCountyRegNo=       $('#id').val()
+
+    LocalDB.get(id).then(function (doc) {
+    if (id !== 'null' && id !== '') {
+    doc._id = id,
+            //these field are updated by the user from the form
+            doc.id = Id;
+            doc.SubPartnerID = subPartnerID;
+            doc.registrationdate= RegDate;
+            doc.quarter= null;
+            doc.year= null;
+            doc.sex= Sex;
+            doc.age= Age;
+            doc.treatmentdate= TreatmentDate;
+            doc.hivstatus= HIVStatus;
+            doc. hivtestdate= HIVTestDate;
+            doc.artstatus= ArtStatus;
+            doc.artdate= ArtDate;
+            doc.treatmentoutcome= null;
+            doc.outcomedate= null;
+            doc.timestamp= new Date().getTime();
+            doc.Mflcode= mflcode;
+            doc.SubPartnerNom= SubPartnerNom;
+            doc.supporttype= SupportType;
+            doc.tbtype= null;
+            doc.patienttype= null;
+            doc.smear0= Smear0;
+            doc.smear2_3= null;
+            doc.smear5= null;
+            doc.smear6_8= null;
+            doc.genexpert= GenExpert;
+            doc.tested_within_facility= WithinFacility;
+            doc.initial_modality= HIVModality;
+            doc.subcounty_regno= SubCountyRegNo;
+            doc.serialno= serialNumber;
+            doc.xray= Xray;
+            doc.user_id= user_id;
+
+//put the records back
+ return LocalDB.put(doc, function callback(error, result) {
+        if (!error) {
+            modeReset();
+            doc = "record Updated";
+            console.log("State of record object BEFORE doing db.put: " + JSON.stringify(doc));
+            // once record is successfully saved, reset the page using our function
+            $('#loading').fadeIn().html(result);
+            setTimeout(function () {
+                $('#loading').fadeOut('slow');
+            }, 2000);
+        } else {
+
+
+        }
+
+    });
+    }
+
+    });
+}
+
+//patasubcounty();
+//patafacility();
 ShowRecords();
