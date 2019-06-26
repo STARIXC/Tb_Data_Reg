@@ -4,6 +4,7 @@
     Author     : starixc
 --%>
 
+<%@page import="java.util.Calendar"%>
 <%@page import="com.database.dbConn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -18,20 +19,27 @@
     <title>Tb Register Data Entry and Management System</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="assets/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link href="assets/bootstrap/css/bootstrap-glyphicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/bootstrap/maps/glyphicons-fontawesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/footable.bootstrap.css">
+    <!--<link rel="stylesheet" href="assets/DT-Tables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/DT-Tables/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/DT-Tables/css/buttons.dataTables.min.css">-->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-formhelpers.min.css">
     <link rel="stylesheet" href="assets/calender/lib/jquery-ui.min.css">
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link href="assets/offcanvas.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-light">
     <%
-        String email=(String)session.getAttribute("email");
-        if(email!=null){
-        %>
+        String email = (String) session.getAttribute("email");
+        String id = (String) session.getAttribute("ID");
+        if (email != null) {
+    %>
     <%
         String ID, record_id, SerialNumber, SubCountyRegNo, SubPartnerID, RegDate, sex, age, Xray, treatmentdate, hivStatus, hivtestdate, artstatus, artdate, Mflcode, SubPartnerNom, smear0, genexpert, withinfacility, initialmodality;
 
@@ -69,7 +77,7 @@
     %>
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand mr-auto mr-lg-0" href="home.jsp">TB Register System</a>
+        <a class="navbar-brand mr-auto mr-lg-0" href="#">TB Register System</a>
         <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -77,17 +85,34 @@
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="home.jsp">Dashboard <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
+
                 <!-- <li class="nav-item">
                      <a class="nav-link" href="#">Notifications</a>
                  </li>
-                 <li class="nav-item">
-                     <a class="nav-link" href="#">Profile</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" href="#">Switch account</a>
-                 </li>-->
+                -->
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=email%> your ID:<%=id%></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" title="Help" data-toggle="modal" href="#help">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                        Help
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.jsp">
+                        <i class="glyphicon glyphicon-lock"></i>
+                        Logout
+                    </a>
+                </li>
+
+
+                </li>
 
             </ul>
 
@@ -97,12 +122,6 @@
     <div class="nav-scroller bg-white box-shadow">
         <nav class="nav nav-underline">
             <a class="nav-link active" href="#">Dashboard</a>
-            <!--  <a class="nav-link" href="#">
-                  Friends
-                  <span class="badge badge-pill bg-light align-text-bottom">27</span>
-              </a>
-              <a class="nav-link" href="#">Explore</a>
-              <a class="nav-link" href="#">Suggestions</a>-->
 
         </nav>
     </div>
@@ -121,18 +140,13 @@
                 <div class="container1">
                     <div class="row">
                         <div class="col-md-12">
-                            <nav>
-                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Edit</a>
-                                </div>
-                            </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Edit Record</h6>
+                                    <h3 class="border-bottom border-primary pb-2 mb-1 mt-2">UPDATING RECORD : <%=ID%></h3>
                                     <div class="text-white pt-3 bg-primary">
-                                        <center><div id="loading" class='alert alert-success'> </div></center>
+                                        <center><div id="loading" class='alert-success'> </div></center>
                                         <form id="form_data" autocomplete="off">
-                                            <input type="text" class="form-control col-md-6" id="id" name="id" value="<%=ID%>" disabled >
+                                            <input type="hidden" class="form-control col-md-6" id="id" name="id" value="<%=ID%>" disabled >
                                             <div class="row offset-1">
                                                 <div class="col-md-5">
                                                     <div class="form-group">
@@ -179,7 +193,15 @@
                                             </div>
                                             <div class="row offset-1">
                                                 <div class="col-md-5">
-
+                                                    <div class="form-group">
+                                                        <label for="quarter">Quarter</label>
+                                                        <select class="form-control" id="quarter" name="quarter">
+                                                            <option value="1">1st Quarter(Oct-Dec)</option>
+                                                            <option value="2">2nd Quarter(Jan-March)</option>
+                                                            <option value="3">3rd Quarter(May-June)</option>
+                                                            <option value="4">4th Quarter(July-Sept)</option>
+                                                        </select>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="sex">Sex</label>
                                                         <select class="form-control" id="sex" name="sex">
@@ -220,6 +242,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="year">Year</label>
+                                                        <select name="year" id="year" class="form-control"  >
+                                                            <option value='' >Choose year</option>
+                                                            <%
+
+                                                                Calendar cal = Calendar.getInstance();
+                                                                int curyear = cal.get(Calendar.YEAR);
+
+                                                                for (int a = curyear - 1; a <= curyear + 1; a++) {
+                                                                    out.println("<option value='" + a + "'>" + a + "</option>");
+                                                            %>
+
+
+                                                            <%
+                                                                }
+
+                                                            %>
+
+                                                        </select>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="art">ART</label>
                                                         <select class="form-control" id="art" name="art">
@@ -283,8 +326,8 @@
                                             </div>
                                             <div class="row offset-1">
 
-                                                <div class="pull-left col-6"><input type="submit" class="btn btn-warning btn-lg mb-2"  name="cancel_update"  value="Cancel"/></div>
-                                                <div class="pull-right col-6"><input type="submit" class="btn btn-success btn-lg mb-2 pull-right " id="update_data" name="update_data"  value="Update"/></div>
+                                                <div class="pull-left col-6"><a href="home.jsp" id="cancel" name="cancel" class="btn btn-warning btn-lg mb-2 ">Cancel</a></div>
+                                                <div class="pull-right col-6"><input type="submit" class="btn btn-success btn-lg mb-2" id="update_data" name="update_data"  value="Update"/></div>
                                             </div>
 
                                         </form>
@@ -294,7 +337,7 @@
                                         } catch (Exception e) {
                                             out.println(e);
                                         }
-                               %>
+                                    %>
                                 </div>
 
                             </div>
@@ -305,10 +348,66 @@
 
 
         </div>
-      
+
 
     </main>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="Help">HELP ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This  system is created for aiding users in collecting data. One is expected to enter data per facility.</p>
+                    <h3>Required Data</h3>
+                    <p>The specific data that one should enter data for are;</p>
+                    <ul>
+
+                        <li> A. Serial Number </li>
+                        <li>B. Date of Registration( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>C. Sub-County Registration Number</li>
+
+                        <li>D. Sex (M/F)</li>
+
+                        <li>E. Age on Registration <br>(If Age is Bellow 12 Months, round up to 1 yr)</li>
+
+                        <li>F. Date of Treatment started( dd mmm YYYY e.g 01 Jan 2019)<br> if HIV Status is negative the Date can be Ignored</li>
+
+                        <li>G. HIV Status (Pos,Neg,ND)</li>
+
+                        <li>H. HIV Test Date( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>I. ART Status(Y/N)</li>
+
+                        <li>J. ART DATE(Date Started)( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>K. Smear0 -Sputum Smear Examination 0th Month Result</li>
+
+                        <li>L. General Expert- to be Chosen from the Drop Down </li>
+                        <li>M. Tested within facility - Was the Client test for HIV within the facility? Y/N</li>
+                        <li>N. Initial Modality - What was the HIV Test Modality (Use the Availed Dropdown) </li>
+                    </ul>
+                    <h3>Data Validation</h3>
+                    <ul>
+                        <li>A. ART Date should be latter or equal to Date Tested</li>
+                        <li>B. If HIV status is Positive or Negative the Date Tested is a Must</li>
+                        <li>C. IF ART Status is equal to Yes, Date Tested is a Must Enter</li>
+                        <li>D. All the Dates Entered should follow the format( dd mmm YYYY e.g 01 Jan 2019) </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -378,16 +477,16 @@
                                                                 });
 
 
-                                                               
+
                                                             });
     </script>
-     <script src="js/update.js"></script>
-   
+    <script src="js/update.js"></script>
+
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="2" style="font-weight:bold;font-size:2pt;font-family:Arial, Helvetica, Open Sans, sans-serif">32x32</text></svg>
-<%
-        }else{
+    <%
+        } else {
             response.sendRedirect("login.jsp");
         }
-%>
+    %>
 </body>
 </html>

@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://www.sitepoint.com/getting-started-with-pouchdb/ -->
+<html class="sp🚧  js no-ie8compat svg csspositionsticky inlinesvg svgclippaths" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="manifest" href="https://www.sitepoint.com/sp-push-manifest.json"><script async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/loader.js.download"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/analytics.js.download"></script><script src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/ptrack-v1.3.1-engagedtime-slots.js.download"></script><script src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/cmp.js.download" async="" type="text/javascript"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/js"></script><script src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/sitepoint.com.download"></script><style id="stndz-style"></style>
+    <link rel="manifest" href="https://www.sitepoint.com/manifest.json">
+    <link href="https://dab1nmslvvntp.cloudfront.net/" ref="dns-prefetch">
+    <link href="https://d2sis3lil8ndrq.cloudfront.net/" ref="dns-prefetch">
+    <link href="https://sitepoint.com/" ref="dns-prefetch">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:image" content="https://www.sitepoint.com/wp-content/themes/sitepoint/assets/images/icon.javascript.png">
+        
+    <link rel="shortcut icon" href="https://www.sitepoint.com/favicon.ico">
+
+    <link rel="apple-touch-icon-precomposed" href="https://www.sitepoint.com/wp-content/themes/sitepoint/assets/images/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://www.sitepoint.com/wp-content/themes/sitepoint/assets/images/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://www.sitepoint.com/wp-content/themes/sitepoint/assets/images/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.sitepoint.com/wp-content/themes/sitepoint/assets/images/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- Sitepoint's new font from Google Fonts -->
+    <link href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/all.css">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for SitePoint.com" href="https://www.sitepoint.com/feed/">
+
+        <link href="https://plus.google.com/+sitepoint" rel="publisher">
+        <meta property="twitter:account_id" content="15743570">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <meta name="google-site-verification" content="hcQq0cWX73AYby8aMMzNHx8bZrTDI75GWeljGdPmNf8">
+<meta name="google-site-verification" content="I0jyQlTvZaveab8RtDOjUxSPZXbdSgFrcKdAwaCCfvA">
+
+
+<!-- Google Tag Manager -->
+<script async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/fbevents.js.download"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/insight.min.js.download"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/uwt.js.download"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/hotjar-1088957.js.download"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/f.txt"></script><script type="text/javascript" async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/analytics.js.download"></script><script async="" type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/gpt.js.download"></script><script async="" type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/sitepoint.min.js.download"></script><script async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/gtm.js.download"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KL8PMMW');</script>
+
+    <script class="SP_stripMobile" type="text/javascript">
+      var propertag = propertag || {};
+      propertag.cmd = propertag.cmd || [];
+      (function() {
+      var pm = document.createElement('script');
+      pm.async = true; pm.type = 'text/javascript';
+      var is_ssl = 'https:' == document.location.protocol;
+      pm.src = (is_ssl ? 'https:' : 'http:') + '//global.proper.io/sitepoint.min.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(pm, node);
+      })();
+    </script>
+    <script class="SP_stripMobile" type="text/javascript">
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+      (function() {
+      var gads = document.createElement('script');
+      gads.async = true;
+      gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+      })();
+
+      var oSpP;
+    </script>
+    <script charset="UTF-8" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/ee9a890c7a9d2a9236648c25e40bd03e_1.js.download" async=""></script>
+    
+<!-- This site is optimized with the Yoast SEO plugin v8.4 - https://yoast.com/wordpress/plugins/seo/ -->
+<title>Getting Started with PouchDB Client-Side JavaScript Database — SitePoint</title>
+<meta name="description" content="Jatin Shridar introduces PouchDB, an in-browser NoSQL, document database. Learn how to store your app data locally and later sync it with a server-side DB.">
+<link rel="canonical" href="https://www.sitepoint.com/getting-started-with-pouchdb/">
+<link rel="publisher" href="https://plus.google.com/+sitepoint/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Started with PouchDB Client-Side JavaScript Database — SitePoint">
+<meta property="og:description" content="Jatin Shridar introduces PouchDB, an in-browser NoSQL, document database. Learn how to store your app data locally and later sync it with a server-side DB.">
+<meta property="og:url" content="https://www.sitepoint.com/getting-started-with-pouchdb/">
+<meta property="og:site_name" content="SitePoint">
+<meta property="article:publisher" content="https://www.facebook.com/sitepoint">
+<meta property="article:tag" content="databases">
+<meta property="article:tag" content="nilsonj">
+<meta property="article:tag" content="nosql">
+<meta property="article:tag" content="PouchDB">
+<meta property="article:section" content="JavaScript">
+<meta property="article:published_time" content="2016-09-07T22:00:18+00:00">
+<meta property="article:modified_time" content="2016-09-07T23:34:46+00:00">
+<meta property="og:updated_time" content="2016-09-07T23:34:46+00:00">
+<meta property="og:image" content="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/09/1472930931Fotolia_111761598_Subscription_Monthly_M.jpg">
+<meta property="og:image:secure_url" content="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/09/1472930931Fotolia_111761598_Subscription_Monthly_M.jpg">
+<meta property="og:image:width" content="1688">
+<meta property="og:image:height" content="1125">
+<meta property="og:image:alt" content="Open drawer full of library index cards">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Jatin Shridar introduces PouchDB, an in-browser NoSQL, document database. Learn how to store your app data locally and later sync it with a server-side DB.">
+<meta name="twitter:title" content="Getting Started with PouchDB Client-Side JavaScript Database — SitePoint">
+<meta name="twitter:site" content="@sitepointdotcom">
+<meta name="twitter:image" content="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/09/1472930931Fotolia_111761598_Subscription_Monthly_M.jpg">
+<meta name="twitter:creator" content="@sitepointdotcom">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="SitePoint » Getting Started with PouchDB Client-Side JavaScript Database Comments Feed" href="https://www.sitepoint.com/getting-started-with-pouchdb/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.sitepoint.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.8"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/wp-emoji-release.min.js.download" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-parsely-style-css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/wp-parsely.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-postratings-css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/postratings-css.css" type="text/css" media="all">
+<link rel="stylesheet" id="sitepoint-styles-css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/styles-f94ef8fd6e7bb37c5ff7a5139da8fcc4.css" type="text/css" media="all">
+<link rel="stylesheet" id="sitepoint-dynamic-styles-css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/bundle-a38c72416ec60f68d69d6e712a8ad5f5.css" type="text/css" media="all">
+<link rel="stylesheet" id="sitepoint-styles-article-css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/article-35a91ee329370f5244ffecd2a6c2e8ca.css" type="text/css" media="all">
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/scripts-head-302ae967a92241deb24be6e2a54eeefd.js.download"></script>
+<link rel="https://api.w.org/" href="https://www.sitepoint.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.sitepoint.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.sitepoint.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.9.8">
+<link rel="shortlink" href="https://www.sitepoint.com/?p=138528">
+<link rel="alternate" type="application/json+oembed" href="https://www.sitepoint.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.sitepoint.com%2Fgetting-started-with-pouchdb%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://www.sitepoint.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.sitepoint.com%2Fgetting-started-with-pouchdb%2F&amp;format=xml">
+
+<!-- BEGIN wp-parsely Plugin Version 1.13.0 -->
+<meta name="wp-parsely_version" id="wp-parsely_version" content="1.13.0">
+	<script type="application/ld+json">
+	{"@context":"http:\/\/schema.org","@type":"NewsArticle","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/www.sitepoint.com\/getting-started-with-pouchdb\/"},"headline":"Getting Started with PouchDB Client-Side JavaScript Database","url":"http:\/\/www.sitepoint.com\/getting-started-with-pouchdb\/","thumbnailUrl":"https:\/\/dab1nmslvvntp.cloudfront.net\/wp-content\/uploads\/2016\/09\/1472930931Fotolia_111761598_Subscription_Monthly_M-150x150.jpg","image":{"@type":"ImageObject","url":"https:\/\/dab1nmslvvntp.cloudfront.net\/wp-content\/uploads\/2016\/09\/1472930931Fotolia_111761598_Subscription_Monthly_M-150x150.jpg"},"dateCreated":"2016-09-07T22:00:18Z","datePublished":"2016-09-07T22:00:18Z","dateModified":"2016-09-07T22:00:18Z","articleSection":"JavaScript","author":[{"@type":"Person","name":"Jatin Shridhar"}],"creator":["Jatin Shridhar"],"keywords":["databases","nilsonj","nosql","pouchdb"],"publisher":{"@type":"Organization","name":"SitePoint","logo":{"@type":"ImageObject","url":"http:\/\/www.sitepoint.com\/wp-content\/themes\/sitepoint\/assets\/images\/icon.sitepoint.png"}}}
+	</script>
+
+	<!-- END wp-parsely Plugin Version 1.13.0 -->
+    <script type="text/javascript">
+      googletag.cmd.push(function() {
+        purchs2s.cmd.push(function() {
+          		googletag.pubads().setTargeting("channel", "javascript");
+		googletag.pubads().setTargeting("post_id", "138528");
+		googletag.pubads().setTargeting("AOL",["true", "false"]);
+		googletag.pubads().setTargeting("OpenX",["true", "false"]);
+		googletag.pubads().setTargeting("Tribal",["true", "false"]);
+		googletag.pubads().enableSingleRequest();
+                    googletag.pubads().collapseEmptyDivs();
+          googletag.pubads().disableInitialLoad();
+          googletag.enableServices();
+          purchs2s.setup();
+        });
+      });
+      SP_GPT_Slots = [];
+    </script>
+    <!--[if lt IE 9]>
+      <script src="/wp-content/themes/sitepoint/assets/javascripts/vendor/respond.custom.min.js"></script>
+    <![endif]-->
+    <style>
+  .t-color { color: #F6B33C }
+  a.t-color:hover,
+  button.t-color:hover { color: #FFD78F }
+
+  .t-bg { background-color: #F6B33C }
+  a.t-bg:hover,
+  button.t-bg:hover { background-color: #FFD78F}
+
+  .t-border { border-color: #F6B33C }
+  a.t-border:hover,
+  button.t-border:hover { border-color: #FFD78F }
+
+  .t-bg-dark { background-color: #FFD78F }
+
+  .t-list li:before { background-color: #F6B33C; }
+
+  .t-p-pop-bg { background-color: #1a9b9e }
+  a.t-p-pop-bg:hover,
+  button.t-p-pop-bg:hover { background-color: #018285}
+</style>
+
+    <!-- Nativo Ads -->
+    <script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/load.js.download" async=""></script>  <script async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/s"></script><style type="text/css"></style><link rel="preload" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/f(1).txt" as="script"><script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/f(1).txt"></script><script src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/pubads_impl_2019061101.js.download" async=""></script><script async="" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/modules.c00c9d4b7fafb51fcbbc.js.download"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><style data-olark="true" type="text/css">.olark-key,#hbl_code,#olark-data{display: none !important;}</style><style data-olark="true" type="text/css">@media print {#habla_beta_container_do_not_rely_on_div_classes_or_names {display: none !important}}</style><link data-olark="true" rel="stylesheet" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/theme.css" type="text/css"><link rel="stylesheet" type="text/css" href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/sendpulse-prompt.min.css" media="all"><script async="true" type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/roundtrip.js.download"></script></head>
+<body style="margin-top: 67px;">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL8PMMW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+    <header class="main-header u-isSingle" role="banner">
+    <nav id="navigation-bar" class="l-d-f l-p-fix l-w-100">
+      <div class="l-d-f l-w-100 l-w-3col--3col l-w-4col--4col l-jc-sb l-mh-auto">
+        <section class="l-d-f l-ai-str l-jc-sta l-gs-ph2 l-gs-ph1--2col">
+          <a class="l-d-f" href="https://www.sitepoint.com/">
+            <div class="l-d-f l-as-cen l-b-n">
+              <svg class="sp-logo" viewBox="0 0 123 27">
+  <g fill-rule="evenodd">
+    <path d="M31.36,16.75 C31.56,17.07 31.82,17.31 32.14,17.50 C32.46,17.68 32.82,17.82 33.23,17.89 C33.63,17.97 34.05,18.01 34.48,18.01 C34.81,18.01 35.16,17.99 35.52,17.94 C35.89,17.89 36.22,17.81 36.53,17.68 C36.83,17.55 37.08,17.36 37.28,17.11 C37.48,16.87 37.58,16.55 37.58,16.17 C37.58,15.64 37.37,15.24 36.96,14.97 C36.55,14.69 36.03,14.47 35.41,14.31 C34.79,14.14 34.12,13.99 33.39,13.85 C32.66,13.71 31.99,13.52 31.37,13.27 C30.75,13.03 30.23,12.68 29.82,12.23 C29.41,11.78 29.20,11.16 29.20,10.36 C29.20,9.73 29.34,9.20 29.63,8.75 C29.92,8.30 30.30,7.94 30.75,7.66 C31.20,7.38 31.72,7.17 32.29,7.03 C32.86,6.90 33.42,6.83 33.99,6.83 C34.71,6.83 35.38,6.89 35.99,7.01 C36.61,7.13 37.15,7.34 37.62,7.63 C38.09,7.93 38.46,8.33 38.75,8.83 C39.03,9.34 39.19,9.96 39.24,10.72 L37.13,10.72 C37.10,10.32 36.99,9.98 36.81,9.72 C36.63,9.46 36.40,9.25 36.12,9.08 C35.84,8.92 35.53,8.81 35.19,8.74 C34.85,8.66 34.51,8.63 34.16,8.63 C33.84,8.63 33.53,8.65 33.20,8.70 C32.88,8.75 32.59,8.83 32.32,8.95 C32.06,9.07 31.84,9.23 31.68,9.43 C31.51,9.63 31.43,9.89 31.43,10.21 C31.43,10.56 31.56,10.86 31.82,11.09 C32.07,11.32 32.40,11.51 32.80,11.66 C33.19,11.82 33.64,11.95 34.13,12.05 C34.63,12.15 35.13,12.26 35.62,12.37 C36.15,12.49 36.67,12.62 37.17,12.78 C37.67,12.94 38.12,13.15 38.51,13.42 C38.90,13.68 39.21,14.01 39.45,14.41 C39.69,14.81 39.81,15.31 39.81,15.90 C39.81,16.66 39.65,17.28 39.33,17.77 C39.01,18.27 38.58,18.67 38.06,18.98 C37.54,19.28 36.96,19.49 36.30,19.61 C35.65,19.73 35.00,19.79 34.36,19.79 C33.65,19.79 32.97,19.72 32.32,19.58 C31.68,19.43 31.11,19.20 30.61,18.87 C30.12,18.54 29.72,18.11 29.42,17.57 C29.13,17.03 28.96,16.38 28.93,15.61 L31.03,15.61 C31.05,16.06 31.16,16.44 31.36,16.75" id="Fill-1"></path>
+    <path d="M42.27,7.12 L44.37,7.12 L44.37,19.53 L42.27,19.53 L42.27,7.12 Z" id="Fill-2"></path>
+    <path d="M53.13,7.12 L53.13,8.92 L50.57,8.92 L50.57,16.62 C50.57,16.86 50.59,17.05 50.63,17.20 C50.67,17.34 50.75,17.46 50.87,17.54 C50.99,17.62 51.15,17.67 51.35,17.69 C51.56,17.71 51.83,17.73 52.16,17.73 L53.13,17.73 L53.13,19.53 L51.51,19.53 C50.97,19.53 50.50,19.49 50.11,19.42 C49.72,19.35 49.41,19.22 49.17,19.02 C48.93,18.83 48.75,18.56 48.64,18.21 C48.52,17.86 48.46,17.39 48.46,16.81 L48.46,8.92 L46.28,8.92 L46.28,7.12 L48.46,7.12 L48.46,3.39 L50.57,3.39 L50.57,7.12 L53.13,7.12" id="Fill-3"></path>
+    <path d="M64.53,18.73 C63.57,19.44 62.36,19.79 60.91,19.79 C59.89,19.79 59.00,19.63 58.25,19.31 C57.49,18.99 56.86,18.54 56.35,17.97 C55.84,17.39 55.45,16.70 55.20,15.90 C54.94,15.10 54.80,14.23 54.76,13.29 C54.76,12.34 54.91,11.48 55.21,10.69 C55.51,9.91 55.92,9.23 56.46,8.65 C57.00,8.08 57.63,7.63 58.37,7.31 C59.11,6.99 59.91,6.83 60.79,6.83 C61.93,6.83 62.87,7.05 63.63,7.51 C64.38,7.97 64.98,8.55 65.44,9.25 C65.89,9.96 66.20,10.73 66.38,11.56 C66.55,12.39 66.62,13.18 66.59,13.93 L56.99,13.93 C56.98,14.48 57.04,14.99 57.19,15.48 C57.34,15.97 57.58,16.40 57.91,16.78 C58.24,17.16 58.66,17.46 59.18,17.68 C59.69,17.90 60.29,18.01 60.98,18.01 C61.88,18.01 62.61,17.82 63.18,17.41 C63.75,17.02 64.13,16.41 64.31,15.59 L66.39,15.59 C66.11,16.98 65.49,18.03 64.53,18.73 L64.53,18.73 Z M64.02,10.76 C63.83,10.33 63.58,9.96 63.25,9.65 C62.93,9.34 62.55,9.09 62.11,8.90 C61.68,8.72 61.19,8.63 60.66,8.63 C60.12,8.63 59.62,8.72 59.19,8.90 C58.75,9.09 58.37,9.34 58.06,9.66 C57.75,9.98 57.50,10.35 57.32,10.78 C57.13,11.20 57.03,11.65 56.99,12.13 L64.36,12.13 C64.32,11.65 64.21,11.20 64.02,10.76 L64.02,10.76 Z" id="Fill-4"></path>
+    <path d="M70.95,7.12 L70.95,8.80 L71.00,8.80 C71.35,8.11 71.89,7.61 72.64,7.30 C73.38,6.98 74.20,6.83 75.09,6.83 C76.09,6.83 76.95,7.00 77.68,7.36 C78.42,7.71 79.03,8.18 79.52,8.78 C80.01,9.38 80.37,10.08 80.62,10.86 C80.87,11.65 80.99,12.48 80.99,13.36 C80.99,14.24 80.87,15.07 80.63,15.85 C80.39,16.64 80.03,17.32 79.54,17.91 C79.06,18.49 78.44,18.95 77.71,19.29 C76.97,19.62 76.12,19.79 75.14,19.79 C74.83,19.79 74.48,19.76 74.09,19.70 C73.70,19.63 73.32,19.53 72.94,19.38 C72.56,19.24 72.20,19.04 71.86,18.79 C71.52,18.55 71.23,18.24 71.00,17.87 L70.95,17.87 L70.95,24.26 L68.84,24.26 L68.84,7.12 L70.95,7.12 L70.95,7.12 Z M78.53,11.52 C78.37,10.97 78.13,10.48 77.81,10.04 C77.49,9.61 77.07,9.27 76.57,9.01 C76.06,8.76 75.47,8.63 74.79,8.63 C74.08,8.63 73.48,8.76 72.98,9.04 C72.49,9.31 72.08,9.67 71.77,10.10 C71.46,10.55 71.23,11.05 71.09,11.60 C70.95,12.17 70.88,12.73 70.88,13.31 C70.88,13.92 70.95,14.51 71.10,15.07 C71.25,15.64 71.48,16.14 71.81,16.57 C72.13,17.01 72.55,17.35 73.06,17.62 C73.57,17.88 74.19,18.01 74.92,18.01 C75.65,18.01 76.25,17.88 76.74,17.61 C77.23,17.34 77.62,16.98 77.92,16.53 C78.22,16.08 78.43,15.57 78.56,14.99 C78.70,14.41 78.76,13.82 78.76,13.21 C78.76,12.64 78.68,12.07 78.53,11.52 L78.53,11.52 Z" id="Fill-5"></path>
+    <path d="M83.17,10.78 C83.44,9.98 83.84,9.30 84.36,8.71 C84.89,8.13 85.55,7.67 86.33,7.33 C87.10,7.00 87.99,6.83 89.00,6.83 C90.03,6.83 90.92,7.00 91.69,7.33 C92.46,7.67 93.11,8.13 93.64,8.71 C94.17,9.30 94.56,9.98 94.83,10.78 C95.09,11.57 95.23,12.42 95.23,13.33 C95.23,14.25 95.09,15.09 94.83,15.88 C94.56,16.66 94.17,17.35 93.64,17.93 C93.11,18.52 92.46,18.97 91.69,19.30 C90.92,19.63 90.03,19.79 89.00,19.79 C87.99,19.79 87.10,19.63 86.33,19.30 C85.55,18.97 84.89,18.52 84.36,17.93 C83.84,17.35 83.44,16.66 83.17,15.88 C82.91,15.09 82.78,14.25 82.78,13.33 C82.78,12.42 82.91,11.57 83.17,10.78 L83.17,10.78 Z M85.32,15.34 C85.53,15.92 85.81,16.41 86.18,16.80 C86.54,17.19 86.96,17.49 87.45,17.70 C87.94,17.91 88.46,18.01 89.00,18.01 C89.55,18.01 90.06,17.91 90.55,17.70 C91.04,17.49 91.46,17.19 91.83,16.80 C92.19,16.41 92.48,15.92 92.68,15.34 C92.89,14.75 92.99,14.09 92.99,13.33 C92.99,12.58 92.89,11.91 92.68,11.33 C92.48,10.75 92.19,10.25 91.83,9.85 C91.46,9.45 91.04,9.15 90.55,8.94 C90.06,8.73 89.55,8.63 89.00,8.63 C88.46,8.63 87.94,8.73 87.45,8.94 C86.96,9.15 86.54,9.45 86.18,9.85 C85.81,10.25 85.53,10.75 85.32,11.33 C85.11,11.91 85.01,12.58 85.01,13.33 C85.01,14.09 85.11,14.75 85.32,15.34 L85.32,15.34 Z" id="Fill-6"></path>
+    <path d="M97.83,7.12 L99.94,7.12 L99.94,19.53 L97.83,19.53 L97.83,7.12 Z" id="Fill-7"></path>
+    <path d="M105.19,7.12 L105.19,9.08 L105.24,9.08 C106.12,7.58 107.51,6.83 109.41,6.83 C110.25,6.83 110.95,6.94 111.51,7.16 C112.08,7.39 112.53,7.70 112.88,8.10 C113.23,8.50 113.47,8.98 113.61,9.53 C113.75,10.08 113.82,10.69 113.82,11.36 L113.82,19.53 L111.71,19.53 L111.71,11.12 C111.71,10.36 111.48,9.75 111.02,9.30 C110.56,8.85 109.92,8.63 109.11,8.63 C108.46,8.63 107.91,8.72 107.43,8.92 C106.96,9.11 106.57,9.38 106.26,9.73 C105.94,10.08 105.71,10.50 105.55,10.97 C105.39,11.44 105.32,11.96 105.32,12.52 L105.32,19.53 L103.21,19.53 L103.21,7.12 L105.19,7.12" id="Fill-8"></path>
+    <path d="M122.47,7.12 L122.47,8.92 L119.92,8.92 L119.92,16.62 C119.92,16.86 119.94,17.05 119.98,17.20 C120.02,17.34 120.10,17.46 120.22,17.54 C120.33,17.62 120.49,17.67 120.70,17.69 C120.91,17.71 121.18,17.73 121.50,17.73 L122.47,17.73 L122.47,19.53 L120.86,19.53 C120.32,19.53 119.85,19.49 119.46,19.42 C119.07,19.35 118.76,19.22 118.52,19.02 C118.28,18.83 118.10,18.56 117.99,18.21 C117.87,17.86 117.81,17.39 117.81,16.81 L117.81,8.92 L115.63,8.92 L115.63,7.12 L117.81,7.12 L117.81,3.39 L119.92,3.39 L119.92,7.12 L122.47,7.12" id="Fill-9"></path>
+    <path d="M0.67,11.87 L2.62,13.76 L8.76,19.50 L11.41,16.94 C11.65,16.61 11.64,16.16 11.36,15.84 L8.94,13.72 L8.95,13.72 L6.34,11.19 C6.04,10.84 6.04,10.32 6.37,9.99 L13.38,3.21 L10.20,0.12 L0.68,9.31 C-0.05,10.02 -0.05,11.17 0.67,11.87" id="Fill-10"></path>
+    <path d="M21.60,15.15 L19.66,13.27 L13.51,7.53 L10.86,10.08 C10.62,10.42 10.64,10.87 10.91,11.19 L13.33,13.31 L13.33,13.31 L15.93,15.84 C16.24,16.19 16.23,16.70 15.91,17.04 L8.89,23.82 L12.08,26.91 L19.65,19.60 L21.60,17.71 C22.33,17.01 22.33,15.86 21.60,15.15" id="Fill-11"></path>
+    <path d="M44.55,4.58 C44.55,5.24 44.00,5.77 43.32,5.77 C42.64,5.77 42.09,5.24 42.09,4.58 C42.09,3.93 42.64,3.39 43.32,3.39 C44.00,3.39 44.55,3.93 44.55,4.58" id="Fill-12"></path>
+    <path d="M100.11,4.58 C100.11,5.24 99.56,5.77 98.88,5.77 C98.20,5.77 97.65,5.24 97.65,4.58 C97.65,3.93 98.20,3.39 98.88,3.39 C99.56,3.39 100.11,3.93 100.11,4.58" id="Fill-13"></path>
+  </g>
+</svg>
+            </div>
+          </a>
+        </section>
+        <section id="hamburger-container" class="l-ai-cen l-d-f l-gs-ph1">
+          <div class="hamburger">
+            <div class="hamburger-box">
+              <div class="hamburger-inner"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="nav-container" class="l-ai-cen">
+          <ul id="nav" class="l-d-f l-w-100 l-ma0 l-fd-col">
+            <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
+              <a id="nav-blog" href="https://www.sitepoint.com/blog" data-text="Blog">Blog</a>
+            </li>
+            <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
+              <a href="https://www.sitepoint.com/community" data-text="Community">Community</a>
+            </li>
+            <li class="l-gs-ph2 l-gs-ph1--2col t-ls-n">
+              <a href="https://www.sitepoint.com/premium/library/" data-text="Library">Library</a>
+            </li>
+                          <nav-bar-actions is_member="" slug="getting-started-with-pouchdb" categories="javascript"><div class="l-d-f--2col"><li class="l-gs-ph2 l-gs-ph1--2col t-ls-n invert"><a href="https://www.sitepoint.com/premium/sign-in" data-text="Login">Login</a></li><a href="https://www.sitepoint.com/premium/products/Z2lkOi8vbGVhcm5hYmxlL1Byb2R1Y3QvMzA3?ref_source=sitepoint&amp;ref_medium=topnav&amp;ref_campaign=getting-started-with-pouchdb&amp;ref_content=javascript" class="Button u-small u-pink l-as-cen l-d-n l-gs-ph1 l-gs-mh1 f-smaller f-small--3col">Join Premium</a></div></nav-bar-actions>
+                      </ul>
+        </section>
+      </div>
+    </nav>
+
+    <div class="NavBar_offsetSpacer"></div>
+    <script>
+              var current_category = ['javascript'];
+        if (localStorage.getItem('SP_categories') !== null) {
+          if (localStorage.getItem('SP_categories').includes(current_category) === false) {
+            var sp_categories = JSON.parse(localStorage.getItem('SP_categories') || "[]");
+            var temp = current_category.concat(sp_categories);
+            var filtered_categories = Array.from(new Set(temp));
+            localStorage.setItem('SP_categories', JSON.stringify(filtered_categories));
+          }
+        } else {
+          localStorage.setItem('SP_categories', JSON.stringify('javascript'));
+        }
+        // campaign
+        localStorage.setItem('SP_slug', 'getting-started-with-pouchdb');
+
+      
+      /* Toggle mobile navigation */
+      var toggleMobileNav = function(event) {
+        var target = event.target;
+        if (target.className.includes("hamburger")) {
+          document.getElementById("hamburger-container").classList.toggle("open");
+        }
+      }
+      var isTouchSupported = 'ontouchstart' in window;
+      var startEvent = isTouchSupported ? 'touchstart' : 'click';
+      document.addEventListener(startEvent, toggleMobileNav);
+
+      /* Set active navigation item  */
+      var current_url = window.location.href;
+      if (current_url.indexOf("/blog") > -1) {
+        document.getElementById("nav-blog").classList.add("youarehere");
+      }
+    </script>
+    <div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-744"><script>
+  (function() {
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+	  var spSmartBarConfig = {
+  "content": {
+    "show": true,
+    "text": "Get 300+ Web Development Books and Courses for $9!"
+  },
+  "countdown": {
+    "show": true,
+    "offset": 12
+  },
+  "button": {
+    "show": true,
+    "text": "GET ACCESS NOW",
+    "href": "https://www.sitepoint.com/premium/products/Z2lkOi8vbGVhcm5hYmxlL1Byb2R1Y3QvMzA3?utm_source=smartbar&utm_medium=article&utm_campaign=$9"
+  },
+  "container": {
+    "timeout": 0
+  }
+} /* <-- Set config here */
+
+	  var sb = new SmartBar(spSmartBarConfig);
+      function _objectSpread(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{},o=Object.keys(n);"function"==typeof Object.getOwnPropertySymbols&&(o=o.concat(Object.getOwnPropertySymbols(n).filter(function(t){return Object.getOwnPropertyDescriptor(n,t).enumerable}))),o.forEach(function(e){_defineProperty(t,e,n[e])})}return t}function _defineProperty(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function SmartBar(){var t=this,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};function n(t){document.body.style.marginTop=t.getBoundingClientRect().height+"px"}this.init=function(){var t,e,n,o=window.localStorage.getItem("sp-smartbar-closed");(!o||(t=o,e=new Date(Date.parse(t)).getTime(),n=(new Date).getTime(),e<n))&&(this.config.countdown.show&&this.setTime(),this.config.countdown.show&&this.buildCountdown(),this.config.content.show&&this.buildText(),this.config.button.show&&this.buildButton(),this.buildCloseButton(),this.render())},this.defaults={content:{show:!0,text:"Get 170+ Web Dev Books - FREE for 7 days"},countdown:{show:!0,offset:23},button:{show:!0,text:"Start Free Trial",href:"https://www.sitepoint.com/premium/sign-up"},container:{timeout:0}},this.config=_objectSpread({},this.defaults,e),this.container=document.createElement("div"),this.body=document.createElement("div"),this.children={text:document.createElement("div"),countdown:document.createElement("div"),button:document.createElement("div")},this.buildText=function(){t.children.text.innerHTML="<span>".concat(t.config.content.text,"</span>")},this.setTime=function(){var e=window.localStorage.getItem("sp-countdown"),n=t.config.countdown.offset;if(n=(n=n>24?24:n)<=0?1:n,e)t.endtime=new Date(e);else{var o=new Date(Date.parse(new Date)+60*n*60*1e3);t.endtime=o,window.localStorage.setItem("sp-countdown",o)}},this.clearTime=function(){window.localStorage.removeItem("sp-countdown")},this.getRemainingTime=function(){var e=t.endtime-Date.parse(new Date),n=Math.floor(e/1e3%60),o=Math.floor(e/1e3/60%60),i=Math.floor(e/36e5%24);return(e<=0||isNaN(e))&&t.setTime(),{total:e,hours:i,minutes:o,seconds:n}},this.buildCountdown=function(){var e=t.getRemainingTime(),n=e.total,o=e.hours,i=e.minutes,s=e.seconds;n<=0&&(t.clearTime(),t.setTime()),isNaN(n)||(t.children.countdown.innerHTML='<span class="hours">'.concat(("0"+o).slice(-2),'</span>:<span class="minutes">').concat(("0"+i).slice(-2),'</span>:<span class="seconds">').concat(("0"+s).slice(-2),"</span>"))},this.buildButton=function(){t.children.button.innerHTML='<a href="'.concat(t.config.button.href,'">').concat(t.config.button.text,"</a>")},this.buildCloseButton=function(){t.closeButton=document.createElement("button"),t.closeButton.setAttribute("title","close"),t.closeButton.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 22.6 22.6" style="height: 1em; width: 1em; xml:space="preserve" preserveAspectRatio="none">\n<rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(0.7071 0.7071 -0.7071 0.7071 11.3137 -4.6863)" width="6" height="26"></rect>\n<rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 27.3137 11.3137)" width="6" height="26"></rect>\n</svg>'},this.hide=function(e){e.preventDefault();var n=window.getComputedStyle(document.body).marginTop,o=parseInt(n.split("px")[0]),i=t.container.getBoundingClientRect().height,s=new Date;s.setDate(s.getDate()+2),document.body.style.marginTop=i-o+"px",window.localStorage.setItem("sp-smartbar-closed",s),t.container.style.display="none"},this.render=function(){t.body.innerHTML="",t.container.setAttribute("class","sp-smartbar"),t.body.setAttribute("class","sp-smartbar__body"),t.children.text.setAttribute("class","sp-smartbar__text"),t.children.countdown.setAttribute("class","sp-smartbar__countdown"),t.children.button.setAttribute("class","sp-smartbar__button"),t.closeButton.setAttribute("class","sp-smartbar__close"),t.body.appendChild(t.closeButton),t.config.content.show&&t.body.appendChild(t.children.text),t.config.countdown.show&&(t.body.appendChild(t.children.countdown),setInterval(t.buildCountdown,1e3)),t.config.button.show&&t.body.appendChild(t.children.button),t.container.appendChild(t.body),document.body.appendChild(t.container),n(t.container),t.closeButton.addEventListener("click",t.hide),window.addEventListener("resize",function(){return n(t.container)})},this.init()}
+    });
+  })();
+</script>
+<style>
+  .sp-smartbar {
+    all: initial;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-size: 18px;
+    font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  }
+  .sp-smartbar__body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 0px;
+    padding: .5em 1.5em;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    background-color:#2c2c2c;
+    color: #fff;
+  }
+  .sp-smartbar__body > * {
+    margin: 0.25em 0.5em;
+  }
+  .sp-smartbar__close {
+    all: initial;
+    padding: .25em;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    color: #9b9b9b;
+    font-size: 20px;
+  }
+  .sp-smartbar__close rect {
+    fill: currentcolor;
+    stroke: currentcolor;
+  }
+  .sp-smartbar__text {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+  .sp-smartbar__countdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 1.5em;
+    font-weight: 800;
+    color: #fd6767;
+  }
+  .sp-smartbar__button a {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background: #3ec9cb;
+    padding: .5em 1.5em;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+</style></div>  </header><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-776"><div class="proper-ad-unit">
+    <div id="proper-ad-sitepoint_billboard"> <script> propertag.cmd.push(function() { proper_display('sitepoint_billboard'); }); </script> </div>
+</div></div>  <div class="l-p-rel t-bg-white sp-article" role="main">
+      <div class="l-p-rel l-w-100 l-mh-auto Article_overflow">
+        <div class="l-w-100 t-bg">
+      <div class="l-w-4col--4col l-mh3 l-mh-auto--3col">
+        <div class="f-medium f-c-grey-200 l-pt3">
+                    <ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="Article_breadcrumb l-ml0 f-minor l-mb0">
+            <li class="breadcrumb__item f-capitalize l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+              <a itemprop="item" itemscope="" itemtype="https://schema.org/Thing" class="f-c-white f-bold" href="https://www.sitepoint.com/javascript/">
+                <span itemprop="name">
+                  javascript                </span>
+              </a>
+            </li>
+            <li class="breadcrumb__item f-c-grey-200 l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                              <span itemprop="name">
+                  September 07, 2016                </span>
+                          </li>
+            <li class="breadcrumb__item l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                                By
+                  <a itemprop="item" itemscope="" itemtype="https://schema.org/Thing" class="f-c-grey-200" href="https://www.sitepoint.com/author/jshridhar/">
+                    <span itemprop="name">
+                      Jatin Shridhar                    </span>
+                  </a>
+                                          </li>
+          </ol>
+        </div>
+        <div class="l-d-f l-fd-col l-fd-row--3col l-jc-sb">
+          <div>
+            <h1 class="l-mt0 f-bold f-icon-bold l-mb4 f-c-white">
+              <span class="f-c-white l-mr3">Getting Started with PouchDB Client-Side JavaScript Database</span>
+            </h1>
+                      </div>
+        </div>
+      </div>
+    </div>
+            <div class="l-d-f l-jc-sb l-mt3 l-w-4col--4col l-mh-auto" data-hellobar="content">
+      <div class="l-w-100 l-fg1 l-mh3--2col l-mh0--4col l-o-h">
+                    <div class="l-pa3 l-pt0">
+    
+      <div class="l-d-f l-jc-cen f-center l-mh-auto l-o-h l-mt3">
+              </div>
+
+        <div class="ArticleCopy language-javascript">
+      <sp-social-share><div class="social-share social-share--left"><button class="sp-share sp-share--facebook" aria-label="Share Sitepoint on facebook" data-network="facebook"><div class="fab fa-facebook-f"></div></button><button class="sp-share sp-share--twitter" aria-label="Share Sitepoint on twitter" data-network="twitter"><div class="fab fa-twitter"></div></button><button class="sp-share sp-share--reddit" aria-label="Share Sitepoint on reddit" data-network="reddit"><div class="fab fa-reddit-alien"></div></button><button class="sp-share sp-share--email" aria-label="Share Sitepoint on email" data-network="email"><div class="fa fa-envelope"></div></button></div></sp-social-share>
+      <div class="l-mt3 l-mh5--2col">
+        
+<p><em>This article was peer reviewed by <a href="https://www.sitepoint.com/community/users/m3g4p0p/activity">Sebastian Seitz</a> and <a href="https://www.sitepoint.com/author/tspahiu">Taulant Spahiu</a>. Thanks to all of SitePoint’s peer reviewers for making SitePoint content the best it can be!</em></p>
+
+<p>Over recent years, client side web applications have gotten more and more sophisticated. Browsers have consistently been providing better JavaScript performance, and are capable of doing more and more things, with rich JavaScript APIs for things like geolocation, and peer-to-peer communication.</p>
+<p>The rise of rich web applications also created a need for good client-side storage mechanisms, and that is where JavaScript databases like <a href="https://pouchdb.com/">PouchDB</a> come in.</p>
+<h2 id="whatispouchdb">What is PouchDB?</h2>
+<blockquote>
+<p>PouchDB is an open-source JavaScript database inspired by Apache CouchDB that is designed to run well within the browser.</p>
+</blockquote>
+<h3 id="whatisajavascriptdatabase">What is a JavaScript database?</h3>
+<p>In very simple terms, a JavaScript database is a JavaScript object that provides methods (or API) to put, get and search data. In fact, a plain old JavaScript object is the simplest kind of JavaScript database. If you are familiar with <a href="https://www.meteor.com/">Meteor</a>, then you might have heard of <a href="https://guide.meteor.com/collections.html#client-collections">Minimongo</a> which is another client side JavaScript database that mimics that MongoDB API. </p>
+<blockquote>
+<p>PouchDB is a JavaScript implementation of CouchDB. Its goal is to emulate the CouchDB API with near-perfect fidelity, while running in the browser or in Node.js.</p>
+</blockquote>
+<p>What makes PouchDB different from databases like Minimongo is that, by default, it is <em>not</em> just in-memory, it uses <a href="https://developer.mozilla.org/en/docs/Web/API/IndexedDB_API">IndexedDB</a> behind the scenes for its storage. IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. What this means is that PouchDB data is stored on disk, and will be available even after page refresh (however, data stored by one browser will not be available to other browsers).</p>
+<p>Different <a href="https://pouchdb.com/adapters.html">adapters</a> let you change the underlying data storage layer.</p>
+<h3 id="relationtocouchdb">Relation to CouchDB</h3>
+<p>PouchDB is a JavaScript implementation of CouchDB, and emulates it’s API as closely as possible.</p>
+<p>In CouchDB, you’d fetch all the documents using this API call</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token operator">/</span>db<span class="token operator">/</span>_all_docs<span class="token operator">?</span>include_docs<span class="token operator">=</span><span class="token boolean">true</span>
+</code></pre>
+<p>In PouchDB, it becomes</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">db<span class="token punctuation">.</span><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">{</span>include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>PouchDB enables applications to store data locally while offline, then synchronize it with CouchDB when the application is back online. </p>
+<p>Now, let’s see how you can use PouchDB in your applications.</p>
+<h2 id="installation">Installation</h2>
+<p>To start using PouchDB you just need to include the PouchDB client library. You can use the standalone build, which makes the <code class="  language-javascript">PouchDB</code> constructor globally available on the <code class="  language-javascript">window</code> object<proper-ad id="2"><div class="proper-ad-unit"></div></proper-ad></p>
+<pre class="  language-markup"><code class="markup  language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>or, if you are using it in Node.js/browserify/webpack environment, you can install it with <code class="  language-javascript">npm</code>. </p>
+<pre class="  language-bash"><code class="bash  language-bash">$ npm install pouchdb --save
+</code></pre>
+<p>Then in your JavaScript:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token keyword">var</span> PouchDB <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'pouchdb'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>(Fun Fact: <code class="  language-javascript">npm isntall pouchdb</code> also works!)</p>
+<h2 id="workingwithpouchdb">Working with PouchDB</h2>
+<h3 id="creatingadatabase">Creating a database</h3>
+<p>Creating a PouchDB database is as simple as calling the PouchDB constructor. Let’s create a database called ‘Movies’.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token keyword">var</span> movies <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PouchDB</span><span class="token punctuation">(</span><span class="token string">'Movies'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>After running that, you can see basic information about your database, by using the <code class="  language-javascript">info</code> method, which returns a <code class="  language-javascript">Promise</code>.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+ <span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">info</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>The code above outputs the following:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token punctuation">{</span><span class="token string">"doc_count"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"update_seq"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"idb_attachment_format"</span><span class="token punctuation">:</span><span class="token string">"binary"</span><span class="token punctuation">,</span><span class="token string">"db_name"</span><span class="token punctuation">:</span><span class="token string">"Movies"</span><span class="token punctuation">,</span><span class="token string">"auto_compaction"</span><span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span><span class="token string">"adapter"</span><span class="token punctuation">:</span><span class="token string">"idb"</span><span class="token punctuation">}</span>
+</code></pre>
+<p>The <code class="  language-javascript">adapter</code> field indicates that underneath it’s using IndexedDB.</p>
+<h3 id="workingwithdocuments">Working with documents</h3>
+<p>PouchDB is a NoSQL, document-based database, so there is no rigid schema and you can just insert JSON documents directly. Let’s see how you can insert, update, retrieve or delete documents.</p>
+<h4 id="creatingadocument">Creating a document</h4>
+<p>You can create a new document using the <code class="  language-javascript">put</code> method</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// returns a promise</span>
+db<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>doc<span class="token punctuation">,</span> <span class="token punctuation">[</span>docId<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>docRev<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>options<span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre>
+<p>The params in square brackets are optional. Each document has an <code class="  language-javascript">_id</code> field associated with it, which works as a unique identifier.</p>
+<p>Create a new doc in the previously created <code class="  language-javascript">Movies</code> database by running the following code:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    _id<span class="token punctuation">:</span> <span class="token string">'tdkr'</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token string">'The Dark Knight Rises'</span><span class="token punctuation">,</span>
+    director<span class="token punctuation">:</span> <span class="token string">'Christopher Nolan'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Success"</span><span class="token punctuation">,</span> response<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Error"</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>The response, in case of success, will be something like:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">Success <span class="token punctuation">{</span>ok<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token string">"tdkr"</span><span class="token punctuation">,</span> rev<span class="token punctuation">:</span> <span class="token string">"3-f8afdea539618c3e8dceb20ba1659d2b"</span><span class="token punctuation">}</span>
+</code></pre>
+<p>Calling <code class="  language-javascript">movies<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> now will give <code class="  language-javascript"><span class="token punctuation">{</span>doc_count<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span></code> along with other data indicating that our document has indeed been inserted.<proper-ad id="3"><div class="proper-ad-unit"></div></proper-ad></p>
+<p>The <code class="  language-javascript">rev</code> field in the response indicates a revision of document. Each document has a field by the name <code class="  language-javascript">_rev</code>. Every time a document is updated, the <code class="  language-javascript">_rev</code> field of document is changed. Each revision point to it’s previous revision. PouchDB maintains a history of each document (much like git).</p>
+<h4 id="readadocument">Read a Document</h4>
+<p>PouchDB provides a <code class="  language-javascript"><span class="token keyword">get</span></code> API method to retrieve a document by its ID. Running:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'tdkr'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">doc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>will give a response like</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token punctuation">{</span>title<span class="token punctuation">:</span> <span class="token string">"The Dark Knight Rises"</span><span class="token punctuation">,</span> director<span class="token punctuation">:</span> <span class="token string">"Christopher Nolan"</span><span class="token punctuation">,</span> _id<span class="token punctuation">:</span> <span class="token string">"tdkr"</span><span class="token punctuation">,</span> _rev<span class="token punctuation">:</span> <span class="token string">"3-f8afdea539618c3e8dceb20ba1659d2b"</span><span class="token punctuation">}</span>
+</code></pre>
+<h4 id="updateadocument">Update a Document</h4>
+<p>Let’s say we want to add a ‘year’ field to our document. You’d update the above created doc by running:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'tdkr'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">doc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    doc<span class="token punctuation">.</span>year <span class="token operator">=</span> <span class="token string">"2012"</span>    <span class="token comment">// new field</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>doc<span class="token punctuation">.</span>_rev<span class="token punctuation">)</span> <span class="token comment">// doc has a '_rev' field</span>
+    <span class="token keyword">return</span> db<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span>   <span class="token comment">// put updated doc, will create new revision</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>When updating a document, you must provide a <code class="  language-javascript">_rev</code> field.</p>
+<p>You should see similar output in console:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token punctuation">{</span>ok<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token string">"tdkr"</span><span class="token punctuation">,</span> rev<span class="token punctuation">:</span> <span class="token string">"4-7a34189fb8f2e28fe08b666e699755b8"</span><span class="token punctuation">}</span>
+</code></pre>
+<p>indicating the new revision of document.</p>
+<h4 id="deletingdocuments">Deleting Documents</h4>
+<p>Deleting a document in PouchDB just sets it’s <code class="  language-javascript">_deleted</code> property to <code class="  language-javascript"><span class="token boolean">true</span></code>. You can call <code class="  language-javascript"><span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> to do that:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'tdkr'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">doc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> movies<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span> <span class="token comment">// return the promise</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Remove operation response"</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>which is equivalent to doing</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'tdkr'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">doc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    doc<span class="token punctuation">.</span>_deleted <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token keyword">return</span> db<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="deletingadatabase">Deleting a database</h3>
+<p>You can delete a database by calling <code class="  language-javascript"><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> on the db object.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// returns a promise</span>
+movies<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+</code></pre>
+<h2 id="bulkoperations">Bulk Operations</h2>
+<p>Until now we have worked with individual documents in PouchDB. It, however, also provides APIs to work with a collection of documents. PouchDB provides two methods for bulk operations – <code class="  language-javascript"><span class="token function">bulkDocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> for bulk writes, and <code class="  language-javascript"><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> for bulk reads.</p>
+<p>The <code class="  language-javascript"><span class="token function">bulkDocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> method is pretty simple. It just takes an array of documents that you want to insert into the database.</p>
+<h3 id="insertmultipledocuments">Insert multiple documents</h3>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// Returns a promise</span>
+movies<span class="token punctuation">.</span><span class="token function">bulkDocs</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    _id<span class="token punctuation">:</span> <span class="token string">'easy-a'</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token string">"Easy A"</span><span class="token punctuation">,</span>
+    <span class="token comment">// other attribues</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    _id<span class="token punctuation">:</span> <span class="token string">'black-swan'</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Black Swan'</span><span class="token punctuation">,</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre>
+<p>Sample Response:<proper-ad id="4"><div class="proper-ad-unit"></div></proper-ad></p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token string">"ok"</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"easy-a"</span><span class="token punctuation">,</span>
+    <span class="token string">"rev"</span><span class="token punctuation">:</span> <span class="token string">"1-84abc2a942007bee7cf55007cba56198"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token string">"ok"</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"black-swan"</span><span class="token punctuation">,</span>
+    <span class="token string">"rev"</span><span class="token punctuation">:</span> <span class="token string">"1-7b80fc50b6af7a905f368670429a757e"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+<p>If you want to insert multiple documents, using the bulk API is generally a better way than doing multiple <code class="  language-javascript"><span class="token function">put</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> requests. Bulk operations tend to be faster than individual operations, because they can be combined into a single transaction (for a local IndexedDB/WebSQL store) or a single HTTP request (for a remote CouchDB server).</p>
+<h3 id="retrievemultipledocuments">Retrieve Multiple Documents</h3>
+<p>To read multiple docs, PouchDB provides the <code class="  language-javascript"><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> method. </p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// without {include_docs: true}, only document ids are returned</span>
+movies
+  <span class="token punctuation">.</span><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">{</span>include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">docs</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>docs<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>It’s a fast and very useful method. From the PouchDB documentation:</p>
+<blockquote>
+<p>allDocs() is the unsung star of the PouchDB world. It not only returns documents in order – it also allows you to reverse the order, filter by _id, slice and dice using “greater than” and “less than” operations on the _id, and much more.</p>
+</blockquote>
+<p>By default, the documents are returned in ascending <code class="  language-javascript">_id</code> order. You can specify <code class="  language-javascript"><span class="token punctuation">{</span>descending<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span></code> to reverse the order.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> 
+    descending<span class="token punctuation">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span>
+</code></pre>
+<p>You can also specify a <code class="  language-javascript">startkey</code> and <code class="  language-javascript">endkey</code> parameter to get documents within a range. For example, to get all the movies whose <code class="  language-javascript">_id</code> starts with ‘a’, or ‘b’, you could run this query:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">movies
+  <span class="token punctuation">.</span><span class="token function">allDocs</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    startkey<span class="token punctuation">:</span> <span class="token string">'a'</span><span class="token punctuation">,</span>
+    endkey<span class="token punctuation">:</span> <span class="token string">'c'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span>
+</code></pre>
+<p>The <code class="  language-javascript">startKey</code> and <code class="  language-javascript">endKey</code> parameters are particularly useful for paginated APIs. </p>
+<h2 id="gorealtimewithchangefeeds">Go Realtime with ChangeFeeds</h2>
+<p>We talked about how PouchDB uses the <code class="  language-javascript">_rev</code> field to keep track of revisions, with each revision pointing to the previous revision. PouchDB and CouchDB use this chain of revisions for database replication. </p>
+<p>However, an implication of this replication algorithm is that it allows you to see the history of the database, letting you answer questions like</p>
+<ul><li>What changes have been made to the database since a given time?</li>
+<li>What changes have been made to a particular document?</li>
+</ul><p>This is where the <code class="  language-javascript"><span class="token function">changes</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> API comes in.</p>
+<p>To fetch all changes since the beginning of time:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">db<span class="token punctuation">.</span><span class="token function">changes</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  since<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">changes</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>changes<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span>
+</code></pre>
+<p>However, in a web application you are generally more interested in seeing the changes to database that occur after initial page load, so that you can change the UI accordingly. The PouchDB/CouchDB duo have got you covered there also with the live change feed.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">db
+  <span class="token punctuation">.</span><span class="token function">changes</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    since<span class="token punctuation">:</span> <span class="token string">'now'</span><span class="token punctuation">,</span>
+    live<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    include_docs<span class="token punctuation">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'change'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">change</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// This is where you can modify UI, based on database change.</span>
+    <span class="token comment">// change.id contains the doc id, change.doc contains the doc</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>change<span class="token punctuation">.</span>deleted<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// document was deleted</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// document was added/modified</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// handle errors</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>So, if you had, say, a basic list application, then you could add items in one window, and they’d show up in another window in real-time. </p>
+<p>You can see a <a href="https://sitepoint-editors.github.io/pouchdb-demo">demo of this in action</a>.</p>
+<h2 id="synctakepouchdbdatabeyondbrowser">Sync: Take PouchDB Data Beyond Browser</h2>
+<p>Most apps will need to store data on the back-end and not just in the browser, so you can use PouchDB to save your data locally, but sync it with a back-end CouchDB instance so that the data is available anywhere and not just in that particular browser.</p>
+<p>PouchDB provides a very simple API to do this. Assuming, you have a remote CouchDB database set up, syncing it just a matter of two lines of JavaScript.</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// local database, that lives in the browser's IndexedDB store</span>
+<span class="token keyword">var</span> localDB <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PouchDB</span><span class="token punctuation">(</span><span class="token string">'mylocaldb'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// remote CouchDB </span>
+<span class="token keyword">var</span> remoteDB <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PouchDB</span><span class="token punctuation">(</span><span class="token string">'http://localhost:5984/myremotedb'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>You can replicate local changes to a remote DB by writing</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript">localDB
+  <span class="token punctuation">.</span>replicate
+  <span class="token punctuation">.</span><span class="token function">to</span><span class="token punctuation">(</span>remoteDB<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// local changes replicated to remote</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// error while replicating</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>However, since many users might have access to same database, it’s more useful to be able to sync changes from a remote DB to the browser. PouchDB has got you covered there also. </p>
+<p>The bidirectional sync can be achieved using this one line of JavaScript:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// replicates once</span>
+localDB<span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span>remoteDB<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Or for live sync:</p>
+<pre class="  language-javascript"><code class="javascript  language-javascript"><span class="token comment">// keeps syncing changes as they occur</span>
+localDB<span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span>remoteDB<span class="token punctuation">,</span> <span class="token punctuation">{</span>live<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="nextsteps">Next Steps</h2>
+<p>PouchDB also has a growing ecosystem of <a href="https://pouchdb.com/external.html">plugins and framework adaptors</a> that we don’t have the space to go into here, but are definitely worth checking out. Also, while working with PouchDB, you can use <a href="https://chrome.google.com/webstore/detail/pouchdb-inspector/hbhhpaojmpfimakffndmpmpndcmonkfa">PouchDB Inspector</a> chrome extension, which provides a nice GUI to see your database.</p>
+<p>That’s it for this introductory look at PouchDB. It’s definitely one of the more interesting databases out there, and I hope you can see how you could use it to build offline-first, real-time applications.</p>
+      <div class="Article_authorBio l-mv4 t-bg-white m-border l-pa3">
+        <div class="l-d-f l-pt3">
+          <a class="l-s5 l-pa0 l-mr3 l-round l-o-h" href="https://www.sitepoint.com/author/jshridhar/">
+            <img src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/aef4fb0215aa823283069dea27053787.png" width="96" height="96" alt="" class="avatar avatar-96 wp-user-avatar wp-user-avatar-96 photo avatar-default">          </a>
+          <div class="f-lh-title">
+            <div class="f-c-grey-300">Meet the author</div>
+            <div class="f-large">
+              <a class="f-bold f-c-grey-500" href="https://www.sitepoint.com/author/jshridhar/">
+                Jatin Shridhar              </a>
+                          </div>
+          </div>
+        </div>
+        <div class="f-light f-lh-copy l-mt3">Jatin is an existing software dev, and aspiring stand up comic. Previously he has worked for Amazon. For a long time, he thought that .js referred to his initials.</div>
+      </div>
+            </div>
+    </div>
+        </div>
+          </div>
+              <div class="article-ads">
+              <div class="l-w-aside-i l-mt3 l-mh3 l-d-n l-d-f--3col l-fd-col l-fs0">
+      <div class="l-mb3">
+            <sp-heading content="Sponsors"></sp-heading>
+    <div class="l-w-100 l-mv3 t-bg-white m-border"><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-765"><div class="proper-ad-unit">
+
+    <div id="proper-ad-sitepoint_sponsor_1"> <script> propertag.cmd.push(function() { proper_display('sitepoint_sponsor_1'); }); </script> </div>
+
+</div></div></div>
+            <div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-301"><adblock-msg data-sidebar="true"><div class=""><div class="AdblockMessage_msg f-left f-larger f-lh-title l-pa3"><div></div></div></div></adblock-msg></div><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-763"><div class="proper-ad-unit">
+
+    <div id="proper-ad-sitepoint_side_1"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_1'); }); </script> 
+
+</div>
+</div></div>      </div>
+      <div class="ArticleBox u-premium-preview"></div>
+      <div class="ArticleAside_row"><div class="widget maestro maestro-content-type-html " id="maestro-728"><div class="proper-ad-unit">
+    <div id="proper-ad-sitepoint_side_2"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_2'); }); </script> </div>
+</div></div><div class="widget maestro maestro-content-type-html " id="maestro-730" style="min-width: 300px;"><div class="proper-ad-unit Sticky u-fixed" style="top: 115px;">
+
+    <div id="proper-ad-sitepoint_side_3"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_3'); }); </script> </div>
+
+</div></div>        <ads-weighted widget="21" data="{&quot;NL&quot;:[{&quot;id&quot;:&quot;584&quot;,&quot;weight&quot;:&quot;50&quot;,&quot;randMax&quot;:50},{&quot;id&quot;:&quot;585&quot;,&quot;weight&quot;:&quot;50&quot;,&quot;randMax&quot;:100}]}" fallback="" url="getting-started-with-pouchdb" channelslug="javascript"></ads-weighted></div>
+      <div class="ArticleAside_row ArticleAside_newboxads"></div>
+    </div>
+            </div>
+          </div>
+
+    <div class="u-accordion-end"></div>
+
+    <div class="l-d-f l-jc-sb l-w-3col--3col l-mh-auto">
+      <div class="u-showseriesx l-w-100 l-fg1 l-mh3--2col l-mh0--4col">
+
+        <div class="widget maestro maestro-content-type-html hide-for-tablet-SP hide-for-mobile-SP" id="maestro-649"><span data-sumome-listbuilder-embed-id="6cbb401075afaa88f82a6ddc686573be3368d07928cf833fe1a56254d6ff9849"></span></div>
+                <div id="commentsSection" class="l-pa3 t-bg-white">
+                  </div>
+      </div>
+    </div>
+
+    
+    <script>
+      var data = 'javascript';
+      if (localStorage && localStorage.SP_categories) {
+        data = JSON.parse(localStorage.SP_categories).toString();
+        data = data ? data.replace('-', '') : 'javascript'
+      }
+
+      oSpP && oSpP.push('channel', data);
+    </script>
+    </div>
+
+    <script>
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      post_id: 138528,
+      title: "Getting Started with PouchDB Client-Side JavaScript Database",
+      category: "JavaScript",
+      tags: ["databases","nilsonj","nosql","PouchDB"],
+      authors: ["Jatin Shridhar"],
+      permalink: "https:\/\/www.sitepoint.com\/getting-started-with-pouchdb\/",
+      published: "20160907",
+      sponsored: false    })
+  </script>
+
+    <style type="text/css">.alm-btn-wrap .alm-load-more-btn{font-size:15px;font-weight:600;width:auto;height:42px;line-height:42px;background:#ed7070;color:#fff;border:none;border-radius:4px;margin:0 0 4px;padding:0 20px;display:inline-block;position:relative;-webkit-transition:all .35s ease;transition:all .35s ease;text-align:center;text-decoration:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer}.alm-btn-wrap .alm-load-more-btn.loading,.alm-btn-wrap .alm-load-more-btn:hover{background-color:#e06464;color:#fff;text-decoration:none}.alm-btn-wrap .alm-load-more-btn:active{-webkit-box-shadow:inset 0 2px 1px rgba(0,0,0,.1);box-shadow:inset 0 2px 1px rgba(0,0,0,.1);text-decoration:none}.alm-btn-wrap .alm-load-more-btn.loading{cursor:default;outline:0;padding-left:44px}.alm-btn-wrap .alm-load-more-btn.done{cursor:default;opacity:.15;background-color:#ed7070;outline:0!important;-webkit-box-shadow:none!important;box-shadow:none!important}.alm-btn-wrap .alm-load-more-btn.done:before,.alm-btn-wrap .alm-load-more-btn:before{background:0 0;width:0}.alm-btn-wrap .alm-load-more-btn.loading:before{background:#fff url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/ajax-loader.gif) no-repeat center center;width:30px;height:30px;margin:6px;border-radius:3px;display:inline-block;z-index:0;content:'';position:absolute;left:0;top:0;overflow:hidden;-webkit-transition:width .5s ease-in-out;transition:width .5s ease-in-out}.alm-btn-wrap,.alm-masonry{display:block;overflow:hidden;clear:both}.alm-btn-wrap{text-align:center;padding:10px 0 25px}.ajax-load-more-wrap.blue .alm-load-more-btn{background-color:#0081bf}.ajax-load-more-wrap.blue .alm-load-more-btn.done,.ajax-load-more-wrap.blue .alm-load-more-btn.loading,.ajax-load-more-wrap.blue .alm-load-more-btn:hover{background-color:#0073aa}.ajax-load-more-wrap.green .alm-load-more-btn{background-color:#6fca68}.ajax-load-more-wrap.green .alm-load-more-btn.done,.ajax-load-more-wrap.green .alm-load-more-btn.loading,.ajax-load-more-wrap.green .alm-load-more-btn:hover{background-color:#64b95e}.ajax-load-more-wrap.red .alm-load-more-btn{background-color:#ca4b4b}.ajax-load-more-wrap.red .alm-load-more-btn.done,.ajax-load-more-wrap.red .alm-load-more-btn.loading,.ajax-load-more-wrap.red .alm-load-more-btn:hover{background-color:#b13b3b}.ajax-load-more-wrap.purple .alm-load-more-btn{background-color:#a86bb9}.ajax-load-more-wrap.purple .alm-load-more-btn.done,.ajax-load-more-wrap.purple .alm-load-more-btn.loading,.ajax-load-more-wrap.purple .alm-load-more-btn:hover{background-color:#9963a8}.ajax-load-more-wrap.grey .alm-load-more-btn{background-color:#888}.ajax-load-more-wrap.grey .alm-load-more-btn.done,.ajax-load-more-wrap.grey .alm-load-more-btn.loading,.ajax-load-more-wrap.grey .alm-load-more-btn:hover{background-color:#777}.ajax-load-more-wrap.white .alm-load-more-btn{background-color:#fff;color:#666;border:1px solid #efefef}.ajax-load-more-wrap.white .alm-load-more-btn.done,.ajax-load-more-wrap.white .alm-load-more-btn.loading,.ajax-load-more-wrap.white .alm-load-more-btn:hover{background-color:#efefef;color:#333}.ajax-load-more-wrap.white .alm-load-more-btn.done{border-color:#fff}.ajax-load-more-wrap.infinite .alm-load-more-btn{width:100%;background-color:transparent!important;background-position:center center;background-repeat:no-repeat;background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/spinner.gif);border:none!important;opacity:0;-webkit-transition:opacity .2s ease;transition:opacity .2s ease;-webkit-box-shadow:none!important;box-shadow:none!important;overflow:hidden;text-indent:-9999px;cursor:default!important;outline:0!important}.ajax-load-more-wrap.infinite .alm-load-more-btn:before{display:none!important}.ajax-load-more-wrap.infinite .alm-load-more-btn:active,.ajax-load-more-wrap.infinite .alm-load-more-btn:focus{outline:0}.ajax-load-more-wrap.infinite .alm-load-more-btn.done{opacity:0}.ajax-load-more-wrap.infinite .alm-load-more-btn.loading{opacity:1}.ajax-load-more-wrap.infinite.skype .alm-load-more-btn{background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/spinner-skype.gif)}.ajax-load-more-wrap.infinite.ring .alm-load-more-btn{background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif)}.ajax-load-more-wrap.infinite.fading-blocks .alm-load-more-btn{background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/loader-fading-blocks.gif)}.ajax-load-more-wrap.infinite.fading-circles .alm-load-more-btn{background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/loader-fading-circles.gif)}.ajax-load-more-wrap.infinite.chasing-arrows .alm-load-more-btn{background-image:url(https://www.sitepoint.com/wp-content/plugins/ajax-load-more/core/img/spinner-chasing-arrows.gif)}.alm-listing{margin:0;padding:0}.alm-listing .alm-reveal{outline:0}.alm-listing .alm-paging-content>li,.alm-listing .alm-reveal>li,.alm-listing>li{background:0 0;margin:0 0 30px;padding:0 0 0 170px;overflow:hidden;position:relative;list-style:none}.alm-listing .alm-paging-content>li.no-img,.alm-listing .alm-reveal>li.no-img,.alm-listing>li.no-img{padding:0}.alm-listing .alm-paging-content>li p,.alm-listing .alm-reveal>li p,.alm-listing>li p{margin:0}.alm-listing .alm-paging-content>li p.entry-meta,.alm-listing .alm-reveal>li p.entry-meta,.alm-listing>li p.entry-meta{margin:0 0 5px;opacity:.75}.alm-listing .alm-paging-content>li h3,.alm-listing .alm-reveal>li h3,.alm-listing>li h3{margin:0 0 10px}.alm-listing .alm-paging-content>li img,.alm-listing .alm-reveal>li img,.alm-listing>li img{position:absolute;left:0;top:0;border-radius:2px}</style><div id="ajax-load-more" class="ajax-load-more-wrap infinite classic alm-0" data-alm-id="0" data-canonical-url="https://www.sitepoint.com/getting-started-with-pouchdb/" data-slug="getting-started-with-pouchdb" data-post-id="138528" data-total-posts="3227"><div aria-live="polite" class="alm-listing alm-ajax" data-container-type="div" data-repeater="default" data-post-type="post" data-category="javascript,tools-libraries" data-post-not-in="138528" data-order="DESC" data-orderby="date" data-offset="0" data-posts-per-page="1" data-scroll="true" data-scroll-distance="-2000" data-max-pages="0" data-pause-override="true" data-pause="true" data-button-label="Older Posts" data-transition="fade" data-transition-container-classes=" next-article l-o-h" data-images-loaded="true"><div class="alm-reveal next-article l-o-h" style="opacity: 1; height: auto; outline: none;">
+<div class="sp-article-next" data-id="172407" data-url="https://www.sitepoint.com/redux-deep-dive/" data-title="A Deep Dive into Redux">
+    <div class="l-p-rel l-w-100 l-mh-auto Article_overflow">
+        <div class="l-w-100 t-bg">
+      <div class="l-w-4col--4col l-mh3 l-mh-auto--3col">
+        <div class="f-medium f-c-grey-200 l-pt3">
+                    <ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="Article_breadcrumb l-ml0 f-minor l-mb0">
+            <li class="breadcrumb__item f-capitalize l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+              <a itemprop="item" itemscope="" itemtype="https://schema.org/Thing" class="f-c-white f-bold" href="https://www.sitepoint.com/javascript/">
+                <span itemprop="name">
+                  javascript                </span>
+              </a>
+            </li>
+            <li class="breadcrumb__item f-c-grey-200 l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                              <span itemprop="name">
+                  June 13, 2019                </span>
+                          </li>
+            <li class="breadcrumb__item l-d-ib t-ls-n" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                                By
+                  <a itemprop="item" itemscope="" itemtype="https://schema.org/Thing" class="f-c-grey-200" href="https://www.sitepoint.com/author/creyes/">
+                    <span itemprop="name">
+                      Camilo Reyes                    </span>
+                  </a>
+                                          </li>
+          </ol>
+        </div>
+        <div class="l-d-f l-fd-col l-fd-row--3col l-jc-sb">
+          <div>
+            <h1 class="l-mt0 f-bold f-icon-bold l-mb4 f-c-white">
+              <span class="f-c-white l-mr3">A Deep Dive into Redux</span>
+            </h1>
+                      </div>
+        </div>
+      </div>
+    </div>
+            <div class="l-d-f l-jc-sb l-mt3 l-w-4col--4col l-mh-auto" data-hellobar="content">
+      <div class="l-w-100 l-fg1 l-mh3--2col l-mh0--4col l-o-h">
+                    <div class="l-pa3 l-pt0">
+    
+      <div class="l-d-f l-jc-cen f-center l-mh-auto l-o-h l-mt3">
+              </div>
+
+        <div class="ArticleCopy language-javascript">
+      <sp-social-share></sp-social-share>
+      <div class="l-mt3 l-mh5--2col">
+        
+<p><strong>Building stateful modern applications is complex. As state mutates, the app becomes unpredictable and hard to maintain. That’s where Redux comes in. Redux is a lightweight library that tackles state. Think of it as a state machine.</strong></p>
+<p>In this article, I’ll delve into Redux’s state container by building a payroll processing engine. The app will store pay stubs, along with all the extras — such as bonuses and stock options. I’ll keep the solution in plain JavaScript with TypeScript for type checking. Since Redux is super testable, I’ll also use Jest to verify the app.</p>
+<p>For the purposes of this tutorial, I’ll assume a moderate level of familiarity with JavaScript, Node, and npm.</p>
+<p>To begin, you can initialize this app with npm:</p>
+<pre class=" language-shell"><code class="shell  language-shell">npm init
+</code></pre>
+<p>When asked about the test command, go ahead and put <code class=" language-javascript">jest</code>. This means <code class=" language-javascript">npm t</code> will fire up Jest and run all unit tests. The main file will be <code class=" language-javascript">index<span class="token punctuation">.</span>js</code> to keep it nice and simple. Feel free to answer the rest of the <code class=" language-javascript">npm init</code> questions to your heart’s content.</p>
+<p>I’ll use TypeScript for type checking and nailing down the data model. This aids in conceptualizing what we’re trying to build.</p>
+<p>To get going with TypeScript:</p>
+<pre class=" language-shell"><code class="shell  language-shell">npm i typescript --save-dev
+</code></pre>
+<p>I’ll keep dependencies that are part of the dev workflow in <code class=" language-javascript">devDependencies</code>. This makes it clear which dependencies are for developers and which goes to prod. With TypeScript ready, add a <code class=" language-javascript">start</code> script in the <code class=" language-javascript"><span class="token keyword">package</span><span class="token punctuation">.</span>json</code>:</p>
+<pre class=" language-javascript"><code class="javascript  language-javascript"><span class="token string">"start"</span><span class="token punctuation">:</span> <span class="token string">"tsc &amp;&amp; node .bin/index.js"</span>
+</code></pre>
+<p>Create an <code class=" language-javascript">index<span class="token punctuation">.</span>ts</code> file under the <code class=" language-javascript">src</code> folder. This separates source files from the rest of the project. If you do an <code class=" language-javascript">npm start</code>, the solution will fail to execute. This is because you’ll need to configure TypeScript.</p>
+<p>Create a <code class=" language-javascript">tsconfig<span class="token punctuation">.</span>json</code> file with the following configuration:</p>
+<pre class=" language-javascript"><code class="javascript  language-javascript"><span class="token punctuation">{</span>
+  <span class="token string">"compilerOptions"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token string">"strict"</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token string">"lib"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"esnext"</span><span class="token punctuation">,</span> <span class="token string">"dom"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">"outDir"</span><span class="token punctuation">:</span> <span class="token string">".bin"</span><span class="token punctuation">,</span>
+    <span class="token string">"sourceMap"</span><span class="token punctuation">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token string">"files"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"src/index"</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>I could have put this configuration in a <code class=" language-javascript">tsc</code> command-line argument. For example, <code class=" language-javascript">tsc src<span class="token operator">/</span>index<span class="token punctuation">.</span>ts <span class="token operator">--</span>strict <span class="token operator">...</span></code>. But it’s much cleaner to go ahead and put all this in a separate file. Note the <code class=" language-javascript">start</code> script in <code class=" language-javascript"><span class="token keyword">package</span><span class="token punctuation">.</span>json</code> only needs a single <code class=" language-javascript">tsc</code> command.</p>
+<p>Here are sensible compiler options that will give us a good starting point, and what each option means:</p>
+<ul><li><strong>strict</strong>: enable all strict type checking options, i.e., <code class=" language-javascript"><span class="token operator">--</span>noImplicitAny</code>, <code class=" language-javascript"><span class="token operator">--</span>strictNullChecks</code>, etc.</li>
+<li><strong>lib</strong>: list of library files included in the compilation</li>
+<li><strong>outDir</strong>: redirect output to this directory</li>
+<li><strong>sourceMap</strong>: generate source map file useful for debugging</li>
+<li><strong>files</strong>: input files fed to the compiler</li>
+</ul><p>Because I’ll be using Jest for unit testing, I’ll go ahead and add it:</p>
+<pre class=" language-shell"><code class="shell  language-shell">npm i jest ts-jest @types/jest @types/node --save-dev
+</code></pre>
+<p>The <code class=" language-javascript">ts<span class="token operator">-</span>jest</code> dependency adds type checking to the testing framework. One gotcha is to add a <code class=" language-javascript">jest</code> configuration in <code class=" language-javascript"><span class="token keyword">package</span><span class="token punctuation">.</span>json</code>:<proper-ad id="2"></proper-ad></p>
+<pre class=" language-javascript"><code class="javascript  language-javascript"><span class="token string">"jest"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+  <span class="token string">"preset"</span><span class="token punctuation">:</span> <span class="token string">"ts-jest"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>This makes it so the testing framework picks up TypeScript files and knows how to transpile them. One nice feature with this is you get type checking while running unit tests. To make sure this project is ready, create a <code class=" language-javascript">__tests__</code> folder with an <code class=" language-javascript">index<span class="token punctuation">.</span>test<span class="token punctuation">.</span>ts</code> file in it. Then, do a sanity check. For example:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('is true', () =&gt; {
+  expect(true).toBe(true);
+});
+</code></pre>
+<p>Doing <code class=" language-javascript">npm start</code> and <code class=" language-javascript">npm t</code> now runs without any errors. This tells us we’re now ready to start building the solution. But before we do, let’s add Redux to the project:</p>
+<pre class=" language-shell"><code class="shell  language-shell">npm i redux --save
+</code></pre>
+<p>This dependency goes to prod. So, no need to include it with <code class=" language-javascript"><span class="token operator">--</span>save<span class="token operator">-</span>dev</code>. If you inspect your <code class=" language-javascript"><span class="token keyword">package</span><span class="token punctuation">.</span>json</code>, it goes in <code class=" language-javascript">dependencies</code>.</p>
+<h2 id="payrollengineinaction">Payroll Engine in Action</h2>
+<p>The payroll engine will have the following: pay, reimbursement, bonus, and stock options. In Redux, you can’t directly update state. Instead, actions are dispatched to notify the store of any new changes.</p>
+<p>So, this leaves us with the following action types:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">const BASE_PAY = 'BASE_PAY';
+const REIMBURSEMENT = 'REIMBURSEMENT';
+const BONUS = 'BONUS';
+const STOCK_OPTIONS = 'STOCK_OPTIONS';
+const PAY_DAY = 'PAY_DAY';
+</code></pre>
+<p>The <code class=" language-javascript"><span class="token constant">PAY_DAY</span></code> action type is useful for dolling out a check on pay day and keeping track of pay history. These action types guide the rest of the design as we flesh out the payroll engine. They capture events in the state lifecycle — for example, setting a base pay amount. These action events can attach to anything, whether that be a click event or a data update. Redux action types are abstract to the point where it doesn’t matter where the dispatch comes from. The state container can run both on the client and/or server.</p>
+<h2 id="typescript">TypeScript</h2>
+<p>Using type theory, I’ll nail down the data model in terms of state data. For each payroll action, say an action type and an optional amount. The amount is optional, because <code class=" language-javascript"><span class="token constant">PAY_DAY</span></code> doesn’t need money to process a paycheck. I mean, it could charge customers but leave it out for now (maybe introducing it in version two).</p>
+<p>So, for example, put this in <code class=" language-javascript">src<span class="token operator">/</span>index<span class="token punctuation">.</span>ts</code>:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">interface PayrollAction {
+  type: string;
+  amount?: number;
+}
+</code></pre>
+<p>For pay stub state, we need a property for base pay, bonus, and whatnot. We’ll use this state to maintain a pay history as well.</p>
+<p>This TypeScript interface ought to do it:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">interface PayStubState {
+  basePay: number;
+  reimbursement: number;
+  bonus: number;
+  stockOptions: number;
+  totalPay: number;
+  payHistory: Array&lt;PayHistoryState&gt;;
+}
+</code></pre>
+<p>The <code class=" language-javascript">PayStubState</code> is a complex type, meaning it depends on another type contract. So, define the <code class=" language-javascript">payHistory</code> array:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">interface PayHistoryState {
+  totalPay: number;
+  totalCompensation: number;
+}
+</code></pre>
+<p>With each property, note TypeScript specifies the type using a colon. For example, <code class=" language-javascript"><span class="token punctuation">:</span> number</code>. This settles the type contract and adds predictability to the type checker. Having a type system with explicit type declarations enhances Redux. This is because the Redux state container is built for predictable behavior.</p>
+<p>This idea isn’t crazy or radical. Here’s a good explanation of it in <a href="https://www.sitepoint.com/premium/books/learning-redux/read?bookmark=div%5Bid%3D%27reeedr%27%5D%20%3E%20div%5Bid%3D%27reeedr-body%27%5D%20%3E%20div%3Anth-of-type(2)%20%3E%20p%3Anth-of-type(5)&amp;utm_source=blog&amp;utm_medium=referralarticle&amp;utm_campaign=camilo"><em>Learning Redux</em>, Chapter 1</a> (<a href="https://www.sitepoint.com/premium/library/?utm_source=blog&amp;utm_medium=referralarticle&amp;utm_campaign=camilo">SitePoint Premium</a> members only).<proper-ad id="3"></proper-ad></p>
+<p>As the app mutates, type checking adds an extra layer of predictability. Type theory also aids as the app scales because it’s easier to refactor large sections of code.</p>
+<p>Conceptualizing the engine with types now helps to create the following action functions:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">export const processBasePay = (amount: number): PayrollAction =&gt;
+  ({type: BASE_PAY, amount});
+export const processReimbursement = (amount: number): PayrollAction =&gt;
+  ({type: REIMBURSEMENT, amount});
+export const processBonus = (amount: number): PayrollAction =&gt;
+  ({type: BONUS, amount});
+export const processStockOptions = (amount: number): PayrollAction =&gt;
+  ({type: STOCK_OPTIONS, amount});
+export const processPayDay = (): PayrollAction =&gt;
+  ({type: PAY_DAY});
+</code></pre>
+<p>What’s nice is that, if you attempt to do <code class=" language-javascript"><span class="token function">processBasePay</span><span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span></code>, the type checker barks at you. Breaking a type contract adds unpredictability to the state container. I’m using a single action contract like <code class=" language-javascript">PayrollAction</code> to make the payroll processor more predictable. Note <code class=" language-javascript">amount</code> is set in the action object via an ES6 property shorthand. The more traditional approach is <code class=" language-javascript">amount<span class="token punctuation">:</span> amount</code>, which is long-winded. An arrow function, like <code class=" language-javascript"><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code>, is one succinct way to write functions that return an object literal.</p>
+<h2 id="reducerasapurefunction">Reducer as a Pure Function</h2>
+<p>The reducer functions need a <code class=" language-javascript">state</code> and an <code class=" language-javascript">action</code> parameter. The <code class=" language-javascript">state</code> should have an initial state with a default value. So, can you imagine what our initial state might look like? I’m thinking it needs to start at zero with an empty pay history list.</p>
+<p>For example:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">const initialState: PayStubState = {
+  basePay: 0, reimbursement: 0,
+  bonus: 0, stockOptions: 0,
+  totalPay: 0, payHistory: []
+};
+</code></pre>
+<p>The type checker makes sure these are proper values that belong in this object. With the initial state in place, begin creating the reducer function:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">export const payrollEngineReducer = (
+  state: PayStubState = initialState,
+  action: PayrollAction): PayStubState =&gt; {
+</code></pre>
+<p>The Redux reducer has a pattern where all action types get handled by a <code class=" language-javascript"><span class="token keyword">switch</span></code> statement. But before going through all switch cases, I’ll create a reusable local variable:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">let totalPay: number = 0;
+</code></pre>
+<p>Note that it’s okay to mutate local variables if you don’t mutate global state. I use a <code class=" language-javascript"><span class="token keyword">let</span></code> operator to communicate this variable is going to change in the future. Mutating global state, like the <code class=" language-javascript">state</code> or <code class=" language-javascript">action</code> parameter, causes the reducer to be impure. This functional paradigm is critical because reducer functions must remain pure. If you’re struggling with this paradigm, check out this explanation from <a href="https://www.sitepoint.com/premium/books/javascript-novice-to-ninja-2nd-edition/read?bookmark=div%5Bid%3D%27reeedr%27%5D%20%3E%20div%5Bid%3D%27reeedr-body%27%5D%20%3E%20div%3Anth-of-type(12)%20%3E%20h3%5Bid%3D%27pure-functions%27%5D&amp;utm_source=blog&amp;utm_medium=referralarticle&amp;utm_campaign=camilo"><em>JavaScript Novice to Ninja</em>, Chapter 11</a> (<a href="https://www.sitepoint.com/premium/library/?utm_source=blog&amp;utm_medium=referralarticle&amp;utm_campaign=camilo">SitePoint Premium</a> members only).</p>
+<p>Start the reducer’s switch statement to handle the first use case:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">switch (action.type) {
+  case BASE_PAY:
+    const {amount: basePay = 0} = action;
+    totalPay = computeTotalPay({...state, basePay});
+
+    return {...state, basePay, totalPay};
+</code></pre>
+<p>I’m using an ES6 <code class=" language-javascript">rest</code> operator to keep state properties the same. For example, <code class=" language-javascript"><span class="token operator">...</span>state</code>. You can override any properties after the rest operator in the new object. The <code class=" language-javascript">basePay</code> comes from destructuring, which is a lot like pattern matching in other languages. The <code class=" language-javascript">computeTotalPay</code> function is set as follows:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">const computeTotalPay = (payStub: PayStubState) =&gt;
+  payStub.basePay + payStub.reimbursement
+  + payStub.bonus - payStub.stockOptions;
+</code></pre>
+<p>Note you deduct <code class=" language-javascript">stockOptions</code> because the money will go towards buying company stock. Say you want to process a reimbursement:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">case REIMBURSEMENT:
+  const {amount: reimbursement = 0} = action;
+  totalPay = computeTotalPay({...state, reimbursement});
+
+  return {...state, reimbursement, totalPay};
+</code></pre>
+<p>Since <code class=" language-javascript">amount</code> is optional, make sure it has a default value to reduce mishaps. This is where TypeScript shines, because the type checker picks up on this pitfall and barks at you. The type system knows certain facts so it can make sound assumptions. Say you want to process bonuses:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">case BONUS:
+  const {amount: bonus = 0} = action;
+  totalPay = computeTotalPay({...state, bonus});
+
+  return {...state, bonus, totalPay};
+</code></pre>
+<p>This pattern makes the reducer readable because all it does is maintain state. You grab the action’s amount, compute total pay, and create a new object literal. Processing stock options is not much different:<proper-ad id="4"></proper-ad></p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">case STOCK_OPTIONS:
+  const {amount: stockOptions = 0} = action;
+  totalPay = computeTotalPay({...state, stockOptions});
+
+  return {...state, stockOptions, totalPay};
+</code></pre>
+<p>For processing a paycheck on pay day, it’ll need to blot out bonus and reimbursement. These two properties don’t remain in state per paycheck. And, add an entry to pay history. Base pay and stock options can stay in state because they don’t change as often per paycheck. With this in mind, this is how <code class=" language-javascript"><span class="token constant">PAY_DAY</span></code> goes:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">case PAY_DAY:
+  const {payHistory} = state;
+  totalPay = state.totalPay;
+
+  const lastPayHistory = payHistory.slice(-1).pop();
+  const lastTotalCompensation = (lastPayHistory
+    &amp;&amp; lastPayHistory.totalCompensation) || 0;
+  const totalCompensation = totalPay + lastTotalCompensation;
+
+  const newTotalPay = computeTotalPay({...state,
+    reimbursement: 0, bonus: 0});
+  const newPayHistory = [...payHistory, {totalPay, totalCompensation}];
+
+  return {...state, reimbursement: 0, bonus: 0,
+    totalPay: newTotalPay, payHistory: newPayHistory};
+</code></pre>
+<p>In an array like <code class=" language-javascript">newPayHistory</code>, use a <code class=" language-javascript">spread</code> operator, which is the reverse of <code class=" language-javascript">rest</code>. Unlike rest, which collects properties in an object, this spreads items out. So, for example, <code class=" language-javascript"><span class="token punctuation">[</span><span class="token operator">...</span>payHistory<span class="token punctuation">]</span></code>. Even though both these operators look similar, they aren’t the same. Look closely, because this might come up in an interview question.</p>
+<p>Using <code class=" language-javascript"><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> on <code class=" language-javascript">payHistory</code> doesn’t mutate state. Why? Because <code class=" language-javascript"><span class="token function">slice</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> returns a brand new array. Arrays in JavaScript are copied by reference. Assigning an array to a new variable doesn’t change the underlying object. So, one must be careful when dealing with these types of objects.</p>
+<p>Because there’s a chance <code class=" language-javascript">lastPayHistory</code> is undefined, I use poor man’s null coalescing to initialize it to zero. Note the <code class=" language-javascript"><span class="token punctuation">(</span>o <span class="token operator">&amp;&amp;</span> o<span class="token punctuation">.</span>property<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span></code> pattern to coalesce. Maybe a future version of JavaScript or even TypeScript will have a more elegant way of doing this.</p>
+<p>Every Redux reducer must define a <code class=" language-javascript"><span class="token keyword">default</span></code> branch. To make sure state doesn’t become <code class=" language-javascript"><span class="token keyword">undefined</span></code>:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">default:
+  return state;
+</code></pre>
+<h2 id="testingthereducerfunction">Testing the Reducer Function</h2>
+<p>One of the many benefits of writing pure functions is that they’re testable. A unit test is one where you must expect predictable behavior — to the point where you can automate all tests as part of a build. In <code class=" language-javascript">__tests__<span class="token operator">/</span>index<span class="token punctuation">.</span>test<span class="token punctuation">.</span>ts</code>, knock out the dummy test and import all functions of interest:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">import { processBasePay,
+  processReimbursement,
+  processBonus,
+  processStockOptions,
+  processPayDay,
+  payrollEngineReducer } from '../src/index';
+</code></pre>
+<p>Note that all functions were set with an <code class=" language-javascript"><span class="token keyword">export</span></code> so you can import them in. For a base pay, fire up the payroll engine reducer and test it:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('process base pay', () =&gt; {
+  const action = processBasePay(10);
+  const result = payrollEngineReducer(undefined, action);
+
+  expect(result.basePay).toBe(10);
+  expect(result.totalPay).toBe(10);
+});
+</code></pre>
+<p>Redux sets the initial state as <code class=" language-javascript"><span class="token keyword">undefined</span></code>. Therefore, it’s always a good idea to provide a default value in the reducer function. What about processing a reimbursement?</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('process reimbursement', () =&gt; {
+  const action = processReimbursement(10);
+  const result = payrollEngineReducer(undefined, action);
+
+  expect(result.reimbursement).toBe(10);
+  expect(result.totalPay).toBe(10);
+});
+</code></pre>
+<p>The pattern here is the same for processing bonuses:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('process bonus', () =&gt; {
+  const action = processBonus(10);
+  const result = payrollEngineReducer(undefined, action);
+
+  expect(result.bonus).toBe(10);
+  expect(result.totalPay).toBe(10);
+});
+</code></pre>
+<p>For stock options:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('skip stock options', () =&gt; {
+  const action = processStockOptions(10);
+  const result = payrollEngineReducer(undefined, action);
+
+  expect(result.stockOptions).toBe(0);
+  expect(result.totalPay).toBe(0);
+});
+</code></pre>
+<p>Note <code class=" language-javascript">totalPay</code> must remain the same when <code class=" language-javascript">stockOptions</code> is greater than <code class=" language-javascript">totalPay</code>. Since this hypothetical company is ethical, is doesn’t want to take money from its employees. If you run this test, note that <code class=" language-javascript">totalPay</code> is set to <code class=" language-javascript"><span class="token operator">-</span><span class="token number">10</span></code> because <code class=" language-javascript">stockOptions</code> gets deducted. This is why we test code! Let’s fix this where it computes total pay:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">const computeTotalPay = (payStub: PayStubState) =&gt;
+  payStub.totalPay &gt;= payStub.stockOptions
+  ? payStub.basePay + payStub.reimbursement
+    + payStub.bonus - payStub.stockOptions
+  : payStub.totalPay;
+</code></pre>
+<p>If the employee doesn’t make enough money to buy company stock, go ahead and skip the deduction. Also, make sure it resets <code class=" language-javascript">stockOptions</code> to zero:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">case STOCK_OPTIONS:
+  const {amount: stockOptions = 0} = action;
+  totalPay = computeTotalPay({...state, stockOptions});
+
+  const newStockOptions = totalPay &gt;= stockOptions
+    ? stockOptions : 0;
+
+  return {...state, stockOptions: newStockOptions, totalPay};
+</code></pre>
+<p>The fix figures out whether they have enough in <code class=" language-javascript">newStockOptions</code>. With this, unit tests pass, and the code is sound and makes sense. We can test the positive use case where there’s enough money for a deduction:<proper-ad id="5"></proper-ad></p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('process stock options', () =&gt; {
+  const oldAction = processBasePay(10);
+  const oldState = payrollEngineReducer(undefined, oldAction);
+  const action = processStockOptions(4);
+  const result = payrollEngineReducer(oldState, action);
+
+  expect(result.stockOptions).toBe(4);
+  expect(result.totalPay).toBe(6);
+});
+</code></pre>
+<p>For pay day, test with multiple states and make sure one-time transactions don’t persist:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('process pay day', () =&gt; {
+  const oldAction = processBasePay(10);
+  const oldState = payrollEngineReducer(undefined, oldAction);
+  const action = processPayDay();
+  const result = payrollEngineReducer({...oldState, bonus: 10,
+    reimbursement: 10}, action);
+
+  expect(result.totalPay).toBe(10);
+  expect(result.bonus).toBe(0);
+  expect(result.reimbursement).toBe(0);
+  expect(result.payHistory[0]).toBeDefined();
+  expect(result.payHistory[0].totalCompensation).toBe(10);
+  expect(result.payHistory[0].totalPay).toBe(10);
+});
+</code></pre>
+<p>Note how I tweak <code class=" language-javascript">oldState</code> to verify <code class=" language-javascript">bonus</code> and reset <code class=" language-javascript">reimbursement</code> back to zero.</p>
+<p>What about the default branch in the reducer?</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">it('handles default branch', () =&gt; {
+  const action = {type: 'INIT_ACTION'};
+  const result = payrollEngineReducer(undefined, action);
+
+  expect(result).toBeDefined();
+});
+</code></pre>
+<p>Redux sets an action type like <code class=" language-javascript"><span class="token constant">INIT_ACTION</span></code> in the beginning. All we care about is that our reducer sets some initial state.</p>
+<h2 id="puttingitalltogether">Putting It All Together</h2>
+<p>At this point, you may start to wonder if Redux is more of a design pattern than anything else. If you answer that it’s both a pattern and a lightweight library, then you’re correct. In <code class=" language-javascript">index<span class="token punctuation">.</span>ts</code>, import Redux:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">import { createStore } from 'redux';
+</code></pre>
+<p>The next code sample can go wrapped around this <code class=" language-javascript"><span class="token keyword">if</span></code> statement. This is a stopgap, so unit tests don’t leak into integration tests:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">if (!process.env.JEST_WORKER_ID) {
+}
+</code></pre>
+<p>I don’t recommend doing this in a real project. Modules can go in separate files to isolate components. This makes it more readable and won’t leak concerns. Unit tests also benefit from the fact modules run in isolation.</p>
+<p>Fire up a Redux store with the <code class=" language-javascript">payrollEngineReducer</code>:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">const store = createStore(payrollEngineReducer, initialState);
+const unsubscribe = store.subscribe(() =&gt; console.log(store.getState()));
+</code></pre>
+<p>Every <code class=" language-javascript">store<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> returns a subsequent <code class=" language-javascript"><span class="token function">unsubscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> function useful for cleaning up. It unsubscribes callbacks when actions get dispatched through the store. Here, I’m outputting current state to the console with <code class=" language-javascript">store<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>.</p>
+<p>Say this employee makes <code class=" language-javascript"><span class="token number">300</span></code>, has a <code class=" language-javascript"><span class="token number">50</span></code> reimbursement, <code class=" language-javascript"><span class="token number">100</span></code> bonus, and <code class=" language-javascript"><span class="token number">15</span></code> going towards company stock:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">store.dispatch(processBasePay(300));
+store.dispatch(processReimbursement(50));
+store.dispatch(processBonus(100));
+store.dispatch(processStockOptions(15));
+store.dispatch(processPayDay());
+</code></pre>
+<p>To make it more interesting, do another <code class=" language-javascript"><span class="token number">50</span></code> reimbursement and process another paycheck:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">store.dispatch(processReimbursement(50));
+store.dispatch(processPayDay());
+</code></pre>
+<p>Finally, run yet another paycheck and unsubscribe from the Redux store:</p>
+<pre class=" language-typescript"><code class="typescript  language-typescript">store.dispatch(processPayDay());
+
+unsubscribe();
+</code></pre>
+<p>The end result looks like this:</p>
+<pre class=" language-javascript"><code class="javascript  language-javascript"><span class="token punctuation">{</span> <span class="token string">"basePay"</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+  <span class="token string">"reimbursement"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token string">"bonus"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token string">"stockOptions"</span><span class="token punctuation">:</span> <span class="token number">15</span><span class="token punctuation">,</span>
+  <span class="token string">"totalPay"</span><span class="token punctuation">:</span> <span class="token number">285</span><span class="token punctuation">,</span>
+  <span class="token string">"payHistory"</span><span class="token punctuation">:</span>
+   <span class="token punctuation">[</span> <span class="token punctuation">{</span> <span class="token string">"totalPay"</span><span class="token punctuation">:</span> <span class="token number">435</span><span class="token punctuation">,</span> <span class="token string">"totalCompensation"</span><span class="token punctuation">:</span> <span class="token number">435</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+     <span class="token punctuation">{</span> <span class="token string">"totalPay"</span><span class="token punctuation">:</span> <span class="token number">335</span><span class="token punctuation">,</span> <span class="token string">"totalCompensation"</span><span class="token punctuation">:</span> <span class="token number">770</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+     <span class="token punctuation">{</span> <span class="token string">"totalPay"</span><span class="token punctuation">:</span> <span class="token number">285</span><span class="token punctuation">,</span> <span class="token string">"totalCompensation"</span><span class="token punctuation">:</span> <span class="token number">1055</span> <span class="token punctuation">}</span> <span class="token punctuation">]</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>As shown, Redux maintains state, mutates, and notifies subscribers in one sweet little package. Think of Redux as a state machine that is the source of truth for state data. All this, while embracing the best coding has to offer, such as a sound functional paradigm.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Redux has a simple solution to the complex problem of state management. It rests on a functional paradigm to reduce unpredictability. Because reducers are pure functions, it’s super easy to unit test. I decided to use Jest, but any test framework that supports basic assertions will work too.</p>
+<p>TypeScript adds an extra layer of protection with type theory. Couple type checking with functional programming and you get sound code that hardly breaks. Best of all, TypeScript stays out of the way while adding value. If you notice, there’s little extra coding once type contracts are in place. The type checker does the rest of the work. Like any good tool, TypeScript automates coding discipline while remaining invisible. TypeScript comes with a loud bark yet gentle bite.</p>
+<p>If you wanted to have a play around with this project (and I hope you do), you can find the source code for this article on <a href="https://github.com/beautifulcoder/deep-dive-redux-with-typescript-jest">GitHub</a>.</p>
+      <div class="Article_authorBio l-mv4 t-bg-white m-border l-pa3">
+        <div class="l-d-f l-pt3">
+          <a class="l-s5 l-pa0 l-mr3 l-round l-o-h" href="https://www.sitepoint.com/author/creyes/">
+            <img src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/1429479245wephoto-resize_lg-96x96.jpg" width="96" height="96" alt="Camilo Reyes" class="avatar avatar-96 wp-user-avatar wp-user-avatar-96 alignnone photo">          </a>
+          <div class="f-lh-title">
+            <div class="f-c-grey-300">Meet the author</div>
+            <div class="f-large">
+              <a class="f-bold f-c-grey-500" href="https://www.sitepoint.com/author/creyes/">
+                Camilo Reyes              </a>
+              <a class="f-c-grey-500 l-mh1" target="_blank" href="https://plus.google.com/117305015265276164398/about"><i class="fab fa-google-plus-g"></i></a><a class="f-c-grey-500 l-mh1" target="_blank" href="https://www.linkedin.com/in/camilo-reyes-743b2069/"><i class="fab fa-linkedin-in"></i></a><a class="f-c-grey-500 l-mh1" target="_blank" href="https://codepen.io/beautifulcoder"><i class="fab fa-codepen"></i></a><a class="f-c-grey-500 l-mh1" target="_blank" href="https://github.com/beautifulcoder"><i class="fab fa-github"></i></a>            </div>
+          </div>
+        </div>
+        <div class="f-light f-lh-copy l-mt3">Husband, father, and software engineer living in Houston Texas. Passionate about JavaScript and cyber-ing all the things.</div>
+      </div>
+            </div>
+    </div>
+        </div>
+          </div>
+              <div class="article-ads">
+              <div class="l-w-aside-i l-mt3 l-mh3 l-d-n l-d-f--3col l-fd-col l-fs0">
+      <div class="l-mb3">
+            <sp-heading content="Sponsors"></sp-heading>
+    <div class="l-w-100 l-mv3 t-bg-white m-border"><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-765"><div class="proper-ad-unit">
+
+    <div id="proper-ad-sitepoint_sponsor_1-2"> <script> propertag.cmd.push(function() { proper_display('sitepoint_sponsor_1'); }); </script> </div>
+
+</div></div></div>
+            <div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-301"><adblock-msg data-sidebar="true" style="display: none;"><a href="https://www.sitepoint.com/premium/products/Z2lkOi8vbGVhcm5hYmxlL1Byb2R1Y3QvMzA3?utm_source=adblock"><img src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/1556690912what-would-you-choose@2x.png"></a></adblock-msg></div><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-763"><div class="proper-ad-unit">
+
+    <div id="proper-ad-sitepoint_side_1-2"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_1'); }); </script> 
+
+</div>
+</div></div>      </div>
+      <div class="ArticleBox u-premium-preview"></div>
+      <div class="ArticleAside_row"><div class="widget maestro maestro-content-type-html " id="maestro-728"><div class="proper-ad-unit">
+    <div id="proper-ad-sitepoint_side_2-2"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_2'); }); </script> </div>
+</div></div><div class="widget maestro maestro-content-type-html " id="maestro-730"><div class="proper-ad-unit Sticky">
+
+    <div id="proper-ad-sitepoint_side_3-2"> <script> propertag.cmd.push(function() { proper_display('sitepoint_side_3'); }); </script> </div>
+
+</div></div>        <ads-weighted widget="21" data="{&quot;NL&quot;:[{&quot;id&quot;:&quot;584&quot;,&quot;weight&quot;:&quot;50&quot;,&quot;randMax&quot;:50},{&quot;id&quot;:&quot;585&quot;,&quot;weight&quot;:&quot;50&quot;,&quot;randMax&quot;:100}]}" fallback="" url="redux-deep-dive" channelslug="javascript"></ads-weighted></div>
+      <div class="ArticleAside_row ArticleAside_newboxads"></div>
+    </div>
+            </div>
+          </div>
+
+    <div class="u-accordion-end"></div>
+
+    <div class="l-d-f l-jc-sb l-w-3col--3col l-mh-auto">
+      <div class="u-showseriesx l-w-100 l-fg1 l-mh3--2col l-mh0--4col">
+
+        
+                <div id="commentsSection" class="l-pa3 t-bg-white">
+              <div id="comments" class="discourse-comments-area">
+      <div class="respond comment-respond">
+        <div class="my-wrapper l-d-f l-jc-cen l-gs-mb3">
+          <a href="https://www.sitepoint.com/community/t/a-deep-dive-into-redux/330609" class="Button u-outline u-blue">Start a discussion</a>
+        </div>
+      </div>
+    </div>
+          </div>
+      </div>
+    </div>
+
+    
+    <script>
+      var data = 'javascript';
+      if (localStorage && localStorage.SP_categories) {
+        data = JSON.parse(localStorage.SP_categories).toString();
+        data = data ? data.replace('-', '') : 'javascript'
+      }
+
+      oSpP && oSpP.push('channel', data);
+    </script>
+    </div>
+
+    <script>
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      post_id: 172407,
+      title: "A Deep Dive into Redux",
+      category: "JavaScript",
+      tags: ["Jest","redux","state","state management","TypeScript"],
+      authors: ["Camilo Reyes"],
+      permalink: "https:\/\/www.sitepoint.com\/redux-deep-dive\/",
+      published: "20190613",
+      sponsored: false    })
+  </script>
+</div>
+</div></div><div class="alm-btn-wrap" style="visibility: visible;"><button class="alm-load-more-btn more" rel="next">Older Posts</button></div></div>  </div>
+    <div class="widget maestro maestro-content-type-html " id="maestro-775"><script type="text/html" class="ModalOnce" data-activate-delay="10" data-tracking="free-book" data-min-height="1" data-min-width="1">
+  <div id="free-book-modal" class="reveal-modal medium l-b-n l-br" data-reveal aria-labelledby="Free Book" aria-hidden="true" role="dialog">
+    <free-book-content book_cover="https://d2sis3lil8ndrq.cloudfront.net/books/4c7f6303-60e8-45dc-a95b-aae08a4f32a3_medium.png" heading="Free Book. All Yours." book_title="JavaScript Best Practice">
+      <p class="f-small l-mb3">Write powerful, clean and maintainable JavaScript with clear, practical lessons in application architecture, package management, tools, shorthands, callbacks, classes, flow control and much more.</p>
+      <p class="f-small l-mb0">Worth $11.95 on Amazon. Yours FREE!</p>
+    </free-book-content>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <free-book-form slug="js-best-practice-reader" />
+  </div>
+</script></div>    <footer role="contentinfo">
+  <div class="l-w-100 l-d-f Footer-bg">
+    <div class="l-d-f l-fw-w l-mh-auto">
+      <div class="l-d-f l-fw-w l-mt4 l-w-100 l-pa3 l-w-3col--4col l-jc-sb l-jc-sa--4col">
+        <ul>
+          <li class="t-ls-n">
+            <div class="f-c-white f-large f-bold l-mb2">Stuff We Do</div>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/premium/">Premium</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/community/">Forums</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://sitepoint.typeform.com/to/fNY7XG">Corporate Memberships</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/premium/l/developer-jobs">Jobs</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/premium/deals">Deals</a>
+          </li>
+        </ul>
+
+        <ul>
+          <li class="t-ls-n">
+            <div class="f-c-white f-large f-bold l-mb2">About</div>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/about-us/">Our Story</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/press/">Press Room</a>
+          </li>
+        </ul>
+
+        <ul>
+          <li class="t-ls-n">
+            <div class="f-c-white f-large f-bold l-mb2">Contact</div>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/contact-us/">Contact Us</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://sitepoint.zendesk.com/hc/en-us">FAQ</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/write-for-us/">Write for Us</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/advertise/">Advertise</a>
+          </li>
+        </ul>
+
+        <ul>
+          <li class="t-ls-n">
+            <div class="f-c-white f-large f-bold l-mb2">Legals</div>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/legals/">Terms of Use</a>
+          </li>
+          <li class="l-ml3 f-c-grey-300 l-mb2">
+            <a class="Footer-link f-small" href="https://www.sitepoint.com/privacy-policy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+      <div class="l-d-n l-d-b--4col l-as-cen Footer-hr">
+      </div>
+      <div class="l-mt4 l-pa3 l-w-1col--4col">
+        <ul class="t-ls-n l-d-f l-fw-w l-d-b--3col">
+          <li>
+            <div class="f-c-white f-large f-bold l-mb2 l-mr3">Connect</div>
+          </li>
+          <li class="f-center">
+            <a class="f-c-grey-300" href="https://www.facebook.com/sitepoint" rel="noopener" target="_blank">
+              <i class="fab fa-facebook-square l-i4"></i>
+            </a>
+            <a class="l-pl3 f-c-grey-300" href="http://twitter.com/sitepointdotcom" rel="noopener" target="_blank">
+              <i class="fab fa-twitter-square l-i4"></i>
+            </a>
+            <a class="l-pl3 f-c-grey-300" href="https://www.sitepoint.com/feed/">
+              <i class="fas fa-rss-square l-i4"></i>
+            </a>
+            <a class="l-pl3 f-c-grey-300" href="https://plus.google.com/+sitepoint" rel="noopener" target="_blank">
+              <i class="fab fa-google-plus-square l-i4"></i>
+            </a>
+          </li>
+          <p class="f-c-grey-300 l-mh-auto l-ml3--2col l-ml0--3col l-mv3--4col f-small f-center">
+            © 2000 – 2019 SitePoint Pty. Ltd.
+          </p>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+  adroll_adv_id = "DJI3I3WGJBGL7PDJEDAYHV";
+  adroll_pix_id = "4RKMV6N56FGA7ANPGL4FQW";
+  (function() {
+    window.adblocked = false;
+    var onAdblock = function() {
+      if (adblocked) return;
+
+      window.adblocked = true;
+
+      gaEventQueue && gaEventQueue.track('CanSeeAds', 'adrollBlocked', {
+        'nonInteraction': true
+      });
+
+      Array.prototype.slice.call(document.getElementsByClassName('CantSeeAds'))
+        .forEach(function(el) {
+          el.className = el.className.replace('CantSeeAds', '');
+        });
+
+    };
+    var _onload = function() {
+      if (document.readyState && !/loaded|complete/.test(document.readyState)) {
+        setTimeout(_onload, 10);
+        return
+      }
+      if (!window.__adroll_loaded) {
+        __adroll_loaded = true;
+        setTimeout(_onload, 50);
+        return
+      }
+      var scr = document.createElement("script");
+      var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+      scr.setAttribute('async', 'true');
+      scr.type = "text/javascript";
+      scr.src = host + "/j/roundtrip.js";
+      scr.onerror = onAdblock;
+      ((document.getElementsByTagName('head') || [null])[0] ||
+        document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+    };
+    if (window.addEventListener) {
+      window.addEventListener('load', _onload, false);
+    } else {
+      window.attachEvent('onload', _onload)
+    }
+  }());
+</script>    <sp-cookie-warning></sp-cookie-warning>
+    
+
+<!-- START Parse.ly Include: Standard -->
+
+<div id="parsely-root" style="display: none">
+	<div id="parsely-cfg" data-parsely-site="sitepoint.com"></div>
+<script id="parsely-script" async="" data-cfasync="false" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/p.js.download"></script></div>
+<script data-cfasync="false">
+	(function (s, p, d) {
+		var h = d.location.protocol, i = p + "-" + s,
+			e = d.getElementById(i), r = d.getElementById(p + "-root"),
+			u = h === "https:" ? "d1z2jf7jlzjs58.cloudfront.net"
+				: "static." + p + ".com";
+		if (e) return;
+		e = d.createElement(s);
+		e.id = i;
+		e.async = true;
+		e.setAttribute('data-cfasync', 'false');
+		e.src = h + "//" + u + "/p.js";
+		r.appendChild(e);
+	})("script", "parsely", document);
+</script>
+
+<!-- END Parse.ly Include: Standard -->
+    <script type="text/javascript">
+    (function(googletag, SP_GPT_Slots) {
+      if(!SP_GPT_Slots.length) return;
+
+      var SP_GPT_First_Slot_Rendered = false;
+      googletag.cmd.push(function(){
+        googletag.pubads().addEventListener("slotRenderEnded", function(e){
+          if (!SP_GPT_First_Slot_Rendered) {
+            gaEventQueue.track("CanSeeAds", "dfpFirstRendered", {"nonInteraction": true});
+            SP_GPT_First_Slot_Rendered = true;
+          }
+        });
+      });
+
+    })(googletag, SP_GPT_Slots);
+    </script>
+<div class="widget maestro maestro-content-type-html " id="maestro-758"><script id="spout-tag-7c887d1e-c4ea-4682-bad8-216a89ce74e5">
+  (function() {
+    var r = encodeURIComponent(top.document.referrer.substring(0,250)),
+        p = encodeURIComponent(top.document.location.href.substring(0,250)),
+        t = Date.now(),
+        u = '7c887d1e-c4ea-4682-bad8-216a89ce74e5',
+        e = document.createElement('script'),
+        s = sessionStorage.getItem('spoutable-' + u);
+    if (!s) {
+      var m = Math.random.bind(Math);
+      s = JSON.stringify({ sessionId: [ t, m(), m(), m(), m(), m(), m(), m(), m(), m(), m(), m(), m() ]});
+      sessionStorage.setItem('spoutable-' + u, s);
+    }
+    e.async = true;
+    e.src='//s.spoutable.com/s?u='+u+'&s='+encodeURIComponent(s)+'&t='+t+'&r='+r+'&p='+p;
+    document.head.appendChild(e);
+  })();
+</script></div><div class="widget maestro maestro-content-type-html hide-for-mobile-SP" id="maestro-746"><div class="proper-ad-unit ad-sticky">
+    <div id="proper-ad-sitepoint_main_1"> <script> propertag.cmd.push(function() { proper_display('sitepoint_main_1'); }); </script> </div>
+</div></div><script type="text/javascript">
+/* <![CDATA[ */
+var ratingsL10n = {"plugin_url":"https:\/\/www.sitepoint.com\/wp-content\/plugins\/wp-postratings","ajax_url":"https:\/\/www.sitepoint.com\/wp-admin\/admin-ajax.php","text_wait":"Please rate only 1 item at a time.","image":"thumbs","image_ext":"gif","max":"2","show_loading":"1","show_fading":"1","custom":"1"};
+var ratings_1_mouseover_image=new Image();ratings_1_mouseover_image.src="https://www.sitepoint.com/wp-content/plugins/wp-postratings/images/thumbs/rating_1_over.gif";var ratings_2_mouseover_image=new Image();ratings_2_mouseover_image.src="https://www.sitepoint.com/wp-content/plugins/wp-postratings/images/thumbs/rating_2_over.gif";;
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/postratings-js.js.download"></script>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/scripts-foot-f52546dce5cf20be14cf298341a4d470.js.download"></script>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/bundle-678ccef27beadcac2ae693341f88ea21.js.download"></script>
+<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1991563104285178");fbq("set","agent","tmgoogletagmanager","1991563104285178");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1991563104285178&amp;ev=PageView&amp;noscript=1"></noscript>
+<link href="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/css(1)" rel="stylesheet">
+<style type="text/css">
+	#sp-modal {
+    font-family: "Roboto","Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+  	-webkit-font-smoothing: antialiased;
+		height: 100%;
+		left: 0;
+    opacity: 1;
+		position: fixed;
+    text-rendering: optimizeLegibility;
+		top: 0;
+		transition: opacity .5s ease-in-out;
+		width: 100%;
+		z-index: 1000;
+  }
+	#sp-modal.hidden {
+		opacity: 0;
+		transition: opacity .5s ease-in-out;
+  }
+	#sp-modal .sp-modal_overlay {
+		background: rgba(0,0,0,0.65);
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1100;
+  }
+	#sp-modal .sp-modal_content {
+    background: #414141;
+  	box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+  	color: #fff;
+    left: 50%;
+		min-width: 645px;
+		max-width: 700px;
+    padding: 1.875em;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+		z-index: 1110;
+  }
+	#sp-modal .sp-modal_content h2 {
+    font-size: 1.95313rem;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+    text-align: center;
+  	color: white;
+	}
+	#sp-modal .sp-modal_content #sp-book {
+		display: flex;
+    align-items: flex-start;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_cover {
+  	max-width: 160px;
+  	width: 100%;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_info {
+    padding: 0 0 0 32px;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_title {
+		font-size: 20px;
+		font-weight: bold;
+  	line-height: 1.5;
+  	margin: 0 0 4px;
+  	color: white;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_description {
+  	direction: ltr;
+  	margin: 0;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_description p {
+  	font-size: 17px;
+  	font-weight: 300;
+  	line-height: 1.5;
+  	margin: 0;
+	}
+	#sp-modal .sp-modal_content #sp-book .sp-book_description p:first-child {
+    margin: 0 0 16px;
+	}
+	#sp-modal .sp-modal_content form {
+		display: flex;
+		flex-direction: row;
+    margin: 32px 0 0;
+	}
+	#sp-modal .sp-modal_content form input {
+    background-color: #fff;
+    font-family: inherit;
+    border: 1px solid #dcdcdc;
+    box-shadow: inset 0 0 0 rgba(0,0,0,0.1);
+    color: #262626;
+    display: block;
+    font-size: 1em;
+    margin: 0 8px 0 0;
+    padding: .75em;
+    height: 3.0625em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all .15s linear;
+	}
+	#sp-modal .sp-modal_content form input[name="name"] {
+    max-width: 230px;
+	}
+	#sp-modal .sp-modal_content form button {
+    background: #3ec9cb;
+    border: 1px solid;
+    border-color: #3ec9cb;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+  	height: 3.0625em;
+    line-height: 1.5;
+    margin: 0;
+    min-width: 100px;
+    padding: 0.5rem;
+    position: relative;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: 0.3s ease;
+    transition-property: border-color, background-color, color;
+	}
+  #sp-modal .sp-modal_content form button:hover {
+    background-color: #24b3b5;
+    border-color: #24b3b5;
+	}
+	.sp-close-modal {
+    background: none;
+    border: none;
+  	color: #fff !important;
+    cursor: pointer;
+    font-size: 16px;
+		font-weight: 600;
+    opacity: 0.6;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transition: opacity 0.3s ease;
+		margin: 0;
+		padding: 0px;
+  }
+	.sp-close-modal:hover {
+		opacity: 1;
+  }
+	.sp-close-modal:focus {
+    outline: none;
+	}
+</style>
+<div id="sp-modal" class="hidden" style="display: none;">
+	<div class="sp-modal_overlay"></div>
+	<div class="sp-modal_content">
+		<h2 class="sp-modal_heading">Free Book. All Yours.</h2>
+    <div id="sp-book">
+      <img class="sp-book_cover" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/4c7f6303-60e8-45dc-a95b-aae08a4f32a3_medium.png">
+			<div class="sp-book_info">
+        <h4 class="sp-book_title">JavaScript Best Practice</h4>
+				<div class="sp-book_description"><p>Write powerful, clean and maintainable JavaScript with clear, practical lessons in application architecture, package management, tools, shorthands, callbacks, classes, flow control and much more.</p><p>Worth $11.95 on Amazon. Yours FREE!</p></div>
+	     </div>
+    </div>
+    <form name="free-book-form" id="free-book-form" action="https://www.sitepoint.com/premium/register-user">
+			<input type="hidden" name="campaign" value="js-best-practice-reader">
+      <input type="text" name="name" placeholder="Name" required="">
+      <input type="email" name="email" placeholder="Enter your Email" required="">
+      <button type="submit">Go</button>
+    </form>
+	  <button title="close" class="sp-close-modal"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 22.6 22.6" style="height: 1em; width: 1em;" xml:space="preserve" preserveAspectRatio="none"><rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(0.7071 0.7071 -0.7071 0.7071 11.3137 -4.6863)" width="6" height="26"></rect><rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 27.3137 11.3137)" width="6" height="26"></rect></svg></button>
+	</div>
+</div>
+
+<script type="text/javascript" id="">var spModal=document.querySelector("#sp-modal"),paragraph=document.createElement("p"),bookParagraph="",modalMeta={delay:1E4,heading:"Free Book. All Yours.",bookSlug:"js-best-practice-reader",bookCover:"https://d2sis3lil8ndrq.cloudfront.net/books/4c7f6303-60e8-45dc-a95b-aae08a4f32a3_medium.png",bookTitle:"JavaScript Best Practice",bookInfo:{p1:"Write powerful, clean and maintainable JavaScript with clear, practical lessons in application architecture, package management, tools, shorthands, callbacks, classes, flow control and much more.",
+p2:"Worth $11.95 on Amazon. Yours FREE!"},timeout:2};function attachModalListeners(a){a.querySelector(".sp-close-modal").addEventListener("click",toggleModal);a.querySelector(".sp-modal_overlay").addEventListener("click",toggleModal)}function detachModalListeners(a){a.querySelector(".sp-close-modal").removeEventListener("click",toggleModal);a.querySelector(".sp-modal_overlay").removeEventListener("click",toggleModal)}
+function toggleModal(){var a=spModal.style.display;"none"===a?(spModal.style.display="block",window.setTimeout(function(){spModal.classList.remove("hidden")},150),attachModalListeners(spModal)):(spModal.classList.add("hidden"),window.setTimeout(function(){spModal.style.display="none"},150),detachModalListeners(spModal),addTimeout())}function addTimeout(){var a=new Date;a.setDate(a.getDate()+modalMeta.timeout);window.localStorage.setItem("sp-book-popup-closed",a)}
+function checkTimeout(){var a=window.localStorage.getItem("sp-book-popup-closed"),b=(new Date(Date.parse(a))).getTime(),c=(new Date).getTime();return b<c||!a?!0:!1}
+(function(){document.forms["free-book-form"].campaign.value=modalMeta.bookSlug;document.querySelector("#sp-modal .sp-modal_heading").innerHTML=modalMeta.heading;document.querySelector("#sp-book .sp-book_cover").src=modalMeta.bookCover;document.querySelector("#sp-book .sp-book_title").innerHTML=modalMeta.bookTitle;document.querySelector("#sp-modal .sp-close-modal").innerHTML='\x3csvg xmlns\x3d"http://www.w3.org/2000/svg" xmlns:xlink\x3d"http://www.w3.org/1999/xlink" version\x3d"1.1" id\x3d"Layer_1" x\x3d"0px" y\x3d"0px" viewBox\x3d"0 0 22.6 22.6" style\x3d"height: 1em; width: 1em;" xml:space\x3d"preserve" preserveAspectRatio\x3d"none"\x3e\x3crect fill\x3d"currentColor" x\x3d"8.3" y\x3d"-1.7" transform\x3d"matrix(0.7071 0.7071 -0.7071 0.7071 11.3137 -4.6863)" width\x3d"6" height\x3d"26"\x3e\x3c/rect\x3e\x3crect fill\x3d"currentColor" x\x3d"8.3" y\x3d"-1.7" transform\x3d"matrix(-0.7071 0.7071 -0.7071 -0.7071 27.3137 11.3137)" width\x3d"6" height\x3d"26"\x3e\x3c/rect\x3e\x3c/svg\x3e';
+for(var a in modalMeta.bookInfo)bookParagraph=paragraph.cloneNode(!0),bookParagraph.innerHTML=modalMeta.bookInfo[a],document.querySelector("#sp-book .sp-book_description").appendChild(bookParagraph);window.setTimeout(function(){(800<window.innerHeight||768<window.innerWidth)&&checkTimeout()&&toggleModal()},modalMeta.delay)})();</script><script type="text/javascript" id="">window.sp_exit_intent_fired=!1;var onWindow=function(b,a){"undefined"!==typeof window.addEventListener?window.addEventListener(b,a,!1):window.attachEvent("on"+b,function(){a.call(window)})},onWindowLeave=function(b){onWindow("mouseout",function(a){a=a?a:window.event;(a=a.relatedTarget||a.toElement)&&"HTML"!==a.nodeName||"function"===typeof b&&b()})};onWindowLeave(function(){!0!==window.sp_exit_intent_fired&&(window.sp_exit_intent_fired=!0,dataLayer.push({event:"exit_intent"}))});</script>
+<iframe name="__cmpLocator" __idm_frm__="631" style="display: none;" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/saved_resource.html"></iframe>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/article-e10acef7ba412ecfd69d69fec5233cd7.js.download"></script>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/wp-embed.min.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var alm_localize = {"ajaxurl":"https:\/\/www.sitepoint.com\/wp-admin\/admin-ajax.php","restapi":{"active":false,"url":"https:\/\/www.sitepoint.com\/wp-json\/","namespace":"ajaxloadmore"},"alm_nonce":"b5dba085fa","pluginurl":"https:\/\/www.sitepoint.com\/wp-content\/plugins\/ajax-load-more","scrolltop":"false","speed":"250","results_text":"Displaying page {num} of {total}.","no_results_text":"No results found."};
+var ajax_load_more_vars = {"id":"ajax-load-more"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/ajax-load-more.min.js.download"></script>
+
+  
+
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Object Caching 18/90 objects using memcached
+Page Caching using memcached 
+Content Delivery Network via Amazon Web Services: CloudFront: dab1nmslvvntp.cloudfront.net
+
+Served from: www.sitepoint.com @ 2019-06-14 06:21:16 by W3 Total Cache
+--><div class="sp-smartbar" data-gtm-vis-recent-on-screen-9559795_37="187659" data-gtm-vis-first-on-screen-9559795_37="187659" data-gtm-vis-total-visible-time-9559795_37="100" data-gtm-vis-has-fired-9559795_37="1"><div class="sp-smartbar__body"><button title="close" class="sp-smartbar__close"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 22.6 22.6" style="height: 1em; width: 1em; xml:space=" preserve"="" preserveAspectRatio="none">
+<rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(0.7071 0.7071 -0.7071 0.7071 11.3137 -4.6863)" width="6" height="26"></rect>
+<rect fill="currentColor" x="8.3" y="-1.7" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 27.3137 11.3137)" width="6" height="26"></rect>
+</svg></button><div class="sp-smartbar__text"><span>Get 300+ Web Development Books and Courses for $9!</span></div><div class="sp-smartbar__countdown"><span class="hours">11</span>:<span class="minutes">39</span>:<span class="seconds">07</span></div><div class="sp-smartbar__button"><a href="https://www.sitepoint.com/premium/products/Z2lkOi8vbGVhcm5hYmxlL1Byb2R1Y3QvMzA3?utm_source=smartbar&amp;utm_medium=article&amp;utm_campaign=$9">GET ACCESS NOW</a></div></div></div><div id="ads"></div><div style="display: none; visibility: hidden;">
+<script type="text/javascript" async="null">(function(d,e,f,a,c,b){d.olark||(a="script",b=e.createElement(a),a=e.getElementsByTagName(a)[0],b.async=1,b.src="//"+f,a.parentNode.insertBefore(b,a),b=d.olark=function(){c.s.push(arguments);c.t.push(+new Date)},b.extend=function(a,c){b("extend",a,c)},b.identify=function(a){b("identify",c.i=a)},b.configure=function(a,d){b("configure",a,d);c.c[a]=d},c=b._={s:[],t:[+new Date],c:{},l:f})})(window,document,"static.olark.com/jsclient/loader.js");olark.identify("6431-299-10-1996");</script>
+</div><iframe data-olark="true" aria-hidden="true" __idm_frm__="633" style="width: 0px; height: 0px; position: absolute; left: 0px; bottom: 0px; border: none;" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/saved_resource(1).html"></iframe><iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="./Getting Started with PouchDB Client-Side JavaScript Database — SitePoint_files/box-90f3a29ef7448451db5af955688970d7.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe><div data-olark="true" id="hbl-live-chat-wrapper" title="Olark Live Chat Widget"><div id="olark-wrapper" class="olark-hidden" data-reactid=".0"><div aria-live="assertive" aria-atomic="true" role="alert" id="chat-box-announcer" style="position:absolute;visibility:visible;overflow:hidden;display:block;width:1px;height:1px;margin:-1px;border:0px;padding:0px;clip:rect(0px, 0px, 0px, 0px);clip-path:polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);white-space:nowrap;" data-reactid=".0.0"><p data-reactid=".0.0.0"></p></div><style rel="stylesheet" type="text/css" data-reactid=".0.1">#olark-wrapper #olark-container .olark-button {
+  background-color: #20B2BB !important;
+  color: #ffffff !important;
+}
+#olark-wrapper #olark-container .olark-button:hover {
+  background-color: #1c9ea6 !important;
+}
+#olark-wrapper #olark-container .olark-theme-bg {
+  background-color: #20B2BB !important;
+}
+#olark-wrapper #olark-container .olark-theme-text {
+  color: #ffffff !important;
+}
+#olark-wrapper .olark-launch-button {
+  background-color: #20B2BB !important;
+}
+#olark-wrapper .olark-launch-button svg path {
+  fill: #ffffff !important;
+}
+#olark-wrapper .olark-launch-button .olark-button-text {
+  color: #ffffff !important;
+}
+#olark-wrapper .olark-top-bar {
+  background-color: #20B2BB !important;
+  color: #ffffff !important;
+  border-color: #1c9ea6 !important;
+}
+#olark-wrapper .olark-top-bar-text {
+  color: #ffffff !important;
+}
+#olark-wrapper .olark-top-bar-arrow {
+  fill: #ffffff !important;
+}
+#olark-wrapper .olark-end-chat-button {
+  color: #ffffff !important;
+  background-color: rgba(24, 137, 144, 0.5) !important;
+}
+#olark-wrapper .olark-end-chat-button:hover {
+  background-color: #188990 !important;
+}
+#olark-wrapper #olark-container .olark-visitor-message:not(.olark-message-trans-bg) {
+  background-color: rgba(32, 178, 187, 0.25) !important;
+}
+#olark-wrapper #olark-container .olark-form-send-button {
+  background-color: #20B2BB !important;
+  color: #ffffff !important;
+}
+#olark-wrapper #olark-container .olark-feedback-form-button {
+  background-color: #20B2BB !important;
+  color: #ffffff !important;
+}
+#olark-wrapper #olark-container .olark-restart-button {
+  background-color: #20B2BB !important;
+  color: #ffffff !important;
+}
+#olark-wrapper #olark-container .olark-branding-panel .olark-branding-cancel-button {
+  background-color: #20B2BB !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+#olark-wrapper #olark-container .olark-branding-panel .olark-branding-go-button {
+  border: none !important;
+  background: rgba(32, 178, 187, 0.35) !important;
+}
+#olark-wrapper #olark-container .olark-send-transcript-container .olark-send-transcript-form.olark-inline-form-valid .olark-form-input-container {
+  border-color: #20B2BB !important;
+}
+#olark-wrapper #olark-container .olark-send-transcript-container .olark-send-transcript-form.olark-inline-form-valid .olark-send-icon {
+  fill: #20B2BB !important;
+}
+#olark-wrapper #olark-container .olark-survey-form .olark-survey-form-radio-button:checked {
+  background: #20B2BB !important;
+  border-color: #20B2BB !important;
+}
+#olark-wrapper #olark-container .olark-visitor-message:not(.olark-message-has-border) {
+  border: none !important;
+}
+</style><noscript data-reactid=".0.2"></noscript><div class="olark-attention-grabber olark-hidden olark-init olark-size-md" aria-hidden="true" data-reactid=".0.3"><div class="olark-bounding-box" tabindex="-1" data-reactid=".0.3.0"><img class="olark-attention-grabber-img" src="https://www.sitepoint.com/getting-started-with-pouchdb/" alt="attention grabber" data-reactid=".0.3.0.0"></div><div class="olark-attention-grabber-cancel olark-hidden" role="button" data-reactid=".0.3.1"><svg viewBox="0 0 11 12" fill="#ffffff" x="0" y="0" aria-label="a small x to signify cancel" role="img" data-reactid=".0.3.1.0"><title data-reactid=".0.3.1.0.0">X icon</title><desc data-reactid=".0.3.1.0.1">a small x to signify cancel</desc><polygon points="10.5,2.7 9.1,1.3 5.5,4.9 1.8,1.3 0.5,2.7 4.1,6.3 0.5,9.9 1.8,11.3 5.5,7.7 9.1,11.3 10.5,9.9 6.8,6.3" data-reactid=".0.3.1.0.2"></polygon></svg></div></div><button class="olark-launch-button olark-size-md" tabindex="0" role="button" aria-hidden="false" data-reactid=".0.4"><svg x="0px" y="0px" viewBox="0 0 28 18" aria-label="small picture of an envelope signifying email" role="img" data-reactid=".0.4.0"><title data-reactid=".0.4.0.0">Envelope Icon</title><desc data-reactid=".0.4.0.1">small picture of an envelope signifying email</desc><path fill="#ffffff" d="M28,3.2C28,1.5,26.5,0,24.8,0H3.2C1.5,0,0,1.5,0,3.2v11.5C0,16.5,1.5,18,3.2,18h21.5c1.8,0,3.2-1.5,3.2-3.2 V3.2z M24.7,14.8c-0.2,0.1-0.4,0.2-0.6,0.2c-0.2,0-0.4-0.1-0.6-0.3l-5-5.3l-3.6,3c-0.3,0.2-0.6,0.3-0.9,0.3s-0.7-0.1-0.9-0.4l-3.6-3 l-5,5.3c-0.2,0.2-0.4,0.3-0.6,0.3c-0.2,0-0.4-0.1-0.6-0.2c-0.3-0.3-0.4-0.8,0-1.2l4.9-5.3L3.3,4.5C3,4.2,2.9,3.6,3.2,3.3 C3.5,2.9,4,2.9,4.4,3.2l9.6,7.9l9.6-7.9c0.4-0.3,0.9-0.2,1.2,0.1c0.3,0.4,0.2,0.9-0.1,1.2l-4.8,3.9l4.9,5.3 C25.1,14,25,14.5,24.7,14.8z" data-reactid=".0.4.0.2"></path></svg><div class="olark-notification-badge olark-hidden" data-reactid=".0.4.1"><div class="olark-notification-badge-text" data-reactid=".0.4.1.0">0</div></div><div class="olark-button-text" data-reactid=".0.4.2">Contact us</div></button><div id="olark-container" class="olark-hidden olark-size-md" aria-hidden="true" role="complementary" data-reactid=".0.5"><div class="olark-top-bar" data-reactid=".0.5.0"><div class="olark-top-bar-text" data-reactid=".0.5.0.0">Contact us!</div><div class="olark-top-bar-button" role="button" tabindex="-1" aria-hidden="true" aria-label="Minimize Chat" data-reactid=".0.5.0.1"><svg viewBox="0 0 15.1 8.9" fill="#ffffff" aria-label="a small down arrow to minimize chat box" role="img" data-reactid=".0.5.0.1.0"><title data-reactid=".0.5.0.1.0.0">Arrow Down</title><desc data-reactid=".0.5.0.1.0.1">a small down arrow to minimize chat box</desc><polygon class="olark-top-bar-arrow" points="0.2,1.4 7.6,8.9 15.1,1.4 13.7,0 7.6,6 1.6,0" data-reactid=".0.5.0.1.0.2"></polygon></svg></div></div><div class="olark-conversation-container olark-no-message-form" data-reactid=".0.5.1"><div class="olark-message-block-container olark-single-message" data-reactid=".0.5.1.0"><div class="olark-generated-message" data-reactid=".0.5.1.0.1">We're not around, but we'd love to chat another time.</div></div></div><div class="olark-overlay-module-container olark-no-message-form" data-reactid=".0.5.4"><div class="olark-offline-survey" data-reactid=".0.5.4.0"><div class="olark-survey-form" id="olark-custom-survey-form" role="form" data-reactid=".0.5.4.0.0"><div class="olark-survey-form-welcome olark-survey-form-item" data-reactid=".0.5.4.0.0.0"><div class="olark-survey-form-welcome-msg" data-reactid=".0.5.4.0.0.0.0">We're not around but we still want to hear from you! Leave us a note:</div></div><div class="olark-survey-form-inner" data-reactid=".0.5.4.0.0.1"><div class="olark-survey-form-page" data-reactid=".0.5.4.0.0.1.0"><div class="olark-survey-form-item olark-survey-form-item-name olark-survey-form-is-required" data-reactid=".0.5.4.0.0.1.0.0:$0"><span class="olark-survey-form-label" data-reactid=".0.5.4.0.0.1.0.0:$0.0">Name</span><span class="olark-survey-form-req-icon" title="Required field" data-reactid=".0.5.4.0.0.1.0.0:$0.1"><svg viewBox="0 0 20 20" x="0" y="0" fill="currentcolor" aria-label="required asterisk signifies that this field can not be left blank" role="img" data-reactid=".0.5.4.0.0.1.0.0:$0.1.0"><title data-reactid=".0.5.4.0.0.1.0.0:$0.1.0.0">Required Asterisk</title><desc data-reactid=".0.5.4.0.0.1.0.0:$0.1.0.1">signifies that this field can not be left blank</desc><path d="M10,0C4.5,0,0,4.5,0,10c0,5.5,4.5,10,10,10s10-4.5,10-10C20,4.5,15.5,0,10,0z M13.8,13.6L12,15l-2-3L8,15l-1.8-1.4l2-2.8 L5,9.6l0.8-2.2L9,8.6L8.8,5h2.4L11,8.6l3.2-1.3L15,9.6l-3.2,1.1L13.8,13.6z" data-reactid=".0.5.4.0.0.1.0.0:$0.1.0.2"></path></svg></span><input class="olark-survey-form-input olark-survey-form-text" data-lpignore="true" aria-label="Name" tabindex="0" type="text" placeholder="Enter your name..." data-reactid=".0.5.4.0.0.1.0.0:$0.2"></div><div class="olark-survey-form-item olark-survey-form-item-email olark-survey-form-is-required" data-reactid=".0.5.4.0.0.1.0.0:$1"><span class="olark-survey-form-label" data-reactid=".0.5.4.0.0.1.0.0:$1.0">Email</span><span class="olark-survey-form-req-icon" title="Required field" data-reactid=".0.5.4.0.0.1.0.0:$1.1"><svg viewBox="0 0 20 20" x="0" y="0" fill="currentcolor" aria-label="required asterisk signifies that this field can not be left blank" role="img" data-reactid=".0.5.4.0.0.1.0.0:$1.1.0"><title data-reactid=".0.5.4.0.0.1.0.0:$1.1.0.0">Required Asterisk</title><desc data-reactid=".0.5.4.0.0.1.0.0:$1.1.0.1">signifies that this field can not be left blank</desc><path d="M10,0C4.5,0,0,4.5,0,10c0,5.5,4.5,10,10,10s10-4.5,10-10C20,4.5,15.5,0,10,0z M13.8,13.6L12,15l-2-3L8,15l-1.8-1.4l2-2.8 L5,9.6l0.8-2.2L9,8.6L8.8,5h2.4L11,8.6l3.2-1.3L15,9.6l-3.2,1.1L13.8,13.6z" data-reactid=".0.5.4.0.0.1.0.0:$1.1.0.2"></path></svg></span><input class="olark-survey-form-input olark-survey-form-text" data-lpignore="true" aria-label="Email" tabindex="0" type="text" placeholder="Enter your email..." data-reactid=".0.5.4.0.0.1.0.0:$1.2"></div><div class="olark-survey-form-item olark-survey-form-item-textarea olark-survey-form-is-required" data-reactid=".0.5.4.0.0.1.0.0:$2"><span class="olark-survey-form-label" data-reactid=".0.5.4.0.0.1.0.0:$2.0">Message</span><span class="olark-survey-form-req-icon" title="Required field" data-reactid=".0.5.4.0.0.1.0.0:$2.1"><svg viewBox="0 0 20 20" x="0" y="0" fill="currentcolor" aria-label="required asterisk signifies that this field can not be left blank" role="img" data-reactid=".0.5.4.0.0.1.0.0:$2.1.0"><title data-reactid=".0.5.4.0.0.1.0.0:$2.1.0.0">Required Asterisk</title><desc data-reactid=".0.5.4.0.0.1.0.0:$2.1.0.1">signifies that this field can not be left blank</desc><path d="M10,0C4.5,0,0,4.5,0,10c0,5.5,4.5,10,10,10s10-4.5,10-10C20,4.5,15.5,0,10,0z M13.8,13.6L12,15l-2-3L8,15l-1.8-1.4l2-2.8 L5,9.6l0.8-2.2L9,8.6L8.8,5h2.4L11,8.6l3.2-1.3L15,9.6l-3.2,1.1L13.8,13.6z" data-reactid=".0.5.4.0.0.1.0.0:$2.1.0.2"></path></svg></span><textarea class="olark-survey-form-input olark-survey-form-textarea" aria-label="Message" data-lpignore="true" placeholder="" tabindex="0" data-reactid=".0.5.4.0.0.1.0.0:$2.2"></textarea></div><button class="olark-button olark-survey-form-submit" aria-label="Send" data-reactid=".0.5.4.0.0.1.0.1">Send</button></div></div></div></div></div><div class="olark-branding-link" data-reactid=".0.5.5"><a role="button" aria-hidden="true" tabindex="-1" data-reactid=".0.5.5.0">Powered by Olark</a></div></div></div></div></body></html>

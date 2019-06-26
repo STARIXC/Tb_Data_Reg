@@ -100,11 +100,11 @@
             </div>
         </div>
         <div class="d-flex align-items-center p-2 my-1 text-white-50 bg-default rounded box-shadow">
-       
-                    <div class="text-center col-12"><button id='refreshpage' class="btn btn-large btn-primary" type="button"><i class="glyphicon glyphicon-refresh"> </i></button></div>
-                   
-               
-      
+
+            <div class="text-center col-12"><button id='refreshpage' class="btn btn-large btn-primary" type="button"><i class="glyphicon glyphicon-refresh"> </i></button></div>
+
+
+
         </div>
 
 
@@ -344,40 +344,7 @@
 
                                     </div>
                                 </div>
-                                <!--   <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
-                                       <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
-                                       <div class="text-muted pt-3">
-                                           <div class="col-lg-12 col-md-12">
-   
-                                               <table id='tb_report_table' class='table table-striped table-hover ' data-paging="true" style='width:100%'>
-                                                   <thead>
-                                                       <tr>
-                                                           <th>SubPartner ID</th>
-                                                           <th>Registration Date</th>
-                                                           <th>HIV Status</th> 
-                                                           <th>MFL Code</th>
-                                                           <th>Facility Name</th>
-                                                           <th>Edit</th>
-                                                       </tr>
-                                                   </thead>
-                                                   <tbody id="update_data">
-                                                   </tbody>
-                                                   <tfoot>
-                                                       <tr>
-                                                           <th>SubPartner ID</th>
-                                                           <th>Registration Date</th>
-                                                           <th>HIV Status</th> 
-                                                           <th>MFL Code</th>
-                                                           <th>Facility Name</th>
-                                                           <th>Edit</th>
-                                                       </tr>
-                                                   </tfoot>
-                                               </table>
-   
-                                           </div>
-   
-                                       </div>
-                                   </div>-->
+
                             </div>
                         </div>
                     </div>
@@ -389,7 +356,61 @@
 
 
     </main>
+     <!-- Modal -->
+    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="Help">HELP ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This  system is created for aiding users in collecting data. One is expected to enter data per facility.</p>
+                    <h3>Required Data</h3>
+                    <p>The specific data that one should enter data for are;</p>
+                    <ul>
 
+                        <li> A. Serial Number </li>
+                        <li>B. Date of Registration( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>C. Sub-County Registration Number</li>
+
+                        <li>D. Sex (M/F)</li>
+
+                        <li>E. Age on Registration <br>(If Age is Bellow 12 Months, round up to 1 yr)</li>
+
+                        <li>F. Date of Treatment started( dd mmm YYYY e.g 01 Jan 2019)<br> if HIV Status is negative the Date can be Ignored</li>
+
+                        <li>G. HIV Status (Pos,Neg,ND)</li>
+
+                        <li>H. HIV Test Date( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>I. ART Status(Y/N)</li>
+
+                        <li>J. ART DATE(Date Started)( dd mmm YYYY e.g 01 Jan 2019)</li>
+
+                        <li>K. Smear0 -Sputum Smear Examination 0th Month Result</li>
+
+                        <li>L. General Expert- to be Chosen from the Drop Down </li>
+                        <li>M. Tested within facility - Was the Client test for HIV within the facility? Y/N</li>
+                        <li>N. Initial Modality - What was the HIV Test Modality (Use the Availed Dropdown) </li>
+                    </ul>
+                    <h3>Data Validation</h3>
+                    <ul>
+                        <li>A. ART Date should be latter or equal to Date Tested</li>
+                        <li>B. If HIV status is Positive or Negative the Date Tested is a Must</li>
+                        <li>C. IF ART Status is equal to Yes, Date Tested is a Must Enter</li>
+                        <li>D. All the Dates Entered should follow the format( dd mmm YYYY e.g 01 Jan 2019) </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -429,7 +450,7 @@
     %>
     <!--<script src="js/app.js"></script>-->
     <script src="pouchdb-7.0.0.min.js"></script>
-    <script src="js/pouch_save.js"></script>
+   
 
     <script>
                                                             jQuery(function ($)

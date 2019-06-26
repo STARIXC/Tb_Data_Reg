@@ -1,13 +1,14 @@
 <%@page import="com.database.dbConn"%>
 <%
+   // String id = (String) session.getAttribute("ID");
     String ID, record_id, SerialNumber, SubCountyRegNo, SubPartnerID, RegDate, sex, age, Xray, treatmentdate, hivStatus, hivtestdate, artstatus, artdate, Mflcode, SubPartnerNom, smear0, genexpert, withinfacility, initialmodality,user_id;
  
                 dbConn conn = new dbConn();
-               //System.out.println("Your Id: "+id);
+               System.out.println("Your Id: "+id);
                             try {
                                 //record_id = request.getParameter("id");
                                 //query
-                                String sql = "SELECT * FROM `tibu_tb_raw`";
+                                String sql = "SELECT * FROM `tibu_tb_raw` WHERE `user_id`='"+id+"'";
                                 conn.rs = conn.st.executeQuery(sql);
 
                                 while (conn.rs.next()) {
@@ -47,9 +48,11 @@
                             <td><%=RegDate%></td>
                             
                             <td>
+                                <span style="display: inline !important;">
                                 <a class='btn btn-sm btn-success btn-edit' href='edit.jsp?id=<%=ID%>'><i class="glyphicon glyphicon-edit"></i>Edit</a>
                                 <a class='btn btn-sm btn-warning btn-update' href='update.jsp?id=<%=ID%>'><i class="glyphicon glyphicon-open"></i>Update</a>
-                            </td>
+                                </span>
+                          </td>
                         </tr>
                         <%      }
                             } catch (Exception e) {
