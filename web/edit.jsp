@@ -296,8 +296,8 @@
                                             </div>
                                             <div class="row offset-1">
 
-                                                <div class="pull-left col-6"><input type="submit" class="btn btn-warning btn-lg mb-2"  name="cancel_update"  value="Cancel"/></div>
-                                                <div class="pull-right col-6"><input type="submit" class="btn btn-success btn-lg mb-2 pull-right " id="update_data" name="update_data"  value="Update"/></div>
+                                               <div class="pull-left col-6"><a href="home.jsp" id="cancel" name="cancel" class="btn btn-warning btn-lg mb-2 ">Cancel</a></div>
+                                                <div class="pull-right col-6"><input type="submit" class="btn btn-success btn-lg mb-2 " id="update_data" name="update_data"  value="Update"/></div>
                                             </div>
 
                                         </form>
