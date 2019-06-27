@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,8 +77,13 @@ public class EmployeeServlet extends HttpServlet {
                 
                 if(conn.rs.next()){
                    String ID = conn.rs.getString("id");
-                    session.setAttribute("email",email);   
+                   String name = conn.rs.getString("name");
+                    session.setAttribute("name",name);   
                     session.setAttribute("ID",ID); 
+                    Cookie ck = new Cookie("name",name);
+                    response.addCookie(ck);
+                    Cookie cks = new Cookie("ID",ID);
+                    response.addCookie(cks);
                     response.sendRedirect("home.jsp");
                 }
                 else

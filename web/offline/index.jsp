@@ -4,26 +4,23 @@
     Author     : starixc
 --%>
 
+<%@page import="org.apache.tomcat.util.http.Cookies"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="javax.servlet.http.Cookie"%>
 <!DOCTYPE html>
 <head><style id="stndz-style"></style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
-
-    <title>Tb Register Data Entry and Management System</title>
+   <title>Tb Register Data Entry and Management System</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="assets/bootstrap/css/bootstrap-glyphicons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/bootstrap/maps/glyphicons-fontawesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/footable.bootstrap.css">
     <link rel="stylesheet" href="css/select2.min.css">
-    <!--<link rel="stylesheet" href="assets/DT-Tables/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets/DT-Tables/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="assets/DT-Tables/css/buttons.dataTables.min.css">-->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-formhelpers.min.css">
     <link rel="stylesheet" href="assets/calender/lib/jquery-ui.min.css">
     <!-- Custom styles for this template -->
@@ -34,11 +31,25 @@
 
 <body class="bg-light" onload="">
     <%
-        //String email = (String) session.getAttribute("email");
-        // String id = (String) session.getAttribute("ID");
-        String email = "admin@tbrecsystems.fhi.com";
-        String id = "admin001";
-        if (email != null) {
+       Cookie ck[]=request.getCookies();
+       Cookie cks[] =request.getCookies();
+        String name = null;
+        String id = null;
+        for (Cookie c : ck) {
+            if (c.getName().equals("name")) {
+                   name =c.getValue();
+                }
+            
+                
+            }
+        for (Cookie cs : cks) {
+            if (cs.getName().equals("ID")) {
+                   id =cs.getValue();
+                }
+            
+                
+            }
+        if (name != null) {
     %>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
         <a class="navbar-brand mr-auto mr-lg-0" href="#">TB Register System</a>
@@ -60,7 +71,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=email%> your ID:<%=id%></a>
+                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=name%> your ID:<%=id%></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" title="Help" data-toggle="modal" href="#help">
@@ -125,6 +136,7 @@
                                         <form  id="form_data" autocomplete="off" validate method="POST" >
 
                                             <div class="row offset-0 p-2">
+                                                <input type="hidden"  name ="id" id="id" value="<%=id%>" />
                                                 <input type="hidden"  name ="rowid" id="rowid"  />
                                                 <div class="col-md-5">
                                                     <div class="form-group">
@@ -156,7 +168,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="subCounty">Sub-County</label>
-                                                        <select class="form-control"  onchange='patafacility()' name='subcounty' id='subcounty' >
+                                                        <select class="form-control" onchange="patafacility()"   name='subcounty' id='subcounty' >
 
                                                         </select>
                                                     </div>
@@ -376,6 +388,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="pouchdb-7.0.0.min.js"></script>
+    <script src="pouchdb.find.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/DT-Tables/js/jquery-3.3.1.min.js" ></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -388,13 +401,10 @@
     <script src="assets/offcanvas.js"></script>
     <script src="assets/bootstrap/js/bootstrap-formhelpers.js"></script>
     <script src="assets/calender/lib/jquery-ui.min.js"></script>
-    <script src="js/credentials.js"></script>
     <script src="js/form_1.js"></script>
     <script src="js/facility.js"></script>
     <script src="js/datepicker.js"></script>
 
-
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="2" style="font-weight:bold;font-size:2pt;font-family:Arial, Helvetica, Open Sans, sans-serif">32x32</text></svg>
     <% } else {
             response.sendRedirect("login.jsp");
         }

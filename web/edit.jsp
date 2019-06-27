@@ -35,9 +35,9 @@
 
 <body class="bg-light">
     <%
-        String email = (String) session.getAttribute("email");
+        String name = (String) session.getAttribute("name");
         String id = (String) session.getAttribute("ID");
-        if(email!=null){
+        if(id!=null){
         %>
     <%
         String ID, record_id, SerialNumber, SubCountyRegNo, SubPartnerID, RegDate, sex, age, Xray, treatmentdate, hivStatus, hivtestdate, artstatus, artdate, Mflcode, SubPartnerNom, smear0, genexpert, withinfacility, initialmodality;
@@ -95,7 +95,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=email%> your ID:<%=id%></a>
+                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=name%></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" title="Help" data-toggle="modal" href="#help">

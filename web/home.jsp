@@ -33,9 +33,9 @@
 
 <body class="bg-light" onload="">
     <%
-        String email = (String) session.getAttribute("email");
+        String name = (String) session.getAttribute("name");
         String id = (String) session.getAttribute("ID");
-        if (email != null) {
+        if(id!=null){
     %>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
         <a class="navbar-brand mr-auto mr-lg-0" href="#">TB Register System</a>
@@ -57,7 +57,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=email%> your ID:<%=id%></a>
+                    <a class="nav-link" href="#">Welcome :<i class="glyphicon glyphicon-user"></i><%=name%> </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" title="Help" data-toggle="modal" href="#help">
