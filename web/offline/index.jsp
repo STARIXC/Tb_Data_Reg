@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-   <title>Tb Register Data Entry and Management System</title>
+    <title>Tb Register Data Entry and Management System</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="assets/bootstrap/css/bootstrap-glyphicons.min.css" rel="stylesheet" type="text/css" />
@@ -31,24 +31,22 @@
 
 <body class="bg-light" onload="">
     <%
-       Cookie ck[]=request.getCookies();
-       Cookie cks[] =request.getCookies();
+        Cookie ck[] = request.getCookies();
+        Cookie cks[] = request.getCookies();
         String name = null;
         String id = null;
         for (Cookie c : ck) {
             if (c.getName().equals("name")) {
-                   name =c.getValue();
-                }
-            
-                
+                name = c.getValue();
             }
+
+        }
         for (Cookie cs : cks) {
             if (cs.getName().equals("ID")) {
-                   id =cs.getValue();
-                }
-            
-                
+                id = cs.getValue();
             }
+
+        }
         if (name != null) {
     %>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -80,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.jsp">
+                    <a class="nav-link" href="../logout.jsp">
                         <i class="glyphicon glyphicon-lock"></i>
                         Logout
                     </a>
@@ -308,8 +306,30 @@
                                     <h6 class="border-bottom border-gray pb-2 mb-0 mt-2">Tb Register Records</h6>
 
                                     <div class="text-muted pt-3">
-                                        <div class="table-responsive toggle-circle-filled" id="datat">
-                                            <div id="showRecords"></div>   
+                                        <div class="table-responsive toggle-circle-filled">
+                                            <div id="showRecords">
+                                                 <table id="TableResults" data-paging-container="#paging-ui-container" class="table table-bordered footable footable-1 footable-filtering  footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display:table">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-visible="true">S/No:</th>
+                                                        <th>SubPartner ID</th>
+                                                        <th data-breakpoints="xs sm md">Sub County Reg #</th>
+                                                        <th data-breakpoints="xs">MFL Code</th>
+                                                        <th data-breakpoints="all">Facility Name</th>
+                                                        <th data-breakpoints="all">ART Status</th>
+                                                        <th data-breakpoints="all">Sex</th>
+                                                        <th data-breakpoints="all">Age</th>
+                                                        <th data-breakpoints="xs sm md">Registration Date</th>
+                                                        <th>Edit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
+                                                <div id="paging-ui-container"></div>
+                                            </div>
+                                           
 
                                         </div>
 
@@ -328,7 +348,7 @@
 
     </main>
 
-  <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -402,6 +422,7 @@
     <script src="assets/bootstrap/js/bootstrap-formhelpers.js"></script>
     <script src="assets/calender/lib/jquery-ui.min.js"></script>
     <script src="js/form_1.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/facility.js"></script>
     <script src="js/datepicker.js"></script>
 
@@ -409,6 +430,6 @@
             response.sendRedirect("login.jsp");
         }
     %>
-
+<script src="js/app.js"></script>
 </body>
 </html>

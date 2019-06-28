@@ -8,19 +8,9 @@ var divDisplayData = document.getElementById('datat');
 //var PouchDB = require('PouchDB');  
 var LocalDB = new PouchDB('Reg_Data');
 //var RenoteDB = false;
-var RemoteDB = 'http://localhost:5984/reg_data/';
+var RemoteDB = 'http://127.0.0.1:5984/reg_data/';
 
-function sync() {
-    syncDom.setAttribute('data-sync-state', 'syncing');
-    var opts = {live: true};
-    LocalDB.replicate.to(RemoteDB, opts, syncError);
-    LocalDB.replicate.from(RemoteDB, opts, syncError);
-}
 
-LocalDB.changes({
-    since: 'now',
-    live: true
-}).on('change', ShowRecords);
 //when user clicks "save " while editing a record
 
 $("#save_data").click(function () {
@@ -219,117 +209,125 @@ function modeReset() {
 } //end modeReset
 
 //show all records in table rows
-var dbdata = "";
+function addRecord(record) {
+    var data = record.doc;
+    var newdata = "<tr><td> " + data.serialno +
+            " </td><td>" + data.SubPartnerID +
+            "</td><td>" + data.subcounty_regno +
+            "</td><td>" + data.Mflcode +
+            "</td><td>" + data.SubPartnerNom +
+            "</td><td>" + data.artstatus +
+            "</td><td>" + data.sex +
+            "</td><td>" + data.age +
+            "</td><td>" + data.registrationdate +
+            "</td><td><button title='Edit!' class='btn-info' href='#nav-home' data-toggle='tab' onclick='loadSavedRecordData(\"" + data._id + "\",\"" + data.Mflcode + "\",\"no\")'><i class='glyphicon glyphicon-edit'></i></button>" +
+            "<button id='delete' title='Delete!' class='btn-danger' data-id='" + data._id + "'><i class='glyphicon glyphicon-trash'></i></button>" +
+            "</td></tr>";
+    $('#TableResults tbody').append(newdata);
+}
+
+function deleteRecord(id) {
+    LocalDB.get(id).then(function (doc) {
+        LocalDB.remove(doc).then(console.log).catch(console.log);
+    });
+}
 function ShowRecords() {
-    //rread from weekly data db
-    LocalDB.allDocs({include_docs: true, ascending: true}).then(function (doc) {
-        console.log(doc);
-        for (b = 0; b < doc.total_rows; b++) {
-            var dat = {};
-            dat = doc.rows[b];
-            //console.log(dat.doc.facility);
-            //how to reference each column 
-            //console.log(dat.doc.startdate);
-            //dat.doc._id
+    //get all data from the db
+    return LocalDB.allDocs({include_docs: true, ascending: true}).then(function (records) {
+        // console.log(doc);
+        $('#TableResults tbody').html('');
 
-            dbdata += "<tr><td> " + dat.doc.serialno +
-                    " </td><td>" + dat.doc.SubPartnerID +
-                    "</td><td>" + dat.doc.subcounty_regno +
-                    "</td><td>" + dat.doc.Mflcode +
-                    "</td><td>" + dat.doc.SubPartnerNom +
-                    "</td><td>" + dat.doc.artstatus +
-                    "</td><td>" + dat.doc.sex +
-                    "</td><td>" + dat.doc.age +
-                    "</td><td>" + dat.doc.registrationdate +
-                    "</td><td><button class='btn-info' href='#nav-home' data-toggle='tab' onclick='loadSavedRecordData(\"" + dat.doc._id + "\",\"" + dat.doc.Mflcode + "\",\"no\")'>Edit</button></td></tr>";
-            // "</td><td class='btn_edit' data-toggle='modal' data-target='#editform'><i class='glyphicon glyphicon-edit'></i></td></tr>";
-        } //end of for loop
+        $.each(records.rows, function (i, record) {
+            addRecord(record);
+        });
 
-        ongezakwameza(dbdata);
-    }).catch(function (err) {
-        console.log(err);
-    });
-    //read data from the db
-}
-//call the function that displays the data
-
-function ongezakwameza(dbdata) {
-    $("#showRecords").html(' <table id="TableResults" class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;"><thead><tr><th data-visible="true">S/No:</th><th>SubPartner ID</th><th data-breakpoints="xs sm md">Sub County Reg #</th><th data-breakpoints="xs">MFL Code</th><th data-breakpoints="all">Facility Name</th><th data-breakpoints="all">ART Status</th><th data-breakpoints="all">Sex</th><th data-breakpoints="all">Age</th><th data-breakpoints="xs sm md">Registration Date</th><th>Edit</th></tr></thead><tbody>' + dbdata + '</tbody></table>');
-    $(document).ready(function () {
-        $('.table').footable();
     });
 }
+$(document).ready(function () {
+ $('.table').footable();
+ });
 
-function sync() {
-    LocalDB.sync(RemoteDB)
-            .on('complete', function () {
-                console.log('All data has been sync!');
-            })
-            .on('error', function (err) {
-                console.log('The sync has failed!');
-            });
+//when a new entry is added to/removed from update the records table
+LocalDB.changes({
+    since: 'now',
+    live: true,
+    include_docs: true
+}).on('change', processChanges);
+//call the function to monitor changes in the database and update the table rows
+function processChanges(record) {
+    if (record.doc._deleted) {
+        ShowRecords();
+
+    } else {
+        addRecord(record);
+    }
+
 }
-
+//when the site loads we load all previous saved data from the local database
+var promise = ShowRecords();
+//after loading continously synchronise with the sync gateway this will trigger LocalDb change
+//retry connection if the connection goes down
+promise.then(function () {
+    LocalDB.sync(RemoteDB, {
+        live: true,
+        retry: true
+    });
+});
 
 var dbs = new PouchDB('subcounty');
 //var RenoteDB = false;
 var remotedbs = 'http://localhost:5984/subcounty/';
+dbs.sync(remotedbs, {
+    live: true,
+    retry: true
+});
 
-function sync() {
-    syncDom.setAttribute('data-sync-state', 'syncing');
-    var opts = {live: true};
-    dbs.replicate.to(remotedbs, opts, syncError);
-    dbs.replicate.from(remotedbs, opts, syncError);
-}
 
+dbs.changes({
+    since: 'now'
+}).on('change', function (change) {
+    // received a change
+    console.log(change);
+}).on('error', function (err) {
+    // handle errors
+    console.log(err);
+});
 
 dbs.createIndex({
     index: {
-        fields: ['CountyID','active','DistrictID']
+        fields: ['CountyID', 'active', 'DistrictID']
     }
 });
 function patasubcounty() {
     console.log("pata county called");
     var county = document.getElementById("county").value;
-     var subcounty = "<option value=''>Select Sub-County</option>";
+    var subcounty = "<option value=''>Select Sub-County</option>";
     dbs.find({
         selector: {
-            active:{$eq:'1'},
+            active: {$eq: '1'},
             CountyID: county}
         //fields: ['_id', 'CountyID'],
         //sort: ['CountyID']
     }).then(function (list) {
-      
-    // var list =doc;  
-     console.log(list);
-     
-   for (var a = 0; a <
-     list['docs'].length; a++) {
- 
-       subcounty += "<option value='" +list['docs'][a]['DistrictID']  + "'>" + list['docs'][a]['DistrictNom'] + "</option>";
-  
-     }//end of for loop
-     $("#subcounty").html(subcounty.replace("<option value=''>Select SubCounty</option>", ""));
-            var select = document.getElementById('subcounty');
-                //$('#subcounty').select2();
-   
+
+        // var list =doc;  
+        console.log(list);
+
+        for (var a = 0; a <
+                list['docs'].length; a++) {
+
+            subcounty += "<option value='" + list['docs'][a]['DistrictID'] + "'>" + list['docs'][a]['DistrictNom'] + "</option>";
+
+        }//end of for loop
+        $("#subcounty").html(subcounty.replace("<option value=''>Select SubCounty</option>", ""));
+        var select = document.getElementById('subcounty');
+        //$('#subcounty').select2();
+
     }).catch(function (err) {
         console.log(err);
     });
 
 }
-
-function sync() {
-    dbs.sync(remotedbs)
-            .on('complete', function () {
-                console.log('All data has been sync!');
-            })
-            .on('error', function (err) {
-                console.log('The sync has failed!');
-            });
-}
-
-
 
 
 
@@ -337,42 +335,51 @@ function sync() {
 var db = new PouchDB('facilities');
 //var RenoteDB = false;
 var remotedb = 'http://localhost:5984/facility/';
-function sync() {
-    syncDom.setAttribute('data-sync-state', 'syncing');
-    var opts = {live: true};
-    db.replicate.to(remotedb, opts, syncError);
-    db.replicate.from(remotedb, opts, syncError);
-}
+db.sync(remotedb, {
+    live: true,
+    retry: true
+});
+
+
+db.changes({
+    since: 'now'
+}).on('change', function (change) {
+    // received a change
+    console.log(change);
+}).on('error', function (err) {
+    // handle errors
+    console.log(err);
+});
 db.createIndex({
     index: {
-        fields: ['DistrictID','active']
+        fields: ['DistrictID', 'active']
     }
 });
 //FUNCTION PATA FACILITY
 function patafacility() {
     console.log("pata county called");
     var subc = document.getElementById("subcounty").value;
-     var facilities = "<option value=''>Select Facility</option>";
+    var facilities = "<option value=''>Select Facility</option>";
     db.find({
         selector: {
-            active:{$eq:'1'},
+            active: {$eq: '1'},
             DistrictID: subc}
         //fields: ['_id', 'CountyID'],
         //sort: ['CountyID']
     }).then(function (facility) {
-      
-    // var list =doc;  
-     console.log(facility);
-     
-   for (var k = 0; k <
-     facility['docs'].length; k++) {
-  facilities += "<option id='facility_select' value='"+ facility['docs'][k]['DistrictID']+"' data-subpartnerid='"+facility['docs'][k]['SubPartnerID']+"' data-mfl='"+facility['docs'][k]['CentreSanteId'] +"' data-facility='"+ facility['docs'][k]['SubPartnerNom'] +"' >"+ facility['docs'][k]['SubPartnerNom'] +" </option>";
-      // $("#subcounty").append("<option value='" +list['docs'][a]['DistrictID']  + "'>" + list['docs'][a]['DistrictNom'] + "</option>");
-     }//end of for loop
-     $("#facility").html(facilities.replace("<option value=''>Select facility</option>", ""));
-            var select = document.getElementById('facility');
-                //$('#facility').select2();
-   
+
+        // var list =doc;  
+        console.log(facility);
+
+        for (var k = 0; k <
+                facility['docs'].length; k++) {
+            facilities += "<option id='facility_select' value='" + facility['docs'][k]['DistrictID'] + "' data-subpartnerid='" + facility['docs'][k]['SubPartnerID'] + "' data-mfl='" + facility['docs'][k]['CentreSanteId'] + "' data-facility='" + facility['docs'][k]['SubPartnerNom'] + "' >" + facility['docs'][k]['SubPartnerNom'] + " </option>";
+            // $("#subcounty").append("<option value='" +list['docs'][a]['DistrictID']  + "'>" + list['docs'][a]['DistrictNom'] + "</option>");
+        }//end of for loop
+        $("#facility").html(facilities.replace("<option value=''>Select facility</option>", ""));
+        var select = document.getElementById('facility');
+        //$('#facility').select2();
+
     }).catch(function (err) {
         console.log(err);
     });
@@ -387,7 +394,7 @@ function sync() {
             .on('error', function (err) {
                 console.log('The sync has failed!');
             });
-            }
+}
 
 $("#showRecords").on("click", ".btn_edit", function () {
     editRecordPrep($(this).parent());
