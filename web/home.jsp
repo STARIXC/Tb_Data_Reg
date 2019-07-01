@@ -83,11 +83,12 @@
     <div class="nav-scroller bg-white box-shadow">
         <nav class="nav nav-underline">
             <a class="nav-link active" href="#">Dashboard</a>
+            <a class="nav-link" href="offline/index.jsp">Offline Mode</a>
             <!--  <a class="nav-link" href="#">
                   Friends
                   <span class="badge badge-pill bg-light align-text-bottom">27</span>
               </a>
-              <a class="nav-link" href="#">Explore</a>
+              
               <a class="nav-link" href="#">Suggestions</a>-->
 
         </nav>
@@ -319,15 +320,15 @@
 
                                                     <tr>
                                                         <th data-visible="true">S/No:</th>
-                                                        <th>SubPartner ID</th>
-                                                        <th data-breakpoints="xs sm md">Sub County Reg #</th>
+                                                        <th>SubPart ID</th>
+                                                        <th data-breakpoints="xs sm md">SubCnty Reg #</th>
                                                         <th data-breakpoints="xs">MFL Code</th>
                                                         <th data-breakpoints="all">Facility Name</th>
                                                         <th data-breakpoints="all">HIV Status</th> 
                                                         <th data-breakpoints="all">ART Status</th> 
                                                         <th data-breakpoints="all">Sex</th> 
                                                         <th data-breakpoints="all">Age</th> 
-                                                        <th data-breakpoints="xs sm md">Registration Date</th>
+                                                        <th data-breakpoints="xs sm md">Reg. Date</th>
 
                                                         <th>Edit</th>
                                                     </tr>
