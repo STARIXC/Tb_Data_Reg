@@ -63,8 +63,6 @@ out.println(data);
 out.close();
         } catch (SQLException ex) {
             Logger.getLogger(get_facility.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(get_facility.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

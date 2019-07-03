@@ -67,7 +67,7 @@ public class viewData extends HttpServlet {
 
             out.println(data);
             out.close();
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(getfacility.class.getName()).log(Level.SEVERE, null, ex);
         }
 

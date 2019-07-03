@@ -5,7 +5,6 @@
  */
 package com.controller;
 
-import com.database.DbConnect;
 import com.database.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,7 +64,7 @@ while (conn.rs.next()) {
 
 out.println(data);
 out.close();
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(getsubcounty.class.getName()).log(Level.SEVERE, null, ex);
         }
         

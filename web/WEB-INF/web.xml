@@ -48,6 +48,10 @@
         <servlet-name>createexcelreport</servlet-name>
         <servlet-class>com.controller.createexcelreport</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>databasesave</servlet-name>
+        <servlet-class>com.controller.databasesave</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>getsubcounty</servlet-name>
         <url-pattern>/getsubcounty</url-pattern>
@@ -91,6 +95,10 @@
     <servlet-mapping>
         <servlet-name>createexcelreport</servlet-name>
         <url-pattern>/createexcelreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>databasesave</servlet-name>
+        <url-pattern>/databasesave</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,14 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.database;
+package db;
 
-/**
- *
- * @author Starixc
- */
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -24,27 +19,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static com.database.OSValidator.isUnix;
 import static com.database.OSValidator.isWindows;
-import com.mysql.jdbc.CallableStatement;
-public class dbConn {
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Starixc
+ */
+public final class dbConn {
 
     public ResultSet rs0, rs, rs1, rs2, rs3, rs4, rs_1, rs_2, rs_3, rs_4, rs_5, rs_6, anc_sch_rs;
-    public Statement stmt, st0, st, st1, st2, st3, st4, st_1, st_2, st_3, st_4, st_5, st_6, anc_scheduling_st;
+    public Statement st0, st, st1, st2, st3, st4, st_1, st_2, st_3, st_4, st_5, st_6, anc_scheduling_st;
     public Statement state, state1, state2, state3, state4;
-    public PreparedStatement pst, pst1, pst2, pst3, pst4, pst5;
-    public PreparedStatement prest, prest1, prest2, prest3, prest4, prest5;
-    public CallableStatement csmt, csmt1, csmt2, csmt3, csmt4;
+    public PreparedStatement pst1, pst2, pst3, pst;
+    public Connection connect;
     String mydrive = "";
     public static int issetdbcalled_file_exists = 2;
     public static int issetdbcalled_exception = 2;
     public static int issetdbcalled_wrongpword = 2;
     public String dbsetup[] = new String[4];
-    public Connection conn = null;
 
- public dbConn() {
+    public dbConn() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             // Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mhc","root", "");
-            conn = null;
+            connect = null;
             //if the saved host name is less than 2 letters long, then thats not a genuine host name
 
             URL location = dbConn.class.getProtectionDomain().getCodeSource().getLocation();
@@ -55,12 +56,11 @@ public class dbConn {
 
                 //String myfile=getServletContext().getRealPath("/dbsettings.txt");
                 if (dbsetup[0] != null) {
-//conn = DriverManager.getConnection("jdbc:sqlserver://nkudat01:1433;databaseName=APHIAMAINDB_2014_NEWTOOLS;user=sa;password=Fhiimpact!;");
+//connect = DriverManager.getConnection("jdbc:sqlserver://nkudat01:1433;databaseName=APHIAMAINDB_2014_NEWTOOLS;user=sa;password=Fhiimpact!;");
                     if (dbsetup[3] == null) {
-                        conn = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2], "");
-                        
+                        connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2], "");
                     } else {
-                        conn = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2], dbsetup[3]);
+                        connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2], dbsetup[3]);
                         System.out.println("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1] + "," + dbsetup[2] + "," + dbsetup[3]);
 
                     }
@@ -82,25 +82,25 @@ public class dbConn {
                 issetdbcalled_file_exists = 2;
                 issetdbcalled_wrongpword = 2;
 
-                st_1 = conn.createStatement();
-                st_2 = conn.createStatement();
-                st_3 = conn.createStatement();
-                st_4 = conn.createStatement();
-                st_5 = conn.createStatement();
-                st_6 = conn.createStatement();
+                st_1 = connect.createStatement();
+                st_2 = connect.createStatement();
+                st_3 = connect.createStatement();
+                st_4 = connect.createStatement();
+                st_5 = connect.createStatement();
+                st_6 = connect.createStatement();
 
-                st1 = conn.createStatement();
-                st2 = conn.createStatement();
-                st3 = conn.createStatement();
-                st4 = conn.createStatement();
-                st0 = conn.createStatement();
-                st = conn.createStatement();
+                st1 = connect.createStatement();
+                st2 = connect.createStatement();
+                st3 = connect.createStatement();
+                st4 = connect.createStatement();
+                st0 = connect.createStatement();
+                st = connect.createStatement();
 
-                state = (Statement) conn.createStatement();
-                state1 = (Statement) conn.createStatement();
-                state2 = (Statement) conn.createStatement();
-                state3 = (Statement) conn.createStatement();
-                state4 = (Statement) conn.createStatement();
+                state = (Statement) connect.createStatement();
+                state1 = (Statement) connect.createStatement();
+                state2 = (Statement) connect.createStatement();
+                state3 = (Statement) connect.createStatement();
+                state4 = (Statement) connect.createStatement();
 
             }
 
@@ -179,7 +179,7 @@ public class dbConn {
         try {
 
             //not so good for now because the host name is static
-            String url = "http://localhost:8085/Tb_Reg/dataconfig.jsp";
+            String url = "http://localhost:8085/Tb_reg/dataconfig.jsp";
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
             //getdbsettings("M");
         } catch (IOException ex) {
