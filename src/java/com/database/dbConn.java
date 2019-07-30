@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static com.database.OSValidator.isUnix;
 import static com.database.OSValidator.isWindows;
-import com.mysql.jdbc.CallableStatement;
+import com.mysql.cj.jdbc.CallableStatement;
 public class dbConn {
 
     public ResultSet rs0, rs, rs1, rs2, rs3, rs4, rs_1, rs_2, rs_3, rs_4, rs_5, rs_6, anc_sch_rs;
@@ -42,7 +42,7 @@ public class dbConn {
 
  public dbConn() {
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             // Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mhc","root", "");
             conn = null;
             //if the saved host name is less than 2 letters long, then thats not a genuine host name
@@ -127,10 +127,10 @@ public class dbConn {
             String dbconnpath = null;
 
             if (isWindows()) {
-                dbconnpath = drive + ":/TB_REGISTER/_/_/dbase.txt";
+                dbconnpath = drive + ":/TB_REGISTER/_/_/dtbase.txt";
 
             } else if (isUnix()) {
-                dbconnpath = "TB_REGISTER/_/_/dbase.txt";
+                dbconnpath = "TB_REGISTER/_/_/dtbase.txt";
 
             }
 
@@ -179,7 +179,7 @@ public class dbConn {
         try {
 
             //not so good for now because the host name is static
-            String url = "http://localhost:8085/Tb_Reg/dataconfig.jsp";
+            String url = "http://localhost:8080/Tb_Reg/dataconfig.jsp";
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
             //getdbsettings("M");
         } catch (IOException ex) {

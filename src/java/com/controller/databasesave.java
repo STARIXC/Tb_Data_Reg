@@ -62,10 +62,10 @@ public class databasesave extends HttpServlet {
             String allpath = getServletContext().getRealPath("/dbase.txt");
             String mydrive = allpath.substring(0, 1);
             dbconnpath = mydrive + ":\\TB_REGISTER\\_\\_\\";
-            dbsetup = dbconnpath + "\\dbase.txt";
+            dbsetup = dbconnpath + "\\dtbase.txt";
             if (isUnix()) {
                 dbconnpath = "//TB_REGISTER/_/_";
-                dbsetup = dbconnpath + "/dbase.txt";
+                dbsetup = dbconnpath + "/dtbase.txt";
             }
             //CREATE A DIRECTORY
             new File(dbconnpath).mkdirs();
