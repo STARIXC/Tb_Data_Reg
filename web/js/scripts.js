@@ -93,6 +93,20 @@ function pataregfacility() {
         }
     });
 }
+function patarecords() {
+
+   var id = $("#id").val();
+    $.ajax({
+        url: 'records?id=' + id,
+        type: 'get',
+        dataType: 'html',
+        success: function (data) {
+           //$('#example tbody ').append(data);
+            
+        }});
+
+}
+patarecords();
 
 
 

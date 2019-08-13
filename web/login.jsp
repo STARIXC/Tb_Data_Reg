@@ -15,7 +15,7 @@
         <script src="js/jquery.min.js"></script>
         <script src="assets/bootstrap-3/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/select2.min.css">
-        
+
     </head>
     <body>
         <div class="container">
@@ -29,6 +29,9 @@
                 }
             %>
             <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="images/banner.PNG" alt="Logo Barner" class="img-responsive"/>
+                </div>
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-login">
                         <div class="panel-heading">
@@ -44,6 +47,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
+
                                 <div class="col-lg-12">
                                     <form id="login-form" action="EmployeeServlet" method="post" role="form" style="display: block;">
                                         <div class="form-group">

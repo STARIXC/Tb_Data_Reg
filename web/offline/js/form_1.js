@@ -223,7 +223,7 @@ function addRecord(record) {
             "</td><td><button title='Edit!' class='btn-info' href='#nav-home' data-toggle='tab' onclick='loadSavedRecordData(\"" + data._id + "\",\"" + data.Mflcode + "\",\"no\")'><i class='glyphicon glyphicon-edit'></i></button>" +
             "<button id='delete' title='Delete!' class='btn-danger' data-id='" + data._id + "'><i class='glyphicon glyphicon-trash'></i></button>" +
             "</td></tr>";
-    $('#TableResults tbody').append(newdata);
+    $('#example tbody').append(newdata);
 }
 
 function deleteRecord(id) {
@@ -235,7 +235,7 @@ function ShowRecords() {
     //get all data from the db
     return LocalDB.allDocs({include_docs: true, ascending: true}).then(function (records) {
         // console.log(doc);
-        $('#TableResults tbody').html('');
+        $('#example tbody').html('');
 
         $.each(records.rows, function (i, record) {
             addRecord(record);
@@ -243,9 +243,6 @@ function ShowRecords() {
 
     });
 }
-$(document).ready(function () {
- $('.table').footable();
- });
 
 //when a new entry is added to/removed from update the records table
 LocalDB.changes({

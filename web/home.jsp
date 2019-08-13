@@ -17,25 +17,36 @@
     <title>Tb Register Data Entry and Management System</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/DT-Tables/css/dataTables.bootstrap4.min.css">
+    <link href="assets/DT-Tables/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/bootstrap/css/bootstrap-glyphicons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/bootstrap/maps/glyphicons-fontawesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/footable.bootstrap.css">
-    <!--<link rel="stylesheet" href="assets/DT-Tables/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets/DT-Tables/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="assets/DT-Tables/css/buttons.dataTables.min.css">-->
+    <link rel="stylesheet" href="css/select2.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-formhelpers.min.css">
     <link rel="stylesheet" href="assets/calender/lib/jquery-ui.min.css">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link href="assets/offcanvas.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="assets/DT-Tables/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/DT-Tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/DT-Tables/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+    <script src="assets/DT-Tables/js/dataTables.responsive.min.js" type="text/javascript"></script>
+    <script src="assets/DT-Tables/js/responsive.bootstrap4.min.js" type="text/javascript"></script>
 
 </head>
+<script>
+    $(document).ready(function () {
+       $('#example').DataTable();
+  });
+</script>
 
 <body class="bg-light" onload="">
     <%
         String name = (String) session.getAttribute("name");
         String id = (String) session.getAttribute("ID");
-        if(id!=null){
+        if (id != null) {
     %>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
         <a class="navbar-brand mr-auto mr-lg-0" href="#">TB Register System</a>
@@ -315,27 +326,28 @@
 
                                     <div class="text-muted pt-3">
                                         <div class="table-responsive toggle-circle-filled" id="datat">
-                                            <table class="table table-bordered footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-xs" data-paging="true" data-filtering="true" data-sorting="true" style="display: table;">
+                                            <table id="example" class="table table-bordered dt-responsive" cellspacing="0" width="100%">
                                                 <thead>
 
                                                     <tr>
-                                                        <th data-visible="true">S/No:</th>
+                                                        <th >S/No:</th>
                                                         <th>SubPart ID</th>
-                                                        <th data-breakpoints="xs sm md">SubCnty Reg #</th>
-                                                        <th data-breakpoints="xs">MFL Code</th>
-                                                        <th data-breakpoints="all">Facility Name</th>
-                                                        <th data-breakpoints="all">HIV Status</th> 
-                                                        <th data-breakpoints="all">ART Status</th> 
-                                                        <th data-breakpoints="all">Sex</th> 
-                                                        <th data-breakpoints="all">Age</th> 
-                                                        <th data-breakpoints="xs sm md">Reg. Date</th>
+                                                        <th>SubCnty Reg #</th>
+                                                        <th>MFL Code</th>
+                                                        <th>Facility Name</th>
+                                                        <th>HIV Status</th> 
+                                                        <th>ART Status</th> 
+                                                        <th>Sex</th> 
+                                                        <th>Age</th> 
+                                                        <th>Reg. Date</th>
 
                                                         <th>Edit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <%@ include file = "list_data.jsp" %>
+                                                   
                                                     <!----data from  db table---->
+                                                    <%@include file="list_data.jsp" %>
 
                                                 </tbody>
 
@@ -357,7 +369,7 @@
 
 
     </main>
-     <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -416,20 +428,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="assets/DT-Tables/js/jquery-3.3.1.min.js" ></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
     <script src="assets/bootstrap/js/bootstrap.min.js" ></script>
-    <!--<script src="assets/DT-Tables/js/jquery.dataTables.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.bootstrap.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.responsive.min.js" ></script>
-    <script src="assets/DT-Tables/js/dataTables.buttons.min.js" ></script>
-    <script src="assets/DT-Tables/js/buttons.flash.min.js" ></script>
-    <script src="assets/DT-Tables/js/jszip.min.js" ></script>
-    <script src="assets/DT-Tables/js/pdfmake.min.js" ></script>
-    <script src="assets/DT-Tables/js/vfs_fonts.js" ></script>
-    <script src="assets/DT-Tables/js/buttons.html5.min.js" ></script>
-   
-    <script src="assets/DT-Tables/js/buttons.print.min.js" ></script>-->
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/additional/additional.js"></script>
     <script src="js/footable.js"></script>
@@ -451,13 +451,10 @@
     %>
     <!--<script src="js/app.js"></script>-->
     <script src="pouchdb-7.0.0.min.js"></script>
-   
+
 
     <script>
-                                                            jQuery(function ($)
-                                                            {
-                                                                $('.table').footable();
-                                                            });
+
                                                             $("#refreshpage").click(function ()
                                                             {
                                                                 window.location.reload();
